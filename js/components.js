@@ -1,18 +1,25 @@
-class Pc {
-  constructor(x, y) {
+class Component {
+  constructor(x, y, w, h, text, textXOffset, textYOffset) {
     this.x = x;
     this.y = y;
-    this.width = 50;
-    this.height = 150;
-    this.text = "PC";
-  }
-
-  show() {
-    rect(this.x, this.y, this.width, this.height);
+    this.width = w;
+    this.height = h;
+    this.text = text;
+    this.textXOffset = textXOffset;
+    this.textYOffset = textYOffset;
   }
 
   drawText() {
-    text(this.text, this.x + this.width / 3, this.y + this.height / 2);
+    fill(0);
+    noStroke();
+    textSize(15);
+    text(
+      this.text,
+      this.x + this.width / this.textXOffset,
+      this.y + this.height / this.textYOffset
+    );
+    fill(255);
+    stroke(0);
   }
 
   draw() {
@@ -21,16 +28,40 @@ class Pc {
   }
 }
 
-class Alu {
+class Pc extends Component {
+  constructor(x, y) {
+    super(x, y, 50, 150, "PC", 3, 2);
+    this.input;
+    this.output;
+    this.generateIO();
+  }
+
+  generateIO() {
+    this.input = new Node(this.x, this.y + this.height / 2, false);
+    this.output = new Node(
+      this.x + this.width,
+      this.y + this.height / 2,
+      false
+    );
+  }
+
+  showNodes() {
+    this.input.draw();
+    this.output.draw();
+  }
+
+  show() {
+    rect(this.x, this.y, this.width, this.height);
+    this.showNodes();
+  }
+}
+
+class Alu extends Component {
   constructor(x, y, isAdd) {
-    this.x = x;
-    this.y = y;
-    this.width = 100;
-    this.height = 150;
+    super(x, y, 100, 150, isAdd ? "Add" : "Alu", 2.5, 2);
     this.inputs = [];
     this.outputs = [];
     this.generateIO(isAdd);
-    this.text = isAdd ? "Add" : "Alu";
   }
 
   generateIO(isAdd) {
@@ -70,26 +101,13 @@ class Alu {
 
     this.showNodes();
   }
-
-  drawText() {
-    text(this.text, this.x + this.width / 2.5, this.y + this.height / 2);
-  }
-
-  draw() {
-    this.show();
-    this.drawText();
-  }
 }
 
-class InstructionMemory {
+class InstructionMemory extends Component {
   constructor(x, y) {
-    this.x = x;
-    this.y = y;
-    this.width = 100;
-    this.height = 150;
+    super(x, y, 100, 150, "Instruction\nMemory", 4, 1.2);
     this.input;
     this.output;
-    this.text = "Instruction\nMemory";
     this.generateIO();
   }
 
@@ -107,26 +125,13 @@ class InstructionMemory {
     this.input.draw();
     this.output.draw();
   }
-
-  drawText() {
-    text(this.text, this.x + this.width / 4, this.y + this.height / 1.2);
-  }
-
-  draw() {
-    this.show();
-    this.drawText();
-  }
 }
 
-class Registers {
+class Registers extends Component {
   constructor(x, y) {
-    this.x = x;
-    this.y = y;
-    this.width = 100;
-    this.height = 150;
+    super(x, y, 100, 150, "Registers", 4, 1.1);
     this.inputs = [];
     this.outputs = [];
-    this.text = "Registers";
     this.generateIO();
   }
 
@@ -152,26 +157,13 @@ class Registers {
     rect(this.x, this.y, this.width, this.height);
     this.showNodes();
   }
-
-  drawText() {
-    text(this.text, this.x + this.width / 4, this.y + this.height / 1.1);
-  }
-
-  draw() {
-    this.show();
-    this.drawText();
-  }
 }
 
-class DataMemory {
+class DataMemory extends Component {
   constructor(x, y) {
-    this.x = x;
-    this.y = y;
-    this.width = 100;
-    this.height = 150;
+    super(x, y, 100, 150, "Data Memory", 15, 1.1);
     this.inputs = [];
     this.output;
-    this.text = "Data Memory";
     this.generateIO();
   }
 
@@ -197,13 +189,36 @@ class DataMemory {
     rect(this.x, this.y, this.width, this.height);
     this.showNodes();
   }
+}
 
-  drawText() {
-    text(this.text, this.x + this.width / 6, this.y + this.height / 1.1);
+class Mux extends Component {
+  constructor(x, y) {
+    super(x, y, 35, 80, "M\nU\nX", 3, 3);
+    this.inputs = [];
+    this.output;
+    this.generateIO();
   }
 
-  draw() {
-    this.show();
-    this.drawText();
+  generateIO() {
+    for (let i = 1; i < 3; i++) {
+      this.inputs.push(new Node(this.x, this.y + (this.height * i) / 3, false));
+    }
+
+    this.output = new Node(
+      this.x + this.width,
+      this.y + this.height / 3,
+      false
+    );
+  }
+
+  showNodes() {
+    [...this.inputs, this.output].forEach((el) => {
+      el.draw();
+    });
+  }
+
+  show() {
+    rect(this.x, this.y, this.width, this.height, 55);
+    this.showNodes();
   }
 }

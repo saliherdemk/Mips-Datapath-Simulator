@@ -6,7 +6,9 @@ class Node {
   }
 
   show() {
+    fill(this.value ? color(0, 255, 0) : color(255, 0, 0));
     ellipse(this.x, this.y, 14);
+    noFill();
   }
 
   draw() {
