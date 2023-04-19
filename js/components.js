@@ -20,6 +20,7 @@ class Component {
     );
     fill(255);
     stroke(0);
+    strokeWeight(2);
   }
 
   draw() {
@@ -219,6 +220,34 @@ class Mux extends Component {
 
   show() {
     rect(this.x, this.y, this.width, this.height, 55);
+    this.showNodes();
+  }
+}
+
+class Ellipse extends Component {
+  constructor(x, y, text) {
+    super(x, y, 65, 100, text, 7, 2.5);
+    this.input;
+    this.output;
+    this.generateIO();
+  }
+
+  generateIO() {
+    this.input = new Node(this.x, this.y + this.height / 2, false);
+    this.output = new Node(
+      this.x + this.width,
+      this.y + this.height / 2,
+      false
+    );
+  }
+
+  showNodes() {
+    this.input.draw();
+    this.output.draw();
+  }
+
+  show() {
+    rect(this.x, this.y, this.width, this.height, 50);
     this.showNodes();
   }
 }
