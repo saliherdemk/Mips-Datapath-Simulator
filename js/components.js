@@ -62,14 +62,20 @@ class Alu extends Component {
     super(x, y, 100, 150, isAdd ? "Add" : "Alu", 2.5, 2);
     this.inputs = [];
     this.outputs = [];
+    this.additionalInput;
     this.generateIO(isAdd);
   }
 
   generateIO(isAdd) {
-    !isAdd &&
+    if (!isAdd) {
+      this.additionalInput = new Node(
+        this.x + this.width / 2,
+        this.y + this.height / 1.1
+      );
       this.outputs.push(
         new Node(this.x + this.width, this.y + this.height / 3, false)
       );
+    }
     this.outputs.push(
       new Node(
         this.x + this.width,
@@ -83,8 +89,8 @@ class Alu extends Component {
   }
 
   showNodes() {
-    [...this.inputs, ...this.outputs].forEach((el) => {
-      el.draw();
+    [...this.inputs, ...this.outputs, this.additionalInput].forEach((el) => {
+      el && el.draw();
     });
   }
 
@@ -133,6 +139,7 @@ class Registers extends Component {
     super(x, y, 100, 150, "Registers", 4, 1.1);
     this.inputs = [];
     this.outputs = [];
+    this.additionalInput;
     this.generateIO();
   }
 
@@ -146,10 +153,12 @@ class Registers extends Component {
         new Node(this.x + this.width, this.y + (this.height * i) / 3, false)
       );
     }
+
+    this.additionalInput = new Node(this.x + this.width / 2, this.y, false);
   }
 
   showNodes() {
-    [...this.inputs, ...this.outputs].forEach((el) => {
+    [...this.inputs, ...this.outputs, this.additionalInput].forEach((el) => {
       el.draw();
     });
   }
@@ -165,6 +174,7 @@ class DataMemory extends Component {
     super(x, y, 100, 150, "Data Memory", 15, 1.1);
     this.inputs = [];
     this.output;
+    this.additionalInputs = [];
     this.generateIO();
   }
 
@@ -178,10 +188,15 @@ class DataMemory extends Component {
       this.y + this.height / 3,
       false
     );
+
+    this.additionalInputs.push(
+      new Node(this.x + this.width / 2, this.y, false),
+      new Node(this.x + this.width / 2, this.y + this.height, false)
+    );
   }
 
   showNodes() {
-    [...this.inputs, this.output].forEach((el) => {
+    [...this.inputs, this.output, ...this.additionalInputs].forEach((el) => {
       el.draw();
     });
   }
@@ -197,6 +212,7 @@ class Mux extends Component {
     super(x, y, 35, 80, "M\nU\nX", 3, 3);
     this.inputs = [];
     this.output;
+    this.additionalInput;
     this.generateIO();
   }
 
@@ -210,10 +226,16 @@ class Mux extends Component {
       this.y + this.height / 3,
       false
     );
+
+    this.additionalInput = new Node(
+      this.x + this.width / 2,
+      this.y + this.height,
+      false
+    );
   }
 
   showNodes() {
-    [...this.inputs, this.output].forEach((el) => {
+    [...this.inputs, this.output, this.additionalInput].forEach((el) => {
       el.draw();
     });
   }
@@ -226,7 +248,7 @@ class Mux extends Component {
 
 class Ellipse extends Component {
   constructor(x, y, text) {
-    super(x, y, 65, 100, text, 7, 2.5);
+    super(x, y, 66, 66, text, 7, 2.5);
     this.input;
     this.output;
     this.generateIO();
@@ -247,6 +269,50 @@ class Ellipse extends Component {
   }
 
   show() {
+    rect(this.x, this.y, this.width, this.height, 50);
+    this.showNodes();
+  }
+}
+
+class Control extends Component {
+  constructor(x, y, text) {
+    super(x, y, 50, 200, text, 2.5, 5);
+    this.input;
+    this.outputs = [];
+    this.generateIO();
+  }
+
+  generateIO() {
+    this.input = new Node(this.x, this.y + this.height / 2, false);
+    for (let i = 1; i < 9; i++) {
+      this.outputs.push(
+        new Node(this.x + this.width, this.y + (this.height * i) / 10, false)
+      );
+    }
+  }
+
+  showNodes() {
+    [...this.outputs, this.input].forEach((el) => {
+      el.draw();
+    });
+  }
+
+  drawText() {
+    fill(5, 176, 239);
+    noStroke();
+    textSize(15);
+    text(
+      this.text,
+      this.x + this.width / this.textXOffset,
+      this.y + this.height / this.textYOffset
+    );
+    fill(255);
+    stroke(0);
+    strokeWeight(2);
+  }
+
+  show() {
+    stroke(5, 176, 239);
     rect(this.x, this.y, this.width, this.height, 50);
     this.showNodes();
   }

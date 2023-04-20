@@ -6,27 +6,32 @@ function createComponents() {
   let originX = (windowWidth - 1000) / 2;
   let originY = (windowHeight - 750) / 2;
 
-  let pc = new Pc(originX + 50, originY + 300);
-  let alu1 = new Alu(originX + 200, originY + 100, true);
-  let alu2 = new Alu(originX + 650, originY + 100, true);
-  let alu3 = new Alu(originX + 650, originY + 275, false);
-  let im = new InstructionMemory(originX + 150, originY + 300);
-  let register = new Registers(originX + 400, originY + 300);
-  let dm = new DataMemory(originX + 825, originY + 350);
-  let mux1 = new Mux(originX + 325, originY + 360);
-  let mux2 = new Mux(originX + 580, originY + 350);
-  let mux3 = new Mux(originX + 975, originY + 475);
-  let mux4 = new Mux(originX + 850, originY + 50);
-  let signExtend = new Ellipse(originX + 450, originY + 475, "Sign\nExtend");
-  let aluControl = new Ellipse(originX + 580, originY + 540, "Alu\nControl");
-  let shift = new Ellipse(originX + 550, originY + 175, "Shift\nLeft 2");
+  let pc = new Pc(originX + 50, originY + 350);
+  let alu1 = new Alu(originX + 200, originY + 10, true);
+  let alu2 = new Alu(originX + 750, originY + 50, true);
+  let alu3 = new Alu(originX + 650, originY + 325, false);
+  let im = new InstructionMemory(originX + 150, originY + 350);
+  let register = new Registers(originX + 400, originY + 350);
+  let dm = new DataMemory(originX + 825, originY + 400);
+  let mux1 = new Mux(originX + 325, originY + 410);
+  let mux2 = new Mux(originX + 580, originY + 400);
+  let mux3 = new Mux(originX + 975, originY + 300);
+  let mux4 = new Mux(originX + 900, originY);
+  let signExtend = new Ellipse(originX + 450, originY + 525, "Sign\nExtend");
+  let aluControl = new Ellipse(originX + 580, originY + 590, "Alu\nControl");
+  let shift = new Ellipse(originX + 600, originY + 225, "Shift\nLeft 2");
+  let control = new Control(
+    originX + 325,
+    originY + 125,
+    "C\nO\nN\nT\nR\nO\nL"
+  );
 
-  let i20Node = new Node(originX + 275, originY + 350);
+  let i20Node = new Node(originX + 275, originY + 400);
   let mux3toReg4_1 = new Node(originX + 975, originY + 650);
   let mux3toReg4_2 = new Node(originX + 375, originY + 650);
-  let seNode = new Node(originX + 400, originY + 525);
-  let alu1Node = new Node(originX + 500, originY + 130);
-  let mux4toPc_1 = new Node(originX + 10, originY + 25);
+  let seNode = new Node(originX + 400, originY + 558);
+  let alu1Node = new Node(originX + 500, originY + 80);
+  let mux4toPc_1 = new Node(originX + 10, originY - 5);
 
   components.push(
     pc,
@@ -42,7 +47,8 @@ function createComponents() {
     mux4,
     signExtend,
     aluControl,
-    shift
+    shift,
+    control
   );
 
   wires.push(
@@ -73,17 +79,18 @@ function createComponents() {
     new Wire(alu1Node, mux4.inputs[0]),
     new Wire(alu2.outputs[0], mux4.inputs[1]),
     new Wire(mux4.output, mux4toPc_1),
-    new Wire(mux4toPc_1, pc.input, true)
+    new Wire(mux4toPc_1, pc.input, true),
+    new Wire(im.output, control.input)
   );
 
   points.push(
-    new Point(originX + 125, originY + 375),
-    new Point(originX + 300, originY + 350),
-    new Point(originX + 540, originY + 403),
-    new Point(originX + 525, originY + 400),
-    new Point(originX + 775, originY + 400),
-    new Point(originX + 425, originY + 525),
-    new Point(originX + 525, originY + 130)
+    new Point(originX + 125, originY + 425),
+    new Point(originX + 300, originY + 400),
+    new Point(originX + 540, originY + 453),
+    new Point(originX + 525, originY + 450),
+    new Point(originX + 775, originY + 425),
+    new Point(originX + 425, originY + 558),
+    new Point(originX + 525, originY + 80)
   );
 }
 
