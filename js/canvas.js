@@ -5,23 +5,29 @@ var points = [];
 function createComponents() {
   let originX = (windowWidth - 1000) / 2;
   let originY = (windowHeight - 750) / 2;
+  let skyColor = color(5, 176, 239);
 
   let pc = new Pc(originX + 50, originY + 350);
-  let alu1 = new Alu(originX + 200, originY + 10, true);
+  let alu1 = new Alu(originX + 150, originY + 5, true);
   let alu2 = new Alu(originX + 750, originY + 50, true);
   let alu3 = new Alu(originX + 650, originY + 325, false);
   let im = new InstructionMemory(originX + 150, originY + 350);
   let register = new Registers(originX + 400, originY + 350);
   let dm = new DataMemory(originX + 825, originY + 400);
   let mux1 = new Mux(originX + 325, originY + 410);
-  let mux2 = new Mux(originX + 580, originY + 400);
-  let mux3 = new Mux(originX + 975, originY + 300);
+  let mux2 = new Mux(originX + 580, originY + 400, true);
+  let mux3 = new Mux(originX + 975, originY + 300, true);
   let mux4 = new Mux(originX + 900, originY);
   let signExtend = new Ellipse(originX + 450, originY + 525, "Sign\nExtend");
-  let aluControl = new Ellipse(originX + 580, originY + 590, "Alu\nControl");
+  let aluControl = new Ellipse(
+    originX + 580,
+    originY + 565,
+    "Alu\nControl",
+    true
+  );
   let shift = new Ellipse(originX + 600, originY + 225, "Shift\nLeft 2");
   let control = new Control(
-    originX + 325,
+    originX + 340,
     originY + 125,
     "C\nO\nN\nT\nR\nO\nL"
   );
@@ -32,6 +38,14 @@ function createComponents() {
   let seNode = new Node(originX + 400, originY + 558);
   let alu1Node = new Node(originX + 500, originY + 80);
   let mux4toPc_1 = new Node(originX + 10, originY - 5);
+  let regDest_1 = new Node(originX + 400, originY + 110);
+  let regDest_2 = new Node(originX + 265, originY + 110);
+  let regDest_3 = new Node(originX + 265, originY + 520);
+  let regDest_4 = new Node(originX + 342, originY + 520);
+  let jump_1 = new Node(originX + 917, originY + 165);
+  let memToRegNode = new Node(originX + 992.5, originY + 210);
+  let aluControlNode = new Node(originX + 587.5, originY + 700);
+  let alu3Node = new Node(originX + 700, originY + 598);
 
   components.push(
     pc,
@@ -80,7 +94,20 @@ function createComponents() {
     new Wire(alu2.outputs[0], mux4.inputs[1]),
     new Wire(mux4.output, mux4toPc_1),
     new Wire(mux4toPc_1, pc.input, true),
-    new Wire(im.output, control.input)
+    new Wire(im.output, control.input),
+    new Wire(control.outputs[0], regDest_1, false, skyColor),
+    new Wire(regDest_1, regDest_2, true, skyColor),
+    new Wire(regDest_2, regDest_3, true, skyColor),
+    new Wire(regDest_3, regDest_4, false, skyColor),
+    new Wire(regDest_4, mux1.additionalInput, true, skyColor),
+    new Wire(control.outputs[1], jump_1, false, skyColor),
+    new Wire(jump_1, mux4.additionalInput, true, skyColor),
+    new Wire(control.outputs[4], memToRegNode, false, skyColor),
+    new Wire(memToRegNode, mux3.additionalInput, true, skyColor),
+    new Wire(control.outputs[5], aluControlNode, false, skyColor),
+    new Wire(aluControlNode, aluControl.additionalInput, false, skyColor),
+    new Wire(aluControl.output, alu3Node),
+    new Wire(alu3Node, alu3.additionalInput, true)
   );
 
   points.push(

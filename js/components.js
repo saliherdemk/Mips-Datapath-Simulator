@@ -208,11 +208,12 @@ class DataMemory extends Component {
 }
 
 class Mux extends Component {
-  constructor(x, y) {
+  constructor(x, y, toTop = false) {
     super(x, y, 35, 80, "M\nU\nX", 3, 3);
     this.inputs = [];
     this.output;
     this.additionalInput;
+    this.toTop = toTop;
     this.generateIO();
   }
 
@@ -229,7 +230,7 @@ class Mux extends Component {
 
     this.additionalInput = new Node(
       this.x + this.width / 2,
-      this.y + this.height,
+      this.y + (this.toTop ? 0 : this.height),
       false
     );
   }
@@ -247,14 +248,23 @@ class Mux extends Component {
 }
 
 class Ellipse extends Component {
-  constructor(x, y, text) {
+  constructor(x, y, text, hasAdditional = false) {
     super(x, y, 66, 66, text, 7, 2.5);
     this.input;
     this.output;
+    this.hasAdditional = hasAdditional;
+    this.additionalInput;
     this.generateIO();
   }
 
   generateIO() {
+    if (this.hasAdditional) {
+      this.additionalInput = new Node(
+        this.x + this.width / 2,
+        this.y + this.height,
+        false
+      );
+    }
     this.input = new Node(this.x, this.y + this.height / 2, false);
     this.output = new Node(
       this.x + this.width,
@@ -264,6 +274,7 @@ class Ellipse extends Component {
   }
 
   showNodes() {
+    this.additionalInput && this.additionalInput.draw();
     this.input.draw();
     this.output.draw();
   }
