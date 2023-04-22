@@ -25,7 +25,7 @@ function createComponents() {
     "Alu\nControl",
     true
   );
-  let shift = new Ellipse(originX + 600, originY + 225, "Shift\nLeft 2");
+  let shift = new Ellipse(originX + 600, originY + 195, "Shift\nLeft 2");
   let control = new Control(
     originX + 340,
     originY + 125,
@@ -46,6 +46,12 @@ function createComponents() {
   let memToRegNode = new Node(originX + 992.5, originY + 210);
   let aluControlNode = new Node(originX + 587.5, originY + 700);
   let alu3Node = new Node(originX + 700, originY + 598);
+  let memWriteNode = new Node(originX + 850, originY + 245);
+  let aluSrcNode = new Node(originX + 597, originY + 265);
+  let regNode = new Node(originX + 450, originY + 285);
+  let memReadNode_1 = new Node(originX + 1050, originY + 190);
+  let memReadNode_2 = new Node(originX + 1050, originY + 600);
+  let memReadNode_3 = new Node(originX + 875, originY + 600);
 
   components.push(
     pc,
@@ -102,12 +108,22 @@ function createComponents() {
     new Wire(regDest_4, mux1.additionalInput, true, skyColor),
     new Wire(control.outputs[1], jump_1, false, skyColor),
     new Wire(jump_1, mux4.additionalInput, true, skyColor),
-    new Wire(control.outputs[4], memToRegNode, false, skyColor),
+    new Wire(control.outputs[3], memToRegNode, false, skyColor),
     new Wire(memToRegNode, mux3.additionalInput, true, skyColor),
-    new Wire(control.outputs[5], aluControlNode, false, skyColor),
+    new Wire(control.outputs[4], aluControlNode, false, skyColor),
     new Wire(aluControlNode, aluControl.additionalInput, false, skyColor),
     new Wire(aluControl.output, alu3Node),
-    new Wire(alu3Node, alu3.additionalInput, true)
+    new Wire(alu3Node, alu3.additionalInput, true),
+    new Wire(control.outputs[5], memWriteNode, false, skyColor),
+    new Wire(memWriteNode, dm.additionalInputs[0], false, skyColor),
+    new Wire(control.outputs[6], aluSrcNode, false, skyColor),
+    new Wire(aluSrcNode, mux2.additionalInput, true, skyColor),
+    new Wire(control.outputs[7], regNode, true, skyColor),
+    new Wire(regNode, register.additionalInput, true, skyColor),
+    new Wire(control.outputs[2], memReadNode_1, false, skyColor),
+    new Wire(memReadNode_1, memReadNode_2, true, skyColor),
+    new Wire(memReadNode_2, memReadNode_3, true, skyColor),
+    new Wire(memReadNode_3, dm.additionalInputs[1], true, skyColor)
   );
 
   points.push(
