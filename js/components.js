@@ -295,7 +295,7 @@ class Control extends Component {
 
   generateIO() {
     this.input = new Node(this.x, this.y + this.height / 2, false);
-    for (let i = 1; i < 9; i++) {
+    for (let i = 1; i < 10; i++) {
       this.outputs.push(
         new Node(this.x + this.width, this.y + (this.height * i) / 10, false)
       );
@@ -325,6 +325,39 @@ class Control extends Component {
   show() {
     stroke(5, 176, 239);
     rect(this.x, this.y, this.width, this.height, 50);
+    this.showNodes();
+  }
+}
+
+class AndGate extends Component {
+  constructor(x, y) {
+    super(x, y, 50, 50, "And", 4.5, 1.7);
+    this.x = x;
+    this.y = y;
+    this.input1;
+    this.input2;
+    this.output;
+    this.generateIO();
+  }
+
+  generateIO() {
+    this.input1 = new Node(this.x, this.y + 10, false);
+    this.input2 = new Node(this.x, this.y + 35, false);
+    this.output = new Node(this.x + this.width, this.y + 25, false);
+  }
+
+  updateNode() {
+    this.output.changeValue(this.input1 && this.input2);
+  }
+
+  showNodes() {
+    this.input1.draw();
+    this.input2.draw();
+    this.output.draw();
+  }
+
+  show() {
+    rect(this.x, this.y, this.width, this.height);
     this.showNodes();
   }
 }

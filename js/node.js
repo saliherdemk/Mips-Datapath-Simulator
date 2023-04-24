@@ -5,6 +5,10 @@ class Node {
     this.value = value;
   }
 
+  changeValue(value) {
+    this.value = value;
+  }
+
   show() {
     fill(this.value ? color(0, 255, 0) : color(255, 0, 0));
     ellipse(this.x, this.y, 14);

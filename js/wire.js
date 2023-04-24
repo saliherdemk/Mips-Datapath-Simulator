@@ -1,9 +1,34 @@
 class Wire {
-  constructor(startNode, endNode, backwards = false, wireColor = 0) {
+  constructor(
+    startNode,
+    endNode,
+    backwards = false,
+    wireColor = 0,
+    text = "",
+    textXOffset = 0,
+    textYOffset = 0
+  ) {
     this.startNode = startNode;
     this.endNode = endNode;
     this.backwards = backwards;
     this.wireColor = wireColor;
+    this.text = text;
+    this.textXOffset = textXOffset;
+    this.textYOffset = textYOffset;
+  }
+
+  drawText() {
+    fill(this.wireColor);
+    noStroke();
+    textSize(13);
+    text(
+      this.text,
+      this.startNode.x + this.textXOffset,
+      this.startNode.y + this.textYOffset
+    );
+    noFill();
+    stroke(0);
+    strokeWeight(2);
   }
 
   draw() {
@@ -15,5 +40,6 @@ class Wire {
     vertex(this.endNode.x, this.endNode.y);
     endShape();
     stroke(0);
+    this.drawText();
   }
 }
