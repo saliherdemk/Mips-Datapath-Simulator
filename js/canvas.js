@@ -175,7 +175,7 @@ function createComponents() {
     new Wire(memReadNode_1, memReadNode_2, true, skyColor),
     new Wire(memReadNode_2, memReadNode_3, true, skyColor),
     new Wire(memReadNode_3, dm.additionalInputs[1], true, skyColor),
-    new Wire(control.outputs[2], branchNode, false, skyColor),
+    new Wire(control.outputs[2], branchNode, false, skyColor, "Branch", 35, 2),
     new Wire(alu3.outputs[0], aluZeroNode1, true),
     new Wire(aluZeroNode1, aluZeroNode2, true),
     new Wire(aluZeroNode2, and.input2, true),
