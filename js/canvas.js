@@ -2,9 +2,9 @@ var components = [];
 var wires = [];
 var points = [];
 
-function createComponents() {
-  let originX = (windowWidth - 1000) / 2;
-  let originY = (windowHeight - 750) / 2;
+function init() {
+  let originX = (windowWidth - 1100) / 2;
+  let originY = (windowHeight - 650) / 2;
   let skyColor = color(5, 176, 239);
 
   let pc = new Pc(originX + 50, originY + 350);
@@ -17,7 +17,7 @@ function createComponents() {
   let mux1 = new Mux(originX + 325, originY + 410);
   let mux2 = new Mux(originX + 580, originY + 400, true);
   let mux3 = new Mux(originX + 975, originY + 300, true);
-  let mux4 = new Mux(originX + 1100, originY);
+  let mux4 = new Mux(originX + 1100, originY, true);
   let mux5 = new Mux(originX + 950, originY + 50);
   let signExtend = new Ellipse(originX + 450, originY + 525, "Sign\nExtend");
   let aluControl = new Ellipse(
@@ -44,7 +44,9 @@ function createComponents() {
   let regDest_2 = new Node(originX + 265, originY + 110);
   let regDest_3 = new Node(originX + 265, originY + 520);
   let regDest_4 = new Node(originX + 342, originY + 520);
-  let jump_1 = new Node(originX + 1117, originY + 165);
+  let jump_1 = new Node(originX + 600, originY + 165);
+  let jump_2 = new Node(originX + 600, originY - 20);
+  let jump_3 = new Node(originX + 1117, originY - 20);
   let memToRegNode = new Node(originX + 992.5, originY + 210);
   let aluControlNode = new Node(originX + 587.5, originY + 700);
   let alu3Node = new Node(originX + 700, originY + 598);
@@ -126,7 +128,10 @@ function createComponents() {
     new Wire(regDest_3, regDest_4, false, skyColor),
     new Wire(regDest_4, mux1.additionalInput, true, skyColor),
     new Wire(control.outputs[1], jump_1, false, skyColor, "Jump", 35, -5),
-    new Wire(jump_1, mux4.additionalInput, true, skyColor),
+    new Wire(jump_1, jump_2, true, skyColor),
+    new Wire(jump_2, jump_3, false, skyColor),
+
+    new Wire(jump_3, mux4.additionalInput, true, skyColor),
     new Wire(
       control.outputs[3],
       memReadNode_1,
@@ -197,9 +202,21 @@ function createComponents() {
   );
 }
 
+function initInput() {
+  let inp = createInput("");
+  inp.position(0, 0);
+  inp.size(100);
+  inp.input(handleInput);
+}
+
+function handleInput() {
+  console.log(this.value);
+}
+
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  createComponents();
+  init();
+  initInput();
 }
 
 function draw() {
