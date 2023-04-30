@@ -8,8 +8,8 @@ function init() {
   let skyColor = color(5, 176, 239);
 
   let pc = new Pc(originX + 50, originY + 350);
-  let alu1 = new Alu(originX + 150, originY + 5, true);
-  let alu2 = new Alu(originX + 715, originY + 35, true);
+  let alu1 = new Alu(originX + 140, originY + 50, true);
+  let alu2 = new Alu(originX + 715, originY + 95, true);
   let alu3 = new Alu(originX + 650, originY + 325, false);
   let im = new InstructionMemory(originX + 150, originY + 350);
   let register = new Registers(originX + 400, originY + 350);
@@ -27,6 +27,8 @@ function init() {
     true
   );
   let shift = new Ellipse(originX + 600, originY + 195, "Shift\nLeft 2");
+  let shift2 = new Ellipse(originX + 400, originY, "Shift\nLeft 2");
+
   let control = new Control(
     originX + 340,
     originY + 125,
@@ -38,7 +40,6 @@ function init() {
   let mux3toReg4_1 = new Node(originX + 975, originY + 650);
   let mux3toReg4_2 = new Node(originX + 375, originY + 650);
   let seNode = new Node(originX + 400, originY + 558);
-  let alu1Node = new Node(originX + 500, originY + 65);
   let mux4toPc_1 = new Node(originX + 10, originY - 5);
   let regDest_1 = new Node(originX + 400, originY + 110);
   let regDest_2 = new Node(originX + 265, originY + 110);
@@ -58,9 +59,11 @@ function init() {
   let memReadNode_3 = new Node(originX + 875, originY + 600);
   let aluZeroNode1 = new Node(originX + 765, originY + 375);
   let aluZeroNode2 = new Node(originX + 800, originY + 275);
-  let branchNode = new Node(originX + 800, originY + 175);
-  let branchNode1 = new Node(originX + 825, originY + 230);
-  let alu2Node = new Node(originX + 875, originY + 27);
+  let branchNode = new Node(originX + 825, originY + 175);
+  let branchNode1 = new Node(originX + 850, originY + 230);
+  let alu1Node = new Node(originX + 650, originY + 125);
+  let addToShiftNode = new Node(originX + 500, originY + 125);
+  let topShiftNode = new Node(originX + 550, originY + 33);
 
   components.push(
     pc,
@@ -79,7 +82,8 @@ function init() {
     aluControl,
     shift,
     control,
-    and
+    and,
+    shift2
   );
 
   wires.push(
@@ -106,23 +110,19 @@ function init() {
     new Wire(mux3toReg4_2, register.inputs[3], true),
     new Wire(seNode, aluControl.input),
     new Wire(shift.output, alu2.inputs[1]),
-    new Wire(alu1.outputs[0], alu2.inputs[0]),
-    new Wire(alu1Node, alu2Node, true),
-    new Wire(alu2Node, mux4.inputs[0], true),
-    new Wire(alu2Node, mux5.inputs[0], true),
+    new Wire(alu1.outputs[0], addToShiftNode),
+    new Wire(addToShiftNode, alu1Node),
+    new Wire(addToShiftNode, topShiftNode, true),
+    new Wire(topShiftNode, mux4.inputs[0], true),
+
+    new Wire(addToShiftNode, alu1Node),
+    new Wire(alu1Node, alu2.inputs[0]),
+    new Wire(alu1Node, mux5.inputs[0], true),
     new Wire(alu2.outputs[0], mux5.inputs[1]),
     new Wire(mux4.output, mux4toPc_1),
     new Wire(mux4toPc_1, pc.input, true),
     new Wire(im.output, control.input),
-    new Wire(
-      control.outputs[0],
-      regDest_1,
-      false,
-      skyColor,
-      "RegDest",
-      30,
-      -15
-    ),
+    new Wire(control.outputs[0], regDest_1, false, skyColor, "RegDest", 30, -5),
     new Wire(regDest_1, regDest_2, true, skyColor),
     new Wire(regDest_2, regDest_3, true, skyColor),
     new Wire(regDest_3, regDest_4, false, skyColor),
@@ -187,7 +187,9 @@ function init() {
     new Wire(branchNode, branchNode1, false, skyColor),
     new Wire(branchNode1, and.input1, false, skyColor),
     new Wire(and.output, mux5.additionalInput),
-    new Wire(mux5.output, mux4.inputs[1], false)
+    new Wire(mux5.output, mux4.inputs[1], false),
+    new Wire(im.output, shift2.input),
+    new Wire(shift2.output, topShiftNode)
   );
 
   points.push(
@@ -197,8 +199,9 @@ function init() {
     new Point(originX + 525, originY + 450),
     new Point(originX + 775, originY + 425),
     new Point(originX + 425, originY + 558),
-    new Point(originX + 500, originY + 65),
-    new Point(originX + 875, originY + 27)
+    new Point(originX + 650, originY + 125),
+    new Point(originX + 500, originY + 125),
+    new Point(originX + 500, originY + 35)
   );
 }
 
