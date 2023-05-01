@@ -1,6 +1,13 @@
 var components = [];
 var wires = [];
 var points = [];
+var instruction = "add $s1 $s2 $s3";
+
+function go() {
+  var [op, rs, rt] = instruction.split(" ");
+  var opCode = opCodes[op];
+  console.log(opCode);
+}
 
 function init() {
   let originX = (windowWidth - 1100) / 2;
@@ -205,21 +212,9 @@ function init() {
   );
 }
 
-function initInput() {
-  let inp = createInput("");
-  inp.position(0, 0);
-  inp.size(100);
-  inp.input(handleInput);
-}
-
-function handleInput() {
-  console.log(this.value);
-}
-
 function setup() {
   createCanvas(windowWidth, windowHeight);
   init();
-  initInput();
 }
 
 function draw() {
