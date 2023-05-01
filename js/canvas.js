@@ -2,6 +2,7 @@ var components = [];
 var wires = [];
 var points = [];
 var instruction = "add $s1 $s2 $s3";
+var cnv;
 
 function go() {
   var [op, rs, rt] = instruction.split(" ");
@@ -10,8 +11,8 @@ function go() {
 }
 
 function init() {
-  let originX = (windowWidth - 1100) / 2;
-  let originY = (windowHeight - 650) / 2;
+  let originX = 0;
+  let originY = 25;
   let skyColor = color(5, 176, 239);
 
   let pc = new Pc(originX + 50, originY + 350);
@@ -213,7 +214,8 @@ function init() {
 }
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  cnv = createCanvas(1200, 750);
+  cnv.parent(select("body"));
   init();
 }
 
@@ -232,3 +234,7 @@ function draw() {
     points[i].draw();
   }
 }
+
+// function windowResized() {
+//   cnv.resize(windowWidth, windowHeight);
+// }

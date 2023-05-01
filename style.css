@@ -3,6 +3,12 @@ body {
   overflow: hidden;
 }
 
-.btn {
-  position: absolute;
+canvas {
+  margin-left: 20%;
+  margin-top: 5%;
+  position: relative;
+}
+
+.regInput {
+  border-width: 2px;
 }
