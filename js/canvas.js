@@ -3,6 +3,7 @@ var wires = [];
 var points = [];
 var instruction = "add $s1 $s2 $s3";
 var cnv;
+var form = document.querySelector("form");
 
 function go() {
   var [op, rs, rt] = instruction.split(" ");
@@ -235,6 +236,12 @@ function draw() {
   }
 }
 
-// function windowResized() {
-//   cnv.resize(windowWidth, windowHeight);
-// }
+function toggleForm() {
+  if (form.getAttribute("isExpanded") == "true") {
+    form.style.maxHeight = "0px";
+    form.setAttribute("isExpanded", "false");
+  } else {
+    form.style.maxHeight = "400px";
+    form.setAttribute("isExpanded", "true");
+  }
+}

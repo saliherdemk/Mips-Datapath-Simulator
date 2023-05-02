@@ -1,14 +1,23 @@
 body {
   margin: 0 0;
-  overflow: hidden;
+  overflow-y: scroll;
 }
 
 canvas {
   margin-left: 20%;
-  margin-top: 5%;
+  margin-top: 2%;
   position: relative;
 }
 
 .regInput {
   border-width: 2px;
+}
+
+.arrow {
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
 }
