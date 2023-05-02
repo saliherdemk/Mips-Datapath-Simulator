@@ -4,6 +4,7 @@ var points = [];
 var instruction = "add $s1 $s2 $s3";
 var cnv;
 var form = document.querySelector("form");
+var regValues = [];
 
 function go() {
   var [op, rs, rt] = instruction.split(" ");
@@ -244,4 +245,10 @@ function toggleForm() {
     form.style.maxHeight = "400px";
     form.setAttribute("isExpanded", "true");
   }
+}
+
+function handleSubmit(e) {
+  e.preventDefault();
+  const formData = new FormData(form);
+  regValues = [...formData.values()];
 }
