@@ -1,15 +1,42 @@
 var components = [];
 var wires = [];
 var points = [];
-var instruction = "add $s1 $s2 $s3";
 var cnv;
 var form = document.querySelector("form");
 var regValues = [];
+var instruction = "Add";
 
 function go() {
-  var [op, rs, rt] = instruction.split(" ");
-  var opCode = opCodes[op];
-  console.log(opCode);
+  let instructionParts = instruction.replaceAll("$", "").split(" ");
+  console.log(instruction, instructionParts);
+
+  let instructionCode = opCodes[instructionParts[0]];
+  if (instructionParts.length == 2) {
+    instructionCode += dectoBin(instructionParts[1], 27);
+  } else if (instructionParts.length == 4) {
+    instructionCode += dectoBin(instructionParts[2], 5);
+    instructionCode += dectoBin(instructionParts[3], 5);
+    instructionCode += dectoBin(instructionParts[1], 5);
+  }
+  console.log(instructionCode);
+}
+
+function setInstruction(e) {
+  instruction = e.target.value;
+  setInputs();
+}
+
+function setInputs() {
+  if (instruction == "Jr") {
+  }
+}
+
+function dectoBin(num, size) {
+  let bin = Number(num).toString(2);
+  while (bin.length < size) {
+    bin = "0" + bin;
+  }
+  return bin;
 }
 
 function init() {
@@ -251,4 +278,5 @@ function handleSubmit(e) {
   e.preventDefault();
   const formData = new FormData(form);
   regValues = [...formData.values()];
+  console.log(regValues);
 }

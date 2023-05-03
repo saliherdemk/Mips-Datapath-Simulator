@@ -13,17 +13,41 @@
       <div
         class="w-full text-center p-5 h-25 flex justify-center items-center relative"
       >
-        <input
-          class="h-full block p-2 mx-3 text-sm font-medium text-gray-900 border-2 rounded"
-          type="text"
-          placeholder="add $1 $2 $3"
-        />
-        <button
-          class="bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 my-2 rounded"
-          onclick="go()"
-        >
-          Execute
-        </button>
+        <form action="">
+          <div class="flex">
+            <div class="inp1 border-r-2 px-4">
+              <label
+                for="instruction"
+                class="block mb-2 text-sm font-medium text-gray-900"
+                >Instruction</label
+              >
+              <select
+                id="instruction"
+                class="border border-gray-300 text-gray-900 text-sm rounded-lg w-32 p-2.5"
+                onchange="setInstruction(event)"
+              >
+                <option value="Add">Add</option>
+                <option value="Sub">Sub</option>
+                <option value="And">And</option>
+                <option value="Or">Or</option>
+                <option value="Jr">Jr</option>
+                <option value="Addi">Addi</option>
+                <option value="Lw">Lw</option>
+                <option value="Sw">Sw</option>
+                <option value="Beq">Beq</option>
+                <option value="J">J</option>
+                <option value="Jal">Jal</option>
+              </select>
+            </div>
+
+            <button
+              class="h-10 w-2/3 w-full bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded place-self-end"
+              onclick="go()"
+            >
+              Execute
+            </button>
+          </div>
+        </form>
         <button class="right-0 absolute" onclick="toggleForm()">
           <i class="arrow down"></i>
         </button>
