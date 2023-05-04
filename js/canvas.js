@@ -2,9 +2,10 @@ var components = [];
 var wires = [];
 var points = [];
 var cnv;
-var form = document.querySelector("form");
+var regs = document.getElementById("regs");
 var regValues = [];
 var instruction = "Add";
+var regInputs = [...document.querySelectorAll(".reg-input")];
 
 function go() {
   let instructionParts = instruction.replaceAll("$", "").split(" ");
@@ -26,8 +27,20 @@ function setInstruction(e) {
   setInputs();
 }
 
+function hideInputs() {
+  regInputs.map((inp) => (inp.style.display = "none"));
+}
+
+function showInputs() {
+  regInputs.map((inp) => (inp.style.display = "block"));
+}
+
 function setInputs() {
-  if (instruction == "Jr") {
+  hideInputs();
+  if (["Jr", "J", "Jal"].includes(instruction)) {
+    regInputs[0].style.display = "block";
+  } else {
+    showInputs();
   }
 }
 
@@ -265,18 +278,18 @@ function draw() {
 }
 
 function toggleForm() {
-  if (form.getAttribute("isExpanded") == "true") {
-    form.style.maxHeight = "0px";
-    form.setAttribute("isExpanded", "false");
+  if (regs.getAttribute("isExpanded") == "true") {
+    regs.style.maxHeight = "0px";
+    regs.setAttribute("isExpanded", "false");
   } else {
-    form.style.maxHeight = "400px";
-    form.setAttribute("isExpanded", "true");
+    regs.style.maxHeight = "400px";
+    regs.setAttribute("isExpanded", "true");
   }
 }
 
 function handleSubmit(e) {
   e.preventDefault();
-  const formData = new FormData(form);
+  const formData = new FormData(regs);
   regValues = [...formData.values()];
   console.log(regValues);
 }
