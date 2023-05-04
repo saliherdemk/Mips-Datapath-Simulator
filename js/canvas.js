@@ -5,7 +5,8 @@ var cnv;
 var regs = document.getElementById("regs");
 var regValues = [];
 var instruction = "Add";
-var regInputs = [...document.querySelectorAll(".reg-input")];
+var regInput1 = [...document.querySelectorAll(".reg-input-1")];
+var regInput2 = [...document.querySelectorAll(".reg-input-2")];
 
 function go() {
   let instructionParts = instruction.replaceAll("$", "").split(" ");
@@ -28,19 +29,36 @@ function setInstruction(e) {
 }
 
 function hideInputs() {
-  regInputs.map((inp) => (inp.style.display = "none"));
+  [...regInput1, ...regInput2].map((inp) => (inp.style.display = "none"));
 }
 
-function showInputs() {
-  regInputs.map((inp) => (inp.style.display = "block"));
+function showInput(indexes) {
+  indexes.map((index) => {
+    regInput1[index].style.display = "block";
+    regInput2[index].style.display = "none";
+  });
+}
+
+function showSecondInput(index) {
+  regInput1[index].style.display = "none";
+  regInput2[index].style.display = "block";
 }
 
 function setInputs() {
   hideInputs();
-  if (["Jr", "J", "Jal"].includes(instruction)) {
-    regInputs[0].style.display = "block";
-  } else {
-    showInputs();
+  if (instruction == "Jr") {
+    showInput([0]);
+  } else if (["J", "Jal"].includes(instruction)) {
+    showInput[0];
+    showSecondInput(0);
+  } else if (instruction == "Addi") {
+    showInput([0, 1, 3]);
+    showSecondInput(3);
+  } else if (["Lw", "Sw"].includes(instruction)) {
+    showInput([0, 1, 2]);
+    showSecondInput(1);
+  } else if (instruction == "Beq") {
+    null;
   }
 }
 
