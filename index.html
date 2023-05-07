@@ -50,10 +50,10 @@
                   >
                   <select
                     id="reg-input1"
-                    class="border border-gray-300 text-gray-900 text-sm rounded-lg w-32 p-2.5 mx-2.5"
+                    class="border border-gray-300 text-gray-900 text-sm rounded-lg w-32 p-2.5 mx-2.5 reg-select"
                   ></select>
                 </div>
-                <div class="reg-input reg-input-2">
+                <div class="reg-input reg-input-2 hidden">
                   <label
                     for="text-inp1"
                     class="block mb-2 text-sm font-medium text-gray-900"
@@ -62,7 +62,7 @@
                   <input
                     id="text-inp1"
                     type="text"
-                    class="border border-gray-300 text-gray-900 text-sm rounded-lg w-32 p-2.5 mx-2.5"
+                    class="border border-gray-300 text-gray-900 text-sm rounded-lg w-32 p-2.5 mx-2.5 reg-select"
                   />
                 </div>
               </div>
@@ -75,10 +75,10 @@
                   >
                   <select
                     id="reg-input2"
-                    class="border border-gray-300 text-gray-900 text-sm rounded-lg w-32 p-2.5 mx-2.5"
+                    class="border border-gray-300 text-gray-900 text-sm rounded-lg w-32 p-2.5 mx-2.5 reg-select"
                   ></select>
                 </div>
-                <div class="reg-input reg-input-2">
+                <div class="reg-input reg-input-2 hidden">
                   <label
                     for="text-inp2"
                     class="block mb-2 text-sm font-medium text-gray-900"
@@ -87,10 +87,11 @@
                   <input
                     id="text-inp2"
                     type="text"
-                    class="border border-gray-300 text-gray-900 text-sm rounded-lg w-32 p-2.5 mx-2.5"
+                    class="border border-gray-300 text-gray-900 text-sm rounded-lg w-32 p-2.5 mx-2.5 reg-select"
                   />
                 </div>
               </div>
+
               <div id="reg-inp3">
                 <div class="reg-input reg-input-1">
                   <label
@@ -100,34 +101,21 @@
                   >
                   <select
                     id="reg-input3"
-                    class="border border-gray-300 text-gray-900 text-sm rounded-lg w-32 p-2.5 mx-2.5"
-                  ></select>
-                </div>
-                <div class="reg-input reg-input-2"></div>
-              </div>
-              <div id="reg-inp4">
-                <div class="reg-input reg-input-1">
-                  <label
-                    for="reg-input4"
-                    class="block mb-2 text-sm font-medium text-gray-900"
-                    >Register</label
-                  >
-                  <select
-                    id="reg-input4"
-                    class="border border-gray-300 text-gray-900 text-sm rounded-lg w-32 p-2.5 mx-2.5"
+                    class="border border-gray-300 text-gray-900 text-sm rounded-lg w-32 p-2.5 mx-2.5 reg-select"
                   ></select>
                 </div>
 
-                <div class="reg-input reg-input-2">
+                <div class="reg-input reg-input-2 hidden">
                   <label
-                    for="text-input4"
+                    for="text-input3"
+                    id="input3-label"
                     class="block mb-2 text-sm font-medium text-gray-900"
                     >Immediate</label
                   >
                   <input
-                    id="text-input4"
+                    id="text-input3"
                     type="text"
-                    class="border border-gray-300 text-gray-900 text-sm rounded-lg w-32 p-2.5 mx-2.5"
+                    class="border border-gray-300 text-gray-900 text-sm rounded-lg w-32 p-2.5 mx-2.5 reg-select"
                   />
                 </div>
               </div>
@@ -154,7 +142,7 @@
       >
         <p class="text-lg text-center h-10">Registers</p>
 
-        <div class="grid grid-cols-8 gap-4">
+        <div class="grid grid-cols-8 gap-4" id="reg-input-container">
           <div class="border-2">
             <p class="text-center">$0</p>
             <div class="text-center">
@@ -167,409 +155,6 @@
                 size="2"
                 maxlength="2"
                 name="reg0"
-              />
-            </div>
-          </div>
-          <div class="border-2">
-            <p class="text-center">$1</p>
-            <div class="text-center">
-              <input
-                type="text"
-                class="text-center border-2 rounded mb-1"
-                placeholder="..."
-                size="2"
-                maxlength="2"
-                name="reg1"
-              />
-            </div>
-          </div>
-          <div class="border-2">
-            <p class="text-center">$2</p>
-            <div class="text-center">
-              <input
-                type="text"
-                class="text-center border-2 rounded mb-1"
-                placeholder="..."
-                size="2"
-                maxlength="2"
-                name="reg2"
-              />
-            </div>
-          </div>
-          <div class="border-2">
-            <p class="text-center">$3</p>
-            <div class="text-center">
-              <input
-                type="text"
-                class="text-center border-2 rounded mb-1"
-                placeholder="..."
-                size="2"
-                maxlength="2"
-                name="reg3"
-              />
-            </div>
-          </div>
-          <div class="border-2">
-            <p class="text-center">$4</p>
-            <div class="text-center">
-              <input
-                type="text"
-                class="text-center border-2 rounded mb-1"
-                placeholder="..."
-                size="2"
-                maxlength="2"
-                name="reg4"
-              />
-            </div>
-          </div>
-          <div class="border-2">
-            <p class="text-center">$5</p>
-            <div class="text-center">
-              <input
-                type="text"
-                class="text-center border-2 rounded mb-1"
-                placeholder="..."
-                size="2"
-                maxlength="2"
-                name="reg5"
-              />
-            </div>
-          </div>
-          <div class="border-2">
-            <p class="text-center">$6</p>
-            <div class="text-center">
-              <input
-                type="text"
-                class="text-center border-2 rounded mb-1"
-                placeholder="..."
-                size="2"
-                maxlength="2"
-                name="reg6"
-              />
-            </div>
-          </div>
-          <div class="border-2">
-            <p class="text-center">$7</p>
-            <div class="text-center">
-              <input
-                type="text"
-                class="text-center border-2 rounded mb-1"
-                placeholder="..."
-                size="2"
-                maxlength="2"
-                name="reg7"
-              />
-            </div>
-          </div>
-          <div class="border-2">
-            <p class="text-center">$8</p>
-            <div class="text-center">
-              <input
-                type="text"
-                class="text-center border-2 rounded mb-1"
-                placeholder="..."
-                size="2"
-                maxlength="2"
-                name="reg8"
-              />
-            </div>
-          </div>
-          <div class="border-2">
-            <p class="text-center">$9</p>
-            <div class="text-center">
-              <input
-                type="text"
-                class="text-center border-2 rounded mb-1"
-                placeholder="..."
-                size="2"
-                maxlength="2"
-                name="reg9"
-              />
-            </div>
-          </div>
-          <div class="border-2">
-            <p class="text-center">$10</p>
-            <div class="text-center">
-              <input
-                type="text"
-                class="text-center border-2 rounded mb-1"
-                placeholder="..."
-                size="2"
-                maxlength="2"
-                name="reg10"
-              />
-            </div>
-          </div>
-          <div class="border-2">
-            <p class="text-center">$11</p>
-            <div class="text-center">
-              <input
-                type="text"
-                class="text-center border-2 rounded mb-1"
-                placeholder="..."
-                size="2"
-                maxlength="2"
-                name="reg11"
-              />
-            </div>
-          </div>
-          <div class="border-2">
-            <p class="text-center">$12</p>
-            <div class="text-center">
-              <input
-                type="text"
-                class="text-center border-2 rounded mb-1"
-                placeholder="..."
-                size="2"
-                maxlength="2"
-                name="reg12"
-              />
-            </div>
-          </div>
-          <div class="border-2">
-            <p class="text-center">$13</p>
-            <div class="text-center">
-              <input
-                type="text"
-                class="text-center border-2 rounded mb-1"
-                placeholder="..."
-                size="2"
-                maxlength="2"
-                name="reg13"
-              />
-            </div>
-          </div>
-          <div class="border-2">
-            <p class="text-center">$14</p>
-            <div class="text-center">
-              <input
-                type="text"
-                class="text-center border-2 rounded mb-1"
-                placeholder="..."
-                size="2"
-                maxlength="2"
-                name="reg14"
-              />
-            </div>
-          </div>
-          <div class="border-2">
-            <p class="text-center">$15</p>
-            <div class="text-center">
-              <input
-                type="text"
-                class="text-center border-2 rounded mb-1"
-                placeholder="..."
-                size="2"
-                maxlength="2"
-                name="reg15"
-              />
-            </div>
-          </div>
-          <div class="border-2">
-            <p class="text-center">$16</p>
-            <div class="text-center">
-              <input
-                type="text"
-                class="text-center border-2 rounded mb-1"
-                placeholder="..."
-                size="2"
-                maxlength="2"
-                name="reg16"
-              />
-            </div>
-          </div>
-          <div class="border-2">
-            <p class="text-center">$17</p>
-            <div class="text-center">
-              <input
-                type="text"
-                class="text-center border-2 rounded mb-1"
-                placeholder="..."
-                size="2"
-                maxlength="2"
-                name="reg17"
-              />
-            </div>
-          </div>
-          <div class="border-2">
-            <p class="text-center">$18</p>
-            <div class="text-center">
-              <input
-                type="text"
-                class="text-center border-2 rounded mb-1"
-                placeholder="..."
-                size="2"
-                maxlength="2"
-                name="reg18"
-              />
-            </div>
-          </div>
-          <div class="border-2">
-            <p class="text-center">$19</p>
-            <div class="text-center">
-              <input
-                type="text"
-                class="text-center border-2 rounded mb-1"
-                placeholder="..."
-                size="2"
-                maxlength="2"
-                name="reg19"
-              />
-            </div>
-          </div>
-          <div class="border-2">
-            <p class="text-center">$20</p>
-            <div class="text-center">
-              <input
-                type="text"
-                class="text-center border-2 rounded mb-1"
-                placeholder="..."
-                size="2"
-                maxlength="2"
-                name="reg20"
-              />
-            </div>
-          </div>
-          <div class="border-2">
-            <p class="text-center">$21</p>
-            <div class="text-center">
-              <input
-                type="text"
-                class="text-center border-2 rounded mb-1"
-                placeholder="..."
-                size="2"
-                maxlength="2"
-                name="reg21"
-              />
-            </div>
-          </div>
-          <div class="border-2">
-            <p class="text-center">$22</p>
-            <div class="text-center">
-              <input
-                type="text"
-                class="text-center border-2 rounded mb-1"
-                placeholder="..."
-                size="2"
-                maxlength="2"
-                name="reg22"
-              />
-            </div>
-          </div>
-          <div class="border-2">
-            <p class="text-center">$23</p>
-            <div class="text-center">
-              <input
-                type="text"
-                class="text-center border-2 rounded mb-1"
-                placeholder="..."
-                size="2"
-                maxlength="2"
-                name="reg23"
-              />
-            </div>
-          </div>
-          <div class="border-2">
-            <p class="text-center">$24</p>
-            <div class="text-center">
-              <input
-                type="text"
-                class="text-center border-2 rounded mb-1"
-                placeholder="..."
-                size="2"
-                maxlength="2"
-                name="reg24"
-              />
-            </div>
-          </div>
-          <div class="border-2">
-            <p class="text-center">$25</p>
-            <div class="text-center">
-              <input
-                type="text"
-                class="text-center border-2 rounded mb-1"
-                placeholder="..."
-                size="2"
-                maxlength="2"
-                name="reg25"
-              />
-            </div>
-          </div>
-          <div class="border-2">
-            <p class="text-center">$26</p>
-            <div class="text-center">
-              <input
-                type="text"
-                class="text-center border-2 rounded mb-1"
-                placeholder="..."
-                size="2"
-                maxlength="2"
-                name="reg26"
-              />
-            </div>
-          </div>
-          <div class="border-2">
-            <p class="text-center">$27</p>
-            <div class="text-center">
-              <input
-                type="text"
-                class="text-center border-2 rounded mb-1"
-                placeholder="..."
-                size="2"
-                maxlength="2"
-                name="reg27"
-              />
-            </div>
-          </div>
-          <div class="border-2">
-            <p class="text-center">$28</p>
-            <div class="text-center">
-              <input
-                type="text"
-                class="text-center border-2 rounded mb-1"
-                placeholder="..."
-                size="2"
-                maxlength="2"
-                name="reg28"
-              />
-            </div>
-          </div>
-          <div class="border-2">
-            <p class="text-center">$29</p>
-            <div class="text-center">
-              <input
-                type="text"
-                class="text-center border-2 rounded mb-1"
-                placeholder="..."
-                size="2"
-                maxlength="2"
-                name="reg29"
-              />
-            </div>
-          </div>
-          <div class="border-2">
-            <p class="text-center">$30</p>
-            <div class="text-center">
-              <input
-                type="text"
-                class="text-center border-2 rounded mb-1"
-                placeholder="..."
-                size="2"
-                maxlength="2"
-                name="reg30"
-              />
-            </div>
-          </div>
-          <div class="border-2">
-            <p class="text-center">$31</p>
-            <div class="text-center">
-              <input
-                type="text"
-                class="text-center border-2 rounded mb-1"
-                placeholder="..."
-                size="2"
-                maxlength="2"
-                name="reg31"
               />
             </div>
           </div>
@@ -590,6 +175,7 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     ></script>
+    <script src="js/script.js"></script>
     <script src="js/data.js"></script>
     <script src="js/canvas.js"></script>
     <script src="js/node.js"></script>

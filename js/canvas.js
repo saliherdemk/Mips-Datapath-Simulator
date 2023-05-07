@@ -4,73 +4,10 @@ var points = [];
 var cnv;
 var regs = document.getElementById("regs");
 var regValues = [];
-var instruction = "Add";
-var regInput1 = [...document.querySelectorAll(".reg-input-1")];
-var regInput2 = [...document.querySelectorAll(".reg-input-2")];
-
-function go() {
-  let instructionParts = instruction.replaceAll("$", "").split(" ");
-  console.log(instruction, instructionParts);
-
-  let instructionCode = opCodes[instructionParts[0]];
-  if (instructionParts.length == 2) {
-    instructionCode += dectoBin(instructionParts[1], 27);
-  } else if (instructionParts.length == 4) {
-    instructionCode += dectoBin(instructionParts[2], 5);
-    instructionCode += dectoBin(instructionParts[3], 5);
-    instructionCode += dectoBin(instructionParts[1], 5);
-  }
-  console.log(instructionCode);
-}
-
-function setInstruction(e) {
-  instruction = e.target.value;
-  setInputs();
-}
-
-function hideInputs() {
-  [...regInput1, ...regInput2].map((inp) => (inp.style.display = "none"));
-}
-
-function showInput(indexes) {
-  indexes.map((index) => {
-    regInput1[index].style.display = "block";
-    regInput2[index].style.display = "none";
-  });
-}
-
-function showSecondInput(index) {
-  regInput1[index].style.display = "none";
-  regInput2[index].style.display = "block";
-}
-
-function setInputs() {
-  hideInputs();
-  if (instruction == "Jr") {
-    showInput([0]);
-  } else if (["J", "Jal"].includes(instruction)) {
-    showInput[0];
-    showSecondInput(0);
-  } else if (instruction == "Addi") {
-    showInput([0, 1, 3]);
-    showSecondInput(3);
-  } else if (["Lw", "Sw"].includes(instruction)) {
-    showInput([0, 1, 2]);
-    showSecondInput(1);
-  } else if (instruction == "Beq") {
-    null;
-  }
-}
-
-function dectoBin(num, size) {
-  let bin = Number(num).toString(2);
-  while (bin.length < size) {
-    bin = "0" + bin;
-  }
-  return bin;
-}
 
 function init() {
+  setSelectOptions();
+  setRegInputs();
   let originX = 0;
   let originY = 25;
   let skyColor = color(5, 176, 239);
@@ -293,21 +230,4 @@ function draw() {
   for (let i = 0; i < points.length; i++) {
     points[i].draw();
   }
-}
-
-function toggleForm() {
-  if (regs.getAttribute("isExpanded") == "true") {
-    regs.style.maxHeight = "0px";
-    regs.setAttribute("isExpanded", "false");
-  } else {
-    regs.style.maxHeight = "400px";
-    regs.setAttribute("isExpanded", "true");
-  }
-}
-
-function handleSubmit(e) {
-  e.preventDefault();
-  const formData = new FormData(regs);
-  regValues = [...formData.values()];
-  console.log(regValues);
 }
