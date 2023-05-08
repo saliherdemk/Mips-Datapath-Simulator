@@ -1,19 +1,21 @@
-var regInput1 = [...document.querySelectorAll(".reg-input-1")];
-var regInput2 = [...document.querySelectorAll(".reg-input-2")];
-var input3Label = document.getElementById("input3-label");
-var regSelects = document.querySelectorAll(".reg-select");
-var regInputContainer = document.getElementById("reg-input-container");
+const regInput1 = [...document.querySelectorAll(".reg-input-1")];
+const regInput2 = [...document.querySelectorAll(".reg-input-2")];
+const input3Label = document.getElementById("input3-label");
+const regSelects = document.querySelectorAll(".reg-select");
+const regInputContainer = document.getElementById("reg-input-container");
+const regForm = document.getElementById("reg-form");
+const instFormInputs = document.querySelectorAll(".inst-form-input");
+const instructionCodeContainer = document.getElementById("instruction-code");
+
 var instructionCode;
 var instruction = "add";
-var regForm = document.getElementById("reg-form");
-var instFormInputs = document.querySelectorAll(".inst-form-input");
 var regValues = [];
 
 function setSelectOptions() {
   regSelects.forEach((regSelect) => {
     for (let i = 1; i < 32; i++) {
       let opt = document.createElement("option");
-      opt.value = i;
+      opt.value = "$" + i;
       opt.innerHTML = "$" + i;
       regSelect.append(opt);
     }
@@ -64,6 +66,10 @@ function showSecondInput(index) {
   regInput2[index].classList.remove("hidden");
 }
 
+function updateIC() {
+  instructionCodeContainer.innerText = instructionCode;
+}
+
 function setInputs() {
   resetInputs();
   if (instruction == "jr") {
@@ -87,6 +93,7 @@ function setInputs() {
 }
 
 function go(e) {
+  // JR IS NOT WORKING
   e.preventDefault();
   let inpValues = [];
   instFormInputs.forEach((inp) => {
@@ -94,23 +101,36 @@ function go(e) {
       inpValues.push(inp.value);
     }
   });
-  console.log(inpValues);
 
-  let instructionCode = opCodes[inpValues[0]] + " ";
-  if (inpValues.length == 2 && instruction == "j") {
-    instructionCode += dectoBin(inpValues[1], 27);
-  } else if (inpValues.length == 2 && instruction == "jr") {
-    instructionCode += dectoBin(inpValues[1], 5);
-    instructionCode += "00000 00000 00000 ";
-    instructionCode += functionBits[inpValues[0]];
-  } else if (inpValues.length == 4) {
-    instructionCode += dectoBin(inpValues[2], 5);
-    instructionCode += dectoBin(inpValues[3], 5);
-    instructionCode += dectoBin(inpValues[1], 5);
-    instructionCode += "00000 ";
-    instructionCode += functionBits[inpValues[0]];
+  let icArray = [opCodes[inpValues[0]]];
+  let codeLength = 6;
+  let iData;
+
+  for (let i = 1; i < inpValues.length; i++) {
+    const element = inpValues[i].split("$");
+    if (element.length == 2) {
+      icArray.push(dectoBin(element[1], 5));
+      codeLength += 5;
+    } else {
+      iData = element[0];
+    }
   }
-  console.log(instructionCode);
+
+  icArray.push(icArray.splice(1, 1)[0]);
+
+  let funcCode = functionBits[inpValues[0]];
+  if (funcCode) {
+    icArray.push(dectoBin(0, 5));
+    icArray.push(funcCode);
+    codeLength += 5 + funcCode.length;
+  }
+
+  if (iData) {
+    icArray.push(dectoBin(iData, 32 - codeLength));
+  }
+
+  instructionCode = icArray.join(" ");
+  updateIC();
 }
 
 function dectoBin(num, size) {
@@ -118,7 +138,7 @@ function dectoBin(num, size) {
   while (bin.length < size) {
     bin = "0" + bin;
   }
-  return bin + " ";
+  return bin;
 }
 
 function toggleForm() {
