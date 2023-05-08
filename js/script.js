@@ -4,6 +4,9 @@ var input3Label = document.getElementById("input3-label");
 var regSelects = document.querySelectorAll(".reg-select");
 var regInputContainer = document.getElementById("reg-input-container");
 var instruction = "Add";
+var regForm = document.getElementById("reg-form");
+var instFormInputs = document.querySelectorAll(".inst-form-input");
+var regValues = [];
 
 function setSelectOptions() {
   regSelects.forEach((regSelect) => {
@@ -45,20 +48,19 @@ function setInstruction(e) {
 }
 
 function resetInputs() {
-  [...regInput1, ...regInput2].map((inp) => (inp.style.display = "none"));
+  [...regInput1, ...regInput2].map((inp) => inp.classList.add("hidden"));
   input3Label.innerText = "Immediate";
 }
 
 function showInput(indexes) {
   indexes.map((index) => {
-    regInput1[index].style.display = "block";
-    regInput2[index].style.display = "none";
+    regInput1[index].classList.remove("hidden");
   });
 }
 
 function showSecondInput(index) {
-  regInput1[index].style.display = "none";
-  regInput2[index].style.display = "block";
+  regInput1[index].classList.add("hidden");
+  regInput2[index].classList.remove("hidden");
 }
 
 function setInputs() {
@@ -83,17 +85,23 @@ function setInputs() {
   }
 }
 
-function go() {
-  let instructionParts = instruction.replaceAll("$", "").split(" ");
+function go(e) {
+  e.preventDefault();
+  instFormInputs.forEach((inp) => {
+    if (!inp.parentElement.classList.contains("hidden")) {
+      console.log(inp.value);
+    }
+  });
+  // let instructionParts = instruction.replaceAll("$", "").split(" ");
 
-  let instructionCode = opCodes[instructionParts[0]];
-  if (instructionParts.length == 2) {
-    instructionCode += dectoBin(instructionParts[1], 27);
-  } else if (instructionParts.length == 4) {
-    instructionCode += dectoBin(instructionParts[2], 5);
-    instructionCode += dectoBin(instructionParts[3], 5);
-    instructionCode += dectoBin(instructionParts[1], 5);
-  }
+  // let instructionCode = opCodes[instructionParts[0]];
+  // if (instructionParts.length == 2) {
+  //   instructionCode += dectoBin(instructionParts[1], 27);
+  // } else if (instructionParts.length == 4) {
+  //   instructionCode += dectoBin(instructionParts[2], 5);
+  //   instructionCode += dectoBin(instructionParts[3], 5);
+  //   instructionCode += dectoBin(instructionParts[1], 5);
+  // }
 }
 
 function dectoBin(num, size) {
@@ -114,9 +122,9 @@ function toggleForm() {
   }
 }
 
-function handleSubmit(e) {
+function setRegisters(e) {
   e.preventDefault();
-  const formData = new FormData(regs);
+  const formData = new FormData(regForm);
   regValues = [...formData.values()];
   console.log(formData, regValues);
 }

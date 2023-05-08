@@ -2,8 +2,6 @@ var components = [];
 var wires = [];
 var points = [];
 var cnv;
-var regs = document.getElementById("regs");
-var regValues = [];
 
 function init() {
   setSelectOptions();

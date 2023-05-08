@@ -13,9 +13,9 @@
       <div
         class="w-full text-center p-5 h-25 flex justify-center items-center relative"
       >
-        <form action="">
+        <form action="" id="inst-form" onsubmit="go(event)">
           <div class="flex">
-            <div class="px-4">
+            <div class="px-4 block">
               <label
                 for="instruction"
                 class="block mb-2 text-sm font-medium text-gray-900"
@@ -23,7 +23,8 @@
               >
               <select
                 id="instruction"
-                class="border border-gray-300 text-gray-900 text-sm rounded-lg w-32 p-2.5 mx-2.5"
+                class="border border-gray-300 text-gray-900 text-sm rounded-lg w-32 p-2.5 mx-2.5 inst-form-input"
+                name="inst-inp"
                 onchange="setInstruction(event)"
               >
                 <option value="Add">Add</option>
@@ -42,7 +43,7 @@
 
             <div id="reg-inputs" class="flex">
               <div id="reg-inp1">
-                <div class="reg-input reg-input-1">
+                <div class="reg-input reg-input-1 block">
                   <label
                     for="reg-input1"
                     class="block mb-2 text-sm font-medium text-gray-900"
@@ -50,7 +51,8 @@
                   >
                   <select
                     id="reg-input1"
-                    class="border border-gray-300 text-gray-900 text-sm rounded-lg w-32 p-2.5 mx-2.5 reg-select"
+                    class="border border-gray-300 text-gray-900 text-sm rounded-lg w-32 p-2.5 mx-2.5 reg-select inst-form-input"
+                    name="reg-input-1-1"
                   ></select>
                 </div>
                 <div class="reg-input reg-input-2 hidden">
@@ -62,12 +64,13 @@
                   <input
                     id="text-inp1"
                     type="text"
-                    class="border border-gray-300 text-gray-900 text-sm rounded-lg w-32 p-2.5 mx-2.5 reg-select"
+                    class="border border-gray-300 text-gray-900 text-sm rounded-lg w-32 p-2.5 mx-2.5 reg-select inst-form-input"
+                    name="reg-input-1-2"
                   />
                 </div>
               </div>
               <div id="reg-inp2">
-                <div class="reg-input reg-input-1">
+                <div class="reg-input reg-input-1 block">
                   <label
                     for="reg-input2"
                     class="block mb-2 text-sm font-medium text-gray-900"
@@ -75,7 +78,8 @@
                   >
                   <select
                     id="reg-input2"
-                    class="border border-gray-300 text-gray-900 text-sm rounded-lg w-32 p-2.5 mx-2.5 reg-select"
+                    class="border border-gray-300 text-gray-900 text-sm rounded-lg w-32 p-2.5 mx-2.5 reg-select inst-form-input"
+                    name="reg-input-2-1"
                   ></select>
                 </div>
                 <div class="reg-input reg-input-2 hidden">
@@ -87,13 +91,14 @@
                   <input
                     id="text-inp2"
                     type="text"
-                    class="border border-gray-300 text-gray-900 text-sm rounded-lg w-32 p-2.5 mx-2.5 reg-select"
+                    class="border border-gray-300 text-gray-900 text-sm rounded-lg w-32 p-2.5 mx-2.5 reg-select inst-form-input"
+                    name="reg-input-2-2"
                   />
                 </div>
               </div>
 
               <div id="reg-inp3">
-                <div class="reg-input reg-input-1">
+                <div class="reg-input reg-input-1 block">
                   <label
                     for="reg-input3"
                     class="block mb-2 text-sm font-medium text-gray-900"
@@ -101,7 +106,8 @@
                   >
                   <select
                     id="reg-input3"
-                    class="border border-gray-300 text-gray-900 text-sm rounded-lg w-32 p-2.5 mx-2.5 reg-select"
+                    class="border border-gray-300 text-gray-900 text-sm rounded-lg w-32 p-2.5 mx-2.5 reg-select inst-form-input"
+                    name="reg-input-3-1"
                   ></select>
                 </div>
 
@@ -115,7 +121,8 @@
                   <input
                     id="text-input3"
                     type="text"
-                    class="border border-gray-300 text-gray-900 text-sm rounded-lg w-32 p-2.5 mx-2.5 reg-select"
+                    class="border border-gray-300 text-gray-900 text-sm rounded-lg w-32 p-2.5 mx-2.5 reg-select inst-form-input"
+                    name="reg-input-3-2"
                   />
                 </div>
               </div>
@@ -123,7 +130,7 @@
 
             <button
               class="h-10 w-2/3 w-full bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded place-self-end"
-              onclick="go()"
+              type="submit"
             >
               Execute
             </button>
@@ -135,10 +142,10 @@
       </div>
 
       <form
-        id="regs"
+        id="reg-form"
         class="w-full max-h-[400px] relative overflow-hidden transition-all text-right"
         isExpanded="true"
-        onsubmit="handleSubmit(event)"
+        onsubmit="setRegisters(event)"
       >
         <p class="text-lg text-center h-10">Registers</p>
 
@@ -160,8 +167,8 @@
           </div>
         </div>
         <button
+          type="submit"
           class="bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 my-2 rounded"
-          onclick="go()"
         >
           Assign
         </button>
