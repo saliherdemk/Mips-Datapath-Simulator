@@ -53,3 +53,12 @@ const opCodes = {
   sh: "101001",
   sw: "101011",
 };
+
+const functionBits = {
+  add: "100000",
+  sub: "100010",
+  and: "100100",
+  or: "100101",
+  slt: "101010",
+  jr: "001000",
+};
