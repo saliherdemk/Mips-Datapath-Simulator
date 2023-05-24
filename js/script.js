@@ -11,6 +11,10 @@ var instructionCode;
 var instruction = "add";
 var regValues = [];
 
+function passToIM(code) {
+  im.input.changeValue(code);
+}
+
 function setSelectOptions() {
   regSelects.forEach((regSelect) => {
     for (let i = 1; i < 32; i++) {
@@ -137,6 +141,7 @@ function go(e) {
 
   instructionCode = icArray.join(" ");
   updateIC();
+  passToIM(icArray);
 }
 
 function dectoBin(num, size) {

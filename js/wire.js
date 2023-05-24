@@ -6,7 +6,8 @@ class Wire {
     wireColor = 0,
     text = "",
     textXOffset = 0,
-    textYOffset = 0
+    textYOffset = 0,
+    isManual = false
   ) {
     this.startNode = startNode;
     this.endNode = endNode;
@@ -15,6 +16,11 @@ class Wire {
     this.text = text;
     this.textXOffset = textXOffset;
     this.textYOffset = textYOffset;
+    this.isManual = isManual;
+  }
+
+  update() {
+    this.endNode.value = this.startNode.value;
   }
 
   drawText() {
@@ -32,6 +38,7 @@ class Wire {
   }
 
   draw() {
+    !this.isManual && this.update();
     stroke(this.wireColor);
     beginShape();
     vertex(this.startNode.x, this.startNode.y);

@@ -2,6 +2,7 @@ var components = [];
 var wires = [];
 var points = [];
 var cnv;
+var im;
 
 function init() {
   setSelectOptions();
@@ -14,7 +15,7 @@ function init() {
   let alu1 = new Alu(originX + 140, originY + 50, true);
   let alu2 = new Alu(originX + 715, originY + 95, true);
   let alu3 = new Alu(originX + 650, originY + 325, false);
-  let im = new InstructionMemory(originX + 150, originY + 350);
+  im = new InstructionMemory(originX + 150, originY + 350);
   let register = new Registers(originX + 400, originY + 350);
   let dm = new DataMemory(originX + 825, originY + 400);
   let mux1 = new Mux(originX + 325, originY + 410);
@@ -89,16 +90,26 @@ function init() {
     shift2
   );
 
+  let wire1 = new Wire(im.output, shift2.input, false, 0, "", 0, 0, true);
+  let wire2 = new Wire(im.output, control.input, false, 0, "", 0, 0, true);
+  let wire3 = new Wire(im.output, register.inputs[0], false, 0, "", 0, 0, true);
+  let wire4 = new Wire(im.output, i20Node, false, 0, "", 0, 0, true);
+  let wire5 = new Wire(im.output, mux1.inputs[1], false, 0, "", 0, 0, true);
+  let wire6 = new Wire(im.output, signExtend.input, false, 0, "", 0, 0, true);
+  im.setWires([wire1, wire2, wire3, wire4, wire5, wire6]);
+
   wires.push(
-    new Wire(pc.output, im.input),
+    // new Wire(pc.output, im.input),
+    wire1,
+    wire2,
+    wire3,
+    wire4,
+    wire5,
+    wire6,
     new Wire(pc.output, alu1.inputs[0]),
-    new Wire(im.output, register.inputs[0]),
-    new Wire(im.output, i20Node),
     new Wire(i20Node, register.inputs[1]),
     new Wire(i20Node, mux1.inputs[0]),
-    new Wire(im.output, mux1.inputs[1]),
     new Wire(mux1.output, register.inputs[2]),
-    new Wire(im.output, signExtend.input),
     new Wire(signExtend.output, shift.input),
     new Wire(signExtend.output, mux2.inputs[1]),
     new Wire(register.outputs[0], alu3.inputs[0]),
@@ -124,7 +135,6 @@ function init() {
     new Wire(alu2.outputs[0], mux5.inputs[1]),
     new Wire(mux4.output, mux4toPc_1),
     new Wire(mux4toPc_1, pc.input, true),
-    new Wire(im.output, control.input),
     new Wire(control.outputs[0], regDest_1, false, skyColor, "RegDest", 30, -5),
     new Wire(regDest_1, regDest_2, true, skyColor),
     new Wire(regDest_2, regDest_3, true, skyColor),
@@ -191,7 +201,6 @@ function init() {
     new Wire(branchNode1, and.input1, false, skyColor),
     new Wire(and.output, mux5.additionalInput),
     new Wire(mux5.output, mux4.inputs[1], false),
-    new Wire(im.output, shift2.input),
     new Wire(shift2.output, topShiftNode)
   );
 

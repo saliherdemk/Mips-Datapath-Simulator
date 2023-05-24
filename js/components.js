@@ -116,6 +116,11 @@ class InstructionMemory extends Component {
     this.input;
     this.output;
     this.generateIO();
+    this.wires = [];
+  }
+
+  setWires(wires) {
+    this.wires = wires;
   }
 
   generateIO() {
@@ -127,7 +132,13 @@ class InstructionMemory extends Component {
     );
   }
 
+  update() {
+    let opCode = this.input.value?.[0];
+    this.wires[1].endNode.changeValue(opCode);
+  }
+
   show() {
+    this.update();
     rect(this.x, this.y, this.width, this.height);
     this.input.draw();
     this.output.draw();
