@@ -148,12 +148,12 @@ function dectoBin(num, size) {
 }
 
 function toggleForm() {
-  if (regs.getAttribute("isExpanded") == "true") {
-    regs.style.maxHeight = "0px";
-    regs.setAttribute("isExpanded", "false");
+  if (regForm.getAttribute("isExpanded") == "true") {
+    regForm.style.maxHeight = "0px";
+    regForm.setAttribute("isExpanded", "false");
   } else {
-    regs.style.maxHeight = "400px";
-    regs.setAttribute("isExpanded", "true");
+    regForm.style.maxHeight = "400px";
+    regForm.setAttribute("isExpanded", "true");
   }
 }
 
