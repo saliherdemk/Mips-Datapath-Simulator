@@ -93,7 +93,6 @@ function setInputs() {
 }
 
 function go(e) {
-  // JR IS NOT WORKING
   e.preventDefault();
   let inpValues = [];
   instFormInputs.forEach((inp) => {
@@ -101,8 +100,9 @@ function go(e) {
       inpValues.push(inp.value);
     }
   });
-
-  let icArray = [opCodes[inpValues[0]]];
+  let opCode = opCodes[inpValues[0]];
+  let isRType = opCode == "000000";
+  let icArray = [opCode];
   let codeLength = 6;
   let iData;
 
@@ -115,13 +115,19 @@ function go(e) {
       iData = element[0];
     }
   }
+  if (opCode != "000100") {
+    icArray.push(icArray.splice(1, 1)[0]);
+  }
 
-  icArray.push(icArray.splice(1, 1)[0]);
-
-  let funcCode = functionBits[inpValues[0]];
-  if (funcCode) {
+  if (isRType) {
+    let funcCode = functionBits[inpValues[0]];
     icArray.push(dectoBin(0, 5));
     icArray.push(funcCode);
+    if (funcCode == "001000") {
+      icArray.splice(3, 0, dectoBin(0, 5));
+      icArray.splice(3, 0, dectoBin(0, 5));
+      codeLength += 10;
+    }
     codeLength += 5 + funcCode.length;
   }
 
