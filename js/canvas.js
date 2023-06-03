@@ -95,7 +95,7 @@ function init() {
   let wire3 = new Wire(im.output, register.inputs[0], false, 0, "", 0, 0, true);
   let wire4 = new Wire(im.output, i20Node, false, 0, "", 0, 0, true);
   let wire5 = new Wire(im.output, mux1.inputs[1], false, 0, "", 0, 0, true);
-  let wire6 = new Wire(im.output, signExtend.input, false, 0, "", 0, 0, true);
+  let wire6 = new Wire(im.output, seNode, false, 0, "", 0, 0, true);
   im.setWires([wire1, wire2, wire3, wire4, wire5, wire6]);
 
   wires.push(
@@ -123,6 +123,8 @@ function init() {
     new Wire(mux3toReg4_1, mux3toReg4_2),
     new Wire(mux3toReg4_2, register.inputs[3], true),
     new Wire(seNode, aluControl.input),
+    new Wire(seNode, signExtend.input),
+
     new Wire(shift.output, alu2.inputs[1]),
     new Wire(alu1.outputs[0], addToShiftNode),
     new Wire(addToShiftNode, alu1Node),

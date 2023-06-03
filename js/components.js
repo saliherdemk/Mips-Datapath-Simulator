@@ -133,12 +133,22 @@ class InstructionMemory extends Component {
   }
 
   update() {
-    let opCode = this.input.value?.[0];
-    this.wires[1].endNode.changeValue(opCode);
+    let type = this.input.value[1];
+    let codeArr = this.input.value[0];
+    console.log(codeArr);
+    if (type == "R") {
+      this.wires[0].endNode.changeValue("X");
+
+      this.wires[1].endNode.changeValue(codeArr[0]);
+      this.wires[2].endNode.changeValue(codeArr[1]);
+      this.wires[3].endNode.changeValue(codeArr[2]);
+      this.wires[4].endNode.changeValue(codeArr[3]);
+      this.wires[5].endNode.changeValue(codeArr[5]);
+    }
   }
 
   show() {
-    this.update();
+    this.input.value && this.update();
     rect(this.x, this.y, this.width, this.height);
     this.input.draw();
     this.output.draw();
@@ -319,6 +329,19 @@ class Control extends Component {
     });
   }
 
+  update() {
+    let opCode = this.input.value;
+    this.outputs[0].value = opCode == "000000";
+    this.outputs[1].value = opCode == "000010" || opCode == "000011";
+    this.outputs[2].value = opCode == "000100";
+    this.outputs[3].value = opCode == "100011";
+    this.outputs[4].value = opCode == "100011";
+    // this.outputs[5].value = (
+    // opCode == "100011" || opCode == "101011" ? "00" :
+    // opCode == "000100"?  "01" :
+    // )
+  }
+
   drawText() {
     fill(5, 176, 239);
     noStroke();
@@ -334,6 +357,7 @@ class Control extends Component {
   }
 
   show() {
+    this.input.value && this.update();
     stroke(5, 176, 239);
     rect(this.x, this.y, this.width, this.height, 50);
     this.showNodes();

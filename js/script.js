@@ -11,8 +11,8 @@ var instructionCode;
 var instruction = "add";
 var regValues = [];
 
-function passToIM(code) {
-  im.input.changeValue(code);
+function passToIM(code, type) {
+  im.input.changeValue([code, type]);
 }
 
 function setSelectOptions() {
@@ -105,10 +105,16 @@ function go(e) {
     }
   });
   let opCode = opCodes[inpValues[0]];
-  let isRType = opCode == "000000";
   let icArray = [opCode];
   let codeLength = 6;
   let iData;
+
+  const type =
+    opCode === "000000"
+      ? "R"
+      : opCode === "000010" || opCode === "000011"
+      ? "J"
+      : "I";
 
   for (let i = 1; i < inpValues.length; i++) {
     const element = inpValues[i].split("$");
@@ -119,11 +125,11 @@ function go(e) {
       iData = element[0];
     }
   }
-  if (opCode != "000100") {
+
+  if (opCode != "000100" && opCode != "000010" && opCode != "000011") {
     icArray.push(icArray.splice(1, 1)[0]);
   }
-
-  if (isRType) {
+  if (type == "R") {
     let funcCode = functionBits[inpValues[0]];
     icArray.push(dectoBin(0, 5));
     icArray.push(funcCode);
@@ -141,7 +147,7 @@ function go(e) {
 
   instructionCode = icArray.join(" ");
   updateIC();
-  passToIM(icArray);
+  passToIM(icArray, type);
 }
 
 function dectoBin(num, size) {
