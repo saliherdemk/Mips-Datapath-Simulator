@@ -131,11 +131,10 @@ class InstructionMemory extends Component {
       false
     );
   }
-
+  // doesn't work properly. Check J
   update() {
     let type = this.input.value[1];
     let codeArr = this.input.value[0];
-    console.log(codeArr);
     if (type == "R") {
       this.wires[0].endNode.changeValue("X");
 
@@ -143,7 +142,23 @@ class InstructionMemory extends Component {
       this.wires[2].endNode.changeValue(codeArr[1]);
       this.wires[3].endNode.changeValue(codeArr[2]);
       this.wires[4].endNode.changeValue(codeArr[3]);
-      this.wires[5].endNode.changeValue(codeArr[5]);
+      this.wires[5].endNode.changeValue("X");
+    } else if (type == "I") {
+      this.wires[0].endNode.changeValue("X");
+
+      this.wires[1].endNode.changeValue(codeArr[0]);
+      this.wires[2].endNode.changeValue(codeArr[1]);
+      this.wires[3].endNode.changeValue(codeArr[2]);
+      this.wires[4].endNode.changeValue("X");
+      this.wires[5].endNode.changeValue(codeArr[3]);
+    } else {
+      this.wires[0].endNode.changeValue(codeArr[1]);
+
+      this.wires[1].endNode.changeValue(codeArr[0]);
+      this.wires[2].endNode.changeValue("X");
+      this.wires[3].endNode.changeValue("X");
+      this.wires[4].endNode.changeValue("X");
+      this.wires[5].endNode.changeValue("X");
     }
   }
 
@@ -262,7 +277,20 @@ class Mux extends Component {
     });
   }
 
+  update() {
+    if (this.additionalInput.value) {
+      this.output.changeValue(
+        this.toTop ? this.inputs[0].value : this.inputs[1].value
+      );
+      return;
+    }
+    this.output.changeValue(
+      this.toTop ? this.inputs[1].value : this.inputs[0].value
+    );
+  }
+
   show() {
+    this.update();
     rect(this.x, this.y, this.width, this.height, 55);
     this.showNodes();
   }
@@ -300,7 +328,20 @@ class Ellipse extends Component {
     this.output.draw();
   }
 
+  update() {
+    let value = this.input.value;
+
+    if (this.text == "Shift\nLeft 2") {
+      this.output.changeValue(value.slice(2) + value.slice(0, 2));
+    } else if (this.text == "Sign\nExtend") {
+      this.output.changeValue(value[0].repeat(32 - value.length) + value);
+      console.log(value);
+      console.log(this.output.value);
+    }
+  }
+
   show() {
+    this.input.value && this.update();
     rect(this.x, this.y, this.width, this.height, 50);
     this.showNodes();
   }
@@ -336,10 +377,21 @@ class Control extends Component {
     this.outputs[2].value = opCode == "000100";
     this.outputs[3].value = opCode == "100011";
     this.outputs[4].value = opCode == "100011";
-    // this.outputs[5].value = (
-    // opCode == "100011" || opCode == "101011" ? "00" :
-    // opCode == "000100"?  "01" :
-    // )
+    this.outputs[5].value =
+      opCode == "100011" || opCode == "101011"
+        ? "00"
+        : opCode == "000100"
+        ? "01"
+        : opCode == "000010" || opCode == "000011" || opCode == "001000"
+        ? "X"
+        : "10";
+    this.outputs[6].value = opCode == "101011";
+    this.outputs[7].value = opCode != "000000" && opCode != "000100";
+    this.outputs[8].value =
+      opCode != "101011" &&
+      opCode != "000100" &&
+      opCode != "000010" &&
+      opCode != "000000";
   }
 
   drawText() {
