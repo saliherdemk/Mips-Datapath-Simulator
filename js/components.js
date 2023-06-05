@@ -44,16 +44,11 @@ class Pc extends Component {
       this.y + this.height / 2,
       false
     );
-  }
-
-  showNodes() {
-    this.input.draw();
-    this.output.draw();
+    nodes.push(this.input, this.output);
   }
 
   show() {
     rect(this.x, this.y, this.width, this.height);
-    this.showNodes();
   }
 }
 
@@ -75,6 +70,7 @@ class Alu extends Component {
       this.outputs.push(
         new Node(this.x + this.width, this.y + this.height / 3, false)
       );
+      nodes.push(this.additionalInput);
     }
     this.outputs.push(
       new Node(
@@ -86,12 +82,7 @@ class Alu extends Component {
 
     this.inputs.push(new Node(this.x, this.y + 30, false));
     this.inputs.push(new Node(this.x, this.y + 120, false));
-  }
-
-  showNodes() {
-    [...this.inputs, ...this.outputs, this.additionalInput].forEach((el) => {
-      el && el.draw();
-    });
+    nodes = nodes.concat(this.outputs).concat(this.inputs);
   }
 
   show() {
@@ -105,8 +96,6 @@ class Alu extends Component {
     vertex(this.x, this.y + this.height / 3);
     vertex(this.x, this.y);
     endShape();
-
-    this.showNodes();
   }
 }
 
@@ -130,8 +119,10 @@ class InstructionMemory extends Component {
       this.y + this.height / 2,
       false
     );
+
+    nodes.push(this.input, this.output);
   }
-  // doesn't work properly. Check J
+
   update() {
     let type = this.input.value[1];
     let codeArr = this.input.value[0];
@@ -165,8 +156,6 @@ class InstructionMemory extends Component {
   show() {
     this.input.value && this.update();
     rect(this.x, this.y, this.width, this.height);
-    this.input.draw();
-    this.output.draw();
   }
 }
 
@@ -191,17 +180,12 @@ class Registers extends Component {
     }
 
     this.additionalInput = new Node(this.x + this.width / 2, this.y, false);
-  }
-
-  showNodes() {
-    [...this.inputs, ...this.outputs, this.additionalInput].forEach((el) => {
-      el.draw();
-    });
+    nodes.push(this.additionalInput);
+    nodes = nodes.concat(this.inputs).concat(this.outputs);
   }
 
   show() {
     rect(this.x, this.y, this.width, this.height);
-    this.showNodes();
   }
 }
 
@@ -229,17 +213,13 @@ class DataMemory extends Component {
       new Node(this.x + this.width / 2, this.y, false),
       new Node(this.x + this.width / 2, this.y + this.height, false)
     );
-  }
 
-  showNodes() {
-    [...this.inputs, this.output, ...this.additionalInputs].forEach((el) => {
-      el.draw();
-    });
+    nodes = nodes.concat(this.inputs).concat(this.additionalInputs);
+    nodes.push(this.output);
   }
 
   show() {
     rect(this.x, this.y, this.width, this.height);
-    this.showNodes();
   }
 }
 
@@ -269,12 +249,9 @@ class Mux extends Component {
       this.y + (this.toTop ? 0 : this.height),
       false
     );
-  }
 
-  showNodes() {
-    [...this.inputs, this.output, this.additionalInput].forEach((el) => {
-      el.draw();
-    });
+    nodes.push(this.additionalInput, this.output);
+    nodes = nodes.concat(this.inputs);
   }
 
   update() {
@@ -292,7 +269,6 @@ class Mux extends Component {
   show() {
     this.update();
     rect(this.x, this.y, this.width, this.height, 55);
-    this.showNodes();
   }
 }
 
@@ -313,6 +289,7 @@ class Ellipse extends Component {
         this.y + this.height,
         false
       );
+      nodes.push(this.additionalInput);
     }
     this.input = new Node(this.x, this.y + this.height / 2, false);
     this.output = new Node(
@@ -320,12 +297,7 @@ class Ellipse extends Component {
       this.y + this.height / 2,
       false
     );
-  }
-
-  showNodes() {
-    this.additionalInput && this.additionalInput.draw();
-    this.input.draw();
-    this.output.draw();
+    nodes.push(this.input, this.output);
   }
 
   update() {
@@ -335,15 +307,12 @@ class Ellipse extends Component {
       this.output.changeValue(value.slice(2) + value.slice(0, 2));
     } else if (this.text == "Sign\nExtend") {
       this.output.changeValue(value[0].repeat(32 - value.length) + value);
-      console.log(value);
-      console.log(this.output.value);
     }
   }
 
   show() {
     this.input.value && this.update();
     rect(this.x, this.y, this.width, this.height, 50);
-    this.showNodes();
   }
 }
 
@@ -362,12 +331,8 @@ class Control extends Component {
         new Node(this.x + this.width, this.y + (this.height * i) / 10, false)
       );
     }
-  }
-
-  showNodes() {
-    [...this.outputs, this.input].forEach((el) => {
-      el.draw();
-    });
+    nodes.push(this.input);
+    nodes = nodes.concat(this.outputs);
   }
 
   update() {
@@ -412,7 +377,6 @@ class Control extends Component {
     this.input.value && this.update();
     stroke(5, 176, 239);
     rect(this.x, this.y, this.width, this.height, 50);
-    this.showNodes();
   }
 }
 
@@ -431,16 +395,12 @@ class AndGate extends Component {
     this.input1 = new Node(this.x, this.y + 10, false);
     this.input2 = new Node(this.x, this.y + 35, false);
     this.output = new Node(this.x + this.width, this.y + 25, false);
+
+    nodes.push(this.input1, this.input2, this.output);
   }
 
   updateNode() {
     this.output.changeValue(this.input1 && this.input2);
-  }
-
-  showNodes() {
-    this.input1.draw();
-    this.input2.draw();
-    this.output.draw();
   }
 
   show() {
@@ -460,7 +420,5 @@ class AndGate extends Component {
     vertex(this.x + 30, this.y + this.height - 2);
 
     endShape();
-
-    this.showNodes();
   }
 }

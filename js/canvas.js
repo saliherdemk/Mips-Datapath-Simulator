@@ -1,6 +1,7 @@
 var components = [];
 var wires = [];
 var points = [];
+var nodes = [];
 var cnv;
 var im;
 
@@ -226,6 +227,8 @@ function setup() {
 }
 
 function draw() {
+  background(255);
+
   noFill();
   for (let i = 0; i < wires.length; i++) {
     wires[i].draw();
@@ -238,5 +241,15 @@ function draw() {
 
   for (let i = 0; i < points.length; i++) {
     points[i].draw();
+  }
+
+  for (let i = 0; i < nodes.length; i++) {
+    nodes[i].draw();
+  }
+}
+
+function mousePressed() {
+  for (let i = 0; i < nodes.length; i++) {
+    nodes[i].onClick();
   }
 }

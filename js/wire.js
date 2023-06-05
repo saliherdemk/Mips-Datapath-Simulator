@@ -25,7 +25,7 @@ class Wire {
 
   drawText() {
     fill(this.wireColor);
-    noStroke();
+    // noStroke();
     textSize(13);
     text(
       this.text,
