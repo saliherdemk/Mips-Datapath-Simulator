@@ -307,6 +307,10 @@ class Ellipse extends Component {
       this.output.changeValue(value.slice(2) + value.slice(0, 2));
     } else if (this.text == "Sign\nExtend") {
       this.output.changeValue(value[0].repeat(32 - value.length) + value);
+    } else if ((this.text = "Alu\nControl")) {
+      this.output.changeValue(
+        this.additionalInput.value ? this.additionalInput.value : value
+      );
     }
   }
 
@@ -337,26 +341,10 @@ class Control extends Component {
 
   update() {
     let opCode = this.input.value;
-    this.outputs[0].value = opCode == "000000";
-    this.outputs[1].value = opCode == "000010" || opCode == "000011";
-    this.outputs[2].value = opCode == "000100";
-    this.outputs[3].value = opCode == "100011";
-    this.outputs[4].value = opCode == "100011";
-    this.outputs[5].value =
-      opCode == "100011" || opCode == "101011"
-        ? "00"
-        : opCode == "000100"
-        ? "01"
-        : opCode == "000010" || opCode == "000011" || opCode == "001000"
-        ? "X"
-        : "10";
-    this.outputs[6].value = opCode == "101011";
-    this.outputs[7].value = opCode != "000000" && opCode != "000100";
-    this.outputs[8].value =
-      opCode != "101011" &&
-      opCode != "000100" &&
-      opCode != "000010" &&
-      opCode != "000000";
+    // Normally, I made this component with combinational logic.
+    // But then I relize that I need to show that if this signal is true, false or X(don't care)
+    // Since there is no way to determinate weather if this signal X or not with combinational logic,
+    // I reimplement this with brute force way. Sorry for this mess.
   }
 
   drawText() {
@@ -422,3 +410,24 @@ class AndGate extends Component {
     endShape();
   }
 }
+
+//   this.outputs[0].value = opCode == "000000";
+//   this.outputs[1].value = opCode == "000010" || opCode == "000011";
+//   this.outputs[2].value = opCode == "000100";
+//   this.outputs[3].value = opCode == "100011";
+//   this.outputs[4].value = opCode == "100011";
+//   this.outputs[5].value =
+//     opCode == "100011" || opCode == "101011"
+//       ? "00"
+//       : opCode == "000100"
+//       ? "01"
+//       : opCode == "000010" || opCode == "000011" || opCode == "001000"
+//       ? "X"
+//       : "10";
+//   this.outputs[6].value = opCode == "101011";
+//   this.outputs[7].value = opCode != "000000" && opCode != "000100";
+//   this.outputs[8].value =
+//     opCode != "101011" &&
+//     opCode != "000100" &&
+//     opCode != "000010" &&
+//     opCode != "000000";
