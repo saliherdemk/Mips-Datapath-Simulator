@@ -129,7 +129,9 @@ class InstructionMemory extends Component {
     if (type == "R") {
       this.wires[0].endNode.changeValue("X");
 
-      this.wires[1].endNode.changeValue(codeArr[0]);
+      this.wires[1].endNode.changeValue(
+        codeArr[0] + (codeArr?.[5] == "001000" ? "t" : "f")
+      );
       this.wires[2].endNode.changeValue(codeArr[1]);
       this.wires[3].endNode.changeValue(codeArr[2]);
       this.wires[4].endNode.changeValue(codeArr[3]);
@@ -150,6 +152,10 @@ class InstructionMemory extends Component {
       this.wires[3].endNode.changeValue("X");
       this.wires[4].endNode.changeValue("X");
       this.wires[5].endNode.changeValue("X");
+    }
+    for (let i = 2; i < 5; i++) {
+      let el = wires[i].endNode;
+      el.changeValue(el.value == "X" || el.value == "00000" ? false : el.value);
     }
   }
 
@@ -184,7 +190,20 @@ class Registers extends Component {
     nodes = nodes.concat(this.inputs).concat(this.outputs);
   }
 
+  update() {
+    console.log(regValues[binToDec(this.inputs[0].value) - 1]);
+    this.outputs[0].changeValue(regValues[binToDec(this.inputs[0].value) - 1]);
+    if (this.inputs[1].value !== "X" && this.inputs[2].value) {
+      this.outputs[1].changeValue(
+        regValues[binToDec(this.inputs[2].value) - 1]
+      );
+      return;
+    }
+    this.outputs[1].changeValue("X");
+  }
+
   show() {
+    this.inputs[0].value && this.update();
     rect(this.x, this.y, this.width, this.height);
   }
 }
@@ -340,11 +359,55 @@ class Control extends Component {
   }
 
   update() {
-    let opCode = this.input.value;
+    let opCode = this.input.value.slice(0, 6);
+    let isJr = this.input.value[this.input.value.length - 1] == "t";
     // Normally, I made this component with combinational logic.
     // But then I relize that I need to show that if this signal is true, false or X(don't care)
     // Since there is no way to determinate weather if this signal X or not with combinational logic,
     // I reimplement this with brute force way. Sorry for this mess.
+    if (isJr) {
+      this.outputs[0].value = "X";
+      this.outputs[1].value = false;
+      this.outputs[2].value = false;
+      this.outputs[3].value = "X";
+      this.outputs[4].value = "X";
+      this.outputs[5].value = "X";
+      this.outputs[6].value = false;
+      this.outputs[7].value = "X";
+      this.outputs[8].value = false;
+      return;
+    }
+    //sw        beq       j
+    if (["101011", "000100", "000010"].includes(opCode)) {
+      this.outputs[0].value = "X";
+      this.outputs[1].value = opCode == "000010";
+      this.outputs[2].value = opCode == "000010" ? "X" : opCode == "000100";
+      this.outputs[3].value = opCode == false;
+      this.outputs[4].value = opCode == "X";
+      this.outputs[5].value =
+        opCode == "000010" ? "X" : opCode == "101011" ? "010" : "110";
+      this.outputs[6].value = opCode == "101011";
+      this.outputs[7].value = opCode == "000010" ? "X" : opCode == "101011";
+      this.outputs[8].value = false;
+      return;
+    }
+    this.outputs[0].value = opCode == "000000";
+    this.outputs[1].value = opCode == "000010" || opCode == "000011";
+    this.outputs[2].value = opCode == "000100";
+    this.outputs[3].value = opCode == "100011";
+    this.outputs[4].value = opCode == "100011";
+    this.outputs[5].value =
+      opCode == "100011" || opCode == "101011"
+        ? "00"
+        : opCode == "000100"
+        ? "01"
+        : opCode == "000010" || opCode == "000011" || opCode == "001000"
+        ? "X"
+        : "10";
+    this.outputs[6].value = opCode == "101011";
+    this.outputs[7].value = opCode != "000000" && opCode != "000100";
+    this.outputs[8].value =
+      opCode != "101011" && opCode != "000100" && opCode != "000010";
   }
 
   drawText() {

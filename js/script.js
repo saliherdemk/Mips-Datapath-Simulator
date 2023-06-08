@@ -158,6 +158,10 @@ function dectoBin(num, size) {
   return bin;
 }
 
+function binToDec(bin) {
+  return parseInt(bin, 2);
+}
+
 function toggleForm() {
   if (regForm.getAttribute("isExpanded") == "true") {
     regForm.style.maxHeight = "0px";
