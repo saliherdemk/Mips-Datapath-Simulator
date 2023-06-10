@@ -9,7 +9,7 @@ const instructionCodeContainer = document.getElementById("instruction-code");
 
 var instructionCode;
 var instruction = "add";
-var regValues = [];
+var regValues = Array(31).fill("");
 
 function passToIM(code, type) {
   im.input.changeValue([code, type]);

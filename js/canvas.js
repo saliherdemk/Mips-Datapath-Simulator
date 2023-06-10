@@ -20,7 +20,7 @@ function init() {
   let register = new Registers(originX + 400, originY + 350);
   let dm = new DataMemory(originX + 825, originY + 400);
   let mux1 = new Mux(originX + 325, originY + 410);
-  let mux2 = new Mux(originX + 580, originY + 400, true);
+  let mux2 = new Mux(originX + 580, originY + 400, false);
   let mux3 = new Mux(originX + 975, originY + 300, true);
   let mux4 = new Mux(originX + 1100, originY, true);
   let mux5 = new Mux(originX + 950, originY + 50);
@@ -45,6 +45,7 @@ function init() {
   let mux3toReg4_1 = new Node(originX + 975, originY + 650);
   let mux3toReg4_2 = new Node(originX + 375, originY + 650);
   let seNode = new Node(originX + 400, originY + 558);
+  let aluNode = new Node(originX + 400, originY + 558);
   let mux4toPc_1 = new Node(originX + 10, originY - 5);
   let regDest_1 = new Node(originX + 400, originY + 110);
   let regDest_2 = new Node(originX + 265, originY + 110);
@@ -54,10 +55,12 @@ function init() {
   let jump_2 = new Node(originX + 600, originY - 20);
   let jump_3 = new Node(originX + 1117, originY - 20);
   let memToRegNode = new Node(originX + 992.5, originY + 210);
-  let aluControlNode = new Node(originX + 587.5, originY + 700);
+  let aluControlNode = new Node(originX + 588, originY + 700);
   let alu3Node = new Node(originX + 700, originY + 598);
   let memWriteNode = new Node(originX + 850, originY + 265);
-  let aluSrcNode = new Node(originX + 597, originY + 285);
+  let aluSrcNode = new Node(originX + 560, originY + 285);
+  let aluSrcNode1 = new Node(originX + 598, originY + 495);
+
   let regNode = new Node(originX + 450, originY + 305);
   let memReadNode_1 = new Node(originX + 1050, originY + 190);
   let memReadNode_2 = new Node(originX + 1050, originY + 600);
@@ -97,7 +100,9 @@ function init() {
   let wire4 = new Wire(im.output, i20Node, false, 0, "", 0, 0, true);
   let wire5 = new Wire(im.output, mux1.inputs[1], false, 0, "", 0, 0, true);
   let wire6 = new Wire(im.output, seNode, false, 0, "", 0, 0, true);
-  im.setWires([wire1, wire2, wire3, wire4, wire5, wire6]);
+  let wire7 = new Wire(im.output, aluNode, false, 0, "", 0, 0, true);
+
+  im.setWires([wire1, wire2, wire3, wire4, wire5, wire6, wire7]);
 
   wires.push(
     // new Wire(pc.output, im.input),
@@ -123,7 +128,7 @@ function init() {
     new Wire(mux3.output, mux3toReg4_1),
     new Wire(mux3toReg4_1, mux3toReg4_2),
     new Wire(mux3toReg4_2, register.inputs[3], true),
-    new Wire(seNode, aluControl.input),
+    new Wire(aluNode, aluControl.input),
     new Wire(seNode, signExtend.input),
 
     new Wire(shift.output, alu2.inputs[1]),
@@ -190,7 +195,9 @@ function init() {
     ),
     new Wire(memWriteNode, dm.additionalInputs[0], false, skyColor),
     new Wire(control.outputs[7], aluSrcNode, false, skyColor, "ALUSrc", 50, -4),
-    new Wire(aluSrcNode, mux2.additionalInput, true, skyColor),
+    new Wire(aluSrcNode, aluSrcNode1, true, skyColor),
+
+    new Wire(aluSrcNode1, mux2.additionalInput, true, skyColor),
     new Wire(control.outputs[8], regNode, true, skyColor, "RegWrite", 65, 20),
     new Wire(regNode, register.additionalInput, true, skyColor),
     new Wire(memReadNode_1, memReadNode_2, true, skyColor),

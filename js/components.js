@@ -136,6 +136,7 @@ class InstructionMemory extends Component {
       this.wires[3].endNode.changeValue(codeArr[2]);
       this.wires[4].endNode.changeValue(codeArr[3]);
       this.wires[5].endNode.changeValue("X");
+      this.wires[6].endNode.changeValue(codeArr[5]);
     } else if (type == "I") {
       this.wires[0].endNode.changeValue("X");
 
@@ -144,6 +145,7 @@ class InstructionMemory extends Component {
       this.wires[3].endNode.changeValue(codeArr[2]);
       this.wires[4].endNode.changeValue("X");
       this.wires[5].endNode.changeValue(codeArr[3]);
+      this.wires[6].endNode.changeValue("X");
     } else {
       this.wires[0].endNode.changeValue(codeArr[1]);
 
@@ -191,7 +193,7 @@ class Registers extends Component {
   }
 
   update() {
-    console.log(regValues[binToDec(this.inputs[0].value) - 1]);
+    // console.log(regValues[binToDec(this.inputs[0].value) - 1]);
     this.outputs[0].changeValue(regValues[binToDec(this.inputs[0].value) - 1]);
     if (this.inputs[1].value !== "X" && this.inputs[2].value) {
       this.outputs[1].changeValue(
@@ -320,6 +322,8 @@ class Ellipse extends Component {
   }
 
   update() {
+    // https://www.comp.nus.edu.sg/~adi-yoga/CS2100/ch08c2/
+    // https://www.cs.princeton.edu/courses/archive/fall15/cos375/lectures/08-Control-3x1.pdf
     let value = this.input.value;
 
     if (this.text == "Shift\nLeft 2") {
@@ -327,9 +331,23 @@ class Ellipse extends Component {
     } else if (this.text == "Sign\nExtend") {
       this.output.changeValue(value[0].repeat(32 - value.length) + value);
     } else if ((this.text = "Alu\nControl")) {
-      this.output.changeValue(
-        this.additionalInput.value ? this.additionalInput.value : value
-      );
+      let aluop1 = this.additionalInput.value[0] == "1"; // t
+      let aluop0 = this.additionalInput.value[1] == "1"; // f
+      let f0 = value[5] == "1"; // t
+      let f1 = value[4] == "1"; //f
+      let f2 = value[3] == "1"; //t
+      let f3 = value[2] == "1"; //f
+
+      let op3 = "";
+      let op2 = (f1 && aluop1) || aluop0; // 0
+      let op1 = !f2 || !aluop1; // 0
+      let op0 = (f0 || f3) && aluop1; // 0
+
+      // console.log(op3, op2, op1, op0);
+      // 0 0 1 0
+      // 3 2 1 0
+
+      this.output.changeValue(op3 + +op2 + +op1 + +op0);
     }
   }
 
@@ -365,6 +383,11 @@ class Control extends Component {
     // But then I relize that I need to show that if this signal is true, false or X(don't care)
     // Since there is no way to determinate weather if this signal X or not with combinational logic,
     // I reimplement this with brute force way. Sorry for this mess.
+
+    // this.outputs[5].value = opCode == "100011" || opCode == "101011"? "00":
+    // opCode == "000100"? "01" :
+    // ;
+
     if (isJr) {
       this.outputs[0].value = "X";
       this.outputs[1].value = false;
@@ -385,7 +408,7 @@ class Control extends Component {
       this.outputs[3].value = opCode == false;
       this.outputs[4].value = opCode == "X";
       this.outputs[5].value =
-        opCode == "000010" ? "X" : opCode == "101011" ? "010" : "110";
+        opCode == "000010" ? "X" : opCode == "101011" ? "00" : "01";
       this.outputs[6].value = opCode == "101011";
       this.outputs[7].value = opCode == "000010" ? "X" : opCode == "101011";
       this.outputs[8].value = false;
@@ -473,24 +496,3 @@ class AndGate extends Component {
     endShape();
   }
 }
-
-//   this.outputs[0].value = opCode == "000000";
-//   this.outputs[1].value = opCode == "000010" || opCode == "000011";
-//   this.outputs[2].value = opCode == "000100";
-//   this.outputs[3].value = opCode == "100011";
-//   this.outputs[4].value = opCode == "100011";
-//   this.outputs[5].value =
-//     opCode == "100011" || opCode == "101011"
-//       ? "00"
-//       : opCode == "000100"
-//       ? "01"
-//       : opCode == "000010" || opCode == "000011" || opCode == "001000"
-//       ? "X"
-//       : "10";
-//   this.outputs[6].value = opCode == "101011";
-//   this.outputs[7].value = opCode != "000000" && opCode != "000100";
-//   this.outputs[8].value =
-//     opCode != "101011" &&
-//     opCode != "000100" &&
-//     opCode != "000010" &&
-//     opCode != "000000";
