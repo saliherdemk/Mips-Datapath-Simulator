@@ -38,6 +38,7 @@ class Node {
 
   showPopup() {
     let width = this.value.length * 10 + 50;
+
     fill(255);
     rect(this.x - width / 2, this.y - 50, width, 40, 20);
     fill(0);

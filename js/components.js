@@ -55,14 +55,15 @@ class Pc extends Component {
 class Alu extends Component {
   constructor(x, y, isAdd) {
     super(x, y, 100, 150, isAdd ? "Add" : "Alu", 2.5, 2);
+    this.isAdd = isAdd;
     this.inputs = [];
     this.outputs = [];
     this.additionalInput;
-    this.generateIO(isAdd);
+    this.generateIO();
   }
 
-  generateIO(isAdd) {
-    if (!isAdd) {
+  generateIO() {
+    if (!this.isAdd) {
       this.additionalInput = new Node(
         this.x + this.width / 2,
         this.y + this.height / 1.1
@@ -75,7 +76,7 @@ class Alu extends Component {
     this.outputs.push(
       new Node(
         this.x + this.width,
-        this.y + this.height / (!isAdd ? 1.5 : 2),
+        this.y + this.height / (!this.isAdd ? 1.5 : 2),
         false
       )
     );
@@ -85,7 +86,43 @@ class Alu extends Component {
     nodes = nodes.concat(this.outputs).concat(this.inputs);
   }
 
+  update() {
+    let aluOp = this.isAdd ? "010" : this.additionalInput.value;
+    let inp1 = binToDec(this.inputs[0].value);
+    let inp2 = binToDec(this.inputs[1].value);
+
+    let result;
+    if (!inp1 || !inp2) {
+      result = "X";
+    }
+
+    switch (aluOp) {
+      case "010":
+        result = inp1 + inp2;
+        break;
+      case "110":
+        result = inp1 - inp2;
+        break;
+      case "000":
+        result = inp1 & inp2;
+
+        break;
+      case "001":
+        result = inp1 | inp2;
+
+        break;
+      case "010":
+        // jr -0
+        break;
+
+      default:
+        break;
+    }
+    this.outputs[1].changeValue(dectoBin(result, 5));
+  }
+
   show() {
+    this.inputs[0].value && this.update();
     beginShape();
     vertex(this.x, this.y);
     vertex(this.x + this.width, this.y + this.height / 5);
@@ -194,11 +231,11 @@ class Registers extends Component {
 
   update() {
     // console.log(regValues[binToDec(this.inputs[0].value) - 1]);
-    this.outputs[0].changeValue(regValues[binToDec(this.inputs[0].value) - 1]);
+    let decValue1 = regValues[binToDec(this.inputs[0].value) - 1];
+    this.outputs[0].changeValue(dectoBin(decValue1, 5));
     if (this.inputs[1].value !== "X" && this.inputs[2].value) {
-      this.outputs[1].changeValue(
-        regValues[binToDec(this.inputs[2].value) - 1]
-      );
+      let decValue2 = regValues[binToDec(this.inputs[1].value) - 1];
+      this.outputs[1].changeValue(dectoBin(decValue2, 5));
       return;
     }
     this.outputs[1].changeValue("X");
