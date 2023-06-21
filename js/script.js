@@ -151,7 +151,7 @@ function go(e) {
 }
 
 function dectoBin(num, size) {
-  let bin = Number(num).toString(2);
+  let bin = (Number(num) >>> 0).toString(2);
   while (bin.length < size) {
     bin = "0" + bin;
   }
