@@ -20,7 +20,7 @@ class Wire {
   }
 
   update() {
-    this.endNode.value = this.startNode.value;
+    this.endNode.changeValue(this.startNode.value);
   }
 
   drawText() {

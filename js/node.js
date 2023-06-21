@@ -3,12 +3,22 @@ class Node {
     this.x = x;
     this.y = y;
     this.value = value;
+    this.colorValue = color(255, 0, 0);
     this.isPopupOpen = false;
     this.rollover = false;
+    this.hasValue = false;
   }
 
   changeValue(value) {
     this.value = value;
+    this.hasValue = value !== false && value !== true;
+    this.colorValue = this.hasValue
+      ? value == "X"
+        ? color(0, 255, 255)
+        : color(0, 0, 255)
+      : this.value
+      ? color(0, 255, 0)
+      : color(255, 0, 0);
   }
 
   showValue() {
@@ -52,17 +62,10 @@ class Node {
   }
 
   show() {
-    let hasValue = this.value !== false && this.value !== true;
-    fill(
-      hasValue
-        ? color(0, 0, 255)
-        : this.value
-        ? color(0, 255, 0)
-        : color(255, 0, 0)
-    );
+    fill(this.colorValue);
     ellipse(this.x, this.y, 14);
     noFill();
-    hasValue && (this.isPopupOpen || this.rollover) && this.showPopup();
+    this.hasValue && (this.isPopupOpen || this.rollover) && this.showPopup();
   }
 
   draw() {

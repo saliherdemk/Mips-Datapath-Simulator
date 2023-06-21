@@ -92,8 +92,10 @@ class Alu extends Component {
     let inp2 = binToDec(this.inputs[1].value);
 
     let result;
-    if (!inp1 || !inp2) {
-      result = "X";
+    if (!inp1 || !inp2 || inp1 == "X" || inp2 == "X") {
+      this.outputs[0].changeValue(false);
+      this.outputs[1].changeValue("X");
+      return;
     }
 
     switch (aluOp) {
@@ -430,48 +432,55 @@ class Control extends Component {
     // ;
 
     if (isJr) {
-      this.outputs[0].value = "X";
-      this.outputs[1].value = false;
-      this.outputs[2].value = false;
-      this.outputs[3].value = "X";
-      this.outputs[4].value = "X";
-      this.outputs[5].value = "X";
-      this.outputs[6].value = false;
-      this.outputs[7].value = "X";
-      this.outputs[8].value = false;
+      this.outputs[0].changeValue("X");
+      this.outputs[1].changeValue(false);
+      this.outputs[2].changeValue(false);
+      this.outputs[3].changeValue("X");
+      this.outputs[4].changeValue("X");
+      this.outputs[5].changeValue("X");
+      this.outputs[6].changeValue(false);
+      this.outputs[7].changeValue("X");
+      this.outputs[8].changeValue(false);
       return;
     }
     //sw        beq       j
     if (["101011", "000100", "000010"].includes(opCode)) {
-      this.outputs[0].value = "X";
-      this.outputs[1].value = opCode == "000010";
-      this.outputs[2].value = opCode == "000010" ? "X" : opCode == "000100";
-      this.outputs[3].value = opCode == false;
-      this.outputs[4].value = opCode == "X";
-      this.outputs[5].value =
-        opCode == "000010" ? "X" : opCode == "101011" ? "00" : "01";
-      this.outputs[6].value = opCode == "101011";
-      this.outputs[7].value = opCode == "000010" ? "X" : opCode == "101011";
-      this.outputs[8].value = false;
+      this.outputs[0].changeValue("X");
+      this.outputs[1].changeValue(opCode == "000010");
+      this.outputs[2].changeValue(
+        opCode == "000010" ? "X" : opCode == "000100"
+      );
+      this.outputs[3].changeValue(opCode == false);
+      this.outputs[4].changeValue(opCode == "X");
+      this.outputs[5].changeValue(
+        opCode == "000010" ? "X" : opCode == "101011" ? "00" : "01"
+      );
+      this.outputs[6].changeValue(opCode == "101011");
+      this.outputs[7].changeValue(
+        opCode == "000010" ? "X" : opCode == "101011"
+      );
+      this.outputs[8].changeValue(false);
       return;
     }
-    this.outputs[0].value = opCode == "000000";
-    this.outputs[1].value = opCode == "000010" || opCode == "000011";
-    this.outputs[2].value = opCode == "000100";
-    this.outputs[3].value = opCode == "100011";
-    this.outputs[4].value = opCode == "100011";
-    this.outputs[5].value =
+    this.outputs[0].changeValue(opCode == "000000");
+    this.outputs[1].changeValue(opCode == "000010" || opCode == "000011");
+    this.outputs[2].changeValue(opCode == "000100");
+    this.outputs[3].changeValue(opCode == "100011");
+    this.outputs[4].changeValue(opCode == "100011");
+    this.outputs[5].changeValue(
       opCode == "100011" || opCode == "101011"
         ? "00"
         : opCode == "000100"
         ? "01"
         : opCode == "000010" || opCode == "000011" || opCode == "001000"
         ? "X"
-        : "10";
-    this.outputs[6].value = opCode == "101011";
-    this.outputs[7].value = opCode != "000000" && opCode != "000100";
-    this.outputs[8].value =
-      opCode != "101011" && opCode != "000100" && opCode != "000010";
+        : "10"
+    );
+    this.outputs[6].changeValue(opCode == "101011");
+    this.outputs[7].changeValue(opCode != "000000" && opCode != "000100");
+    this.outputs[8].changeValue(
+      opCode != "101011" && opCode != "000100" && opCode != "000010"
+    );
   }
 
   drawText() {

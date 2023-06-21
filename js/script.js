@@ -41,6 +41,7 @@ function setRegInputs() {
     inp.setAttribute("size", "2");
     inp.setAttribute("maxlength", "2");
     inp.setAttribute("name", "reg-" + i);
+    inp.setAttribute("value", 0);
     inp.classList.add("text-center", "border-2", "rounded", "mb-1");
     inpInnerContainer.append(inp);
     inpContainer.append(p);
