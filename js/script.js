@@ -10,6 +10,7 @@ const instructionCodeContainer = document.getElementById("instruction-code");
 var instructionCode;
 var instruction = "add";
 var regValues = Array(31).fill("");
+var instructionType = "Add";
 
 function passToIM(code, type) {
   im.input.changeValue([code, type]);
@@ -105,7 +106,8 @@ function go(e) {
       inpValues.push(inp.value);
     }
   });
-  let opCode = opCodes[inpValues[0]];
+  instructionType = inpValues[0];
+  let opCode = opCodes[instructionType];
   let icArray = [opCode];
   let codeLength = 6;
   let iData;
@@ -131,7 +133,7 @@ function go(e) {
     icArray.push(icArray.splice(1, 1)[0]);
   }
   if (type == "R") {
-    let funcCode = functionBits[inpValues[0]];
+    let funcCode = functionBits[instructionType];
     icArray.push(dectoBin(0, 5));
     icArray.push(funcCode);
     if (funcCode == "001000") {

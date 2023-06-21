@@ -10,6 +10,8 @@ class Node {
   }
 
   changeValue(value) {
+    // only color will change
+    // value must be identical with normal cpu (combinational logic)
     this.value = value;
     this.hasValue = value !== false && value !== true;
     this.colorValue = this.hasValue
