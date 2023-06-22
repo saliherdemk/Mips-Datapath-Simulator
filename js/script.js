@@ -12,8 +12,8 @@ var instruction = "add";
 var regValues = Array(31).fill("");
 var instructionType = "Add";
 
-function passToIM(code, type) {
-  im.input.changeValue([code, type]);
+function passToIM(code) {
+  im.input.changeValue(code);
 }
 
 function setSelectOptions() {
@@ -150,7 +150,7 @@ function go(e) {
 
   instructionCode = icArray.join(" ");
   updateIC();
-  passToIM(icArray, type);
+  passToIM(instructionCode);
 }
 
 function dectoBin(num, size) {

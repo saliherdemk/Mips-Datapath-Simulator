@@ -7,6 +7,7 @@ class Node {
     this.isPopupOpen = false;
     this.rollover = false;
     this.hasValue = false;
+    this.isDontCare = false;
   }
 
   changeValue(value) {
