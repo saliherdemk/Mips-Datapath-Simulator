@@ -406,7 +406,7 @@ class Control extends Component {
 
     this.outputs[0].changeValue(opCode == "000000"); // regdest
     this.outputs[1].changeValue(opCode == "000010" || opCode == "000011"); //jump
-    this.outputs[2].changeValue(opCode == "000100"); //barnch
+    this.outputs[2].changeValue(opCode == "000100"); //branch
     this.outputs[3].changeValue(opCode == "100011"); //memread
     this.outputs[4].changeValue(opCode == "100011"); // memtoreg
     this.outputs[5].changeValue(
@@ -419,7 +419,7 @@ class Control extends Component {
         : "11" //X
     ); //aluop
     this.outputs[6].changeValue(opCode == "101011"); //memwrite
-    this.outputs[7].changeValue(opCode == "000000" ? "10" : opCode == ""); //alusrc
+    this.outputs[7].changeValue(opCode != "000000" && opCode != "000100"); //alusrc
     this.outputs[8].changeValue(
       !["101011", "000010", "000100"].includes(opCode)
     ); //regwrite

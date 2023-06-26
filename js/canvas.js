@@ -20,7 +20,7 @@ function init() {
   let register = new Registers(originX + 400, originY + 350);
   let dm = new DataMemory(originX + 825, originY + 400);
   let mux1 = new Mux(originX + 325, originY + 410);
-  let mux2 = new Mux(originX + 580, originY + 400, false);
+  let mux2 = new Mux(originX + 580, originY + 400, true);
   let mux3 = new Mux(originX + 975, originY + 300, true);
   let mux4 = new Mux(originX + 1100, originY, true);
   let mux5 = new Mux(originX + 950, originY + 50);
@@ -58,8 +58,7 @@ function init() {
   let aluControlNode = new Node(originX + 588, originY + 700);
   let alu3Node = new Node(originX + 700, originY + 598);
   let memWriteNode = new Node(originX + 850, originY + 265);
-  let aluSrcNode = new Node(originX + 560, originY + 285);
-  let aluSrcNode1 = new Node(originX + 598, originY + 495);
+  let aluSrcNode = new Node(originX + 597, originY + 285);
 
   let regNode = new Node(originX + 450, originY + 305);
   let memReadNode_1 = new Node(originX + 1050, originY + 190);
@@ -195,9 +194,8 @@ function init() {
     ),
     new Wire(memWriteNode, dm.additionalInputs[0], false, skyColor),
     new Wire(control.outputs[7], aluSrcNode, false, skyColor, "ALUSrc", 50, -4),
-    new Wire(aluSrcNode, aluSrcNode1, true, skyColor),
+    new Wire(aluSrcNode, mux2.additionalInput, true, skyColor),
 
-    new Wire(aluSrcNode1, mux2.additionalInput, true, skyColor),
     new Wire(control.outputs[8], regNode, true, skyColor, "RegWrite", 65, 20),
     new Wire(regNode, register.additionalInput, true, skyColor),
     new Wire(memReadNode_1, memReadNode_2, true, skyColor),
