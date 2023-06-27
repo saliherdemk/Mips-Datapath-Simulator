@@ -3,13 +3,15 @@ const regInput2 = [...document.querySelectorAll(".reg-input-2")];
 const input3Label = document.getElementById("input3-label");
 const regSelects = document.querySelectorAll(".reg-select");
 const regInputContainer = document.getElementById("reg-input-container");
+const container = document.getElementById("container");
 const regForm = document.getElementById("reg-form");
 const instFormInputs = document.querySelectorAll(".inst-form-input");
 const instructionCodeContainer = document.getElementById("instruction-code");
 
 var instructionCode;
 var instruction = "add";
-var regValues = Array(31).fill("");
+var regValues = Array(32).fill("0");
+var memValues = [];
 var instructionType = "Add";
 
 function passToIM(code) {
@@ -165,13 +167,21 @@ function binToDec(bin) {
   return parseInt(bin, 2);
 }
 
+function binToHex(bin) {
+  return "0x" + parseInt(bin, 2).toString(16).toUpperCase();
+}
+
+function hexToBin(hex) {
+  return parseInt(hex.substring(2), 16).toString(2);
+}
+
 function toggleForm() {
-  if (regForm.getAttribute("isExpanded") == "true") {
-    regForm.style.maxHeight = "0px";
-    regForm.setAttribute("isExpanded", "false");
+  if (container.getAttribute("isExpanded") == "true") {
+    container.style.maxHeight = "0px";
+    container.setAttribute("isExpanded", "false");
   } else {
-    regForm.style.maxHeight = "400px";
-    regForm.setAttribute("isExpanded", "true");
+    container.style.maxHeight = "500px";
+    container.setAttribute("isExpanded", "true");
   }
 }
 
@@ -179,5 +189,11 @@ function setRegisters(e) {
   e.preventDefault();
   const formData = new FormData(regForm);
   regValues = [...formData.values()];
-  console.log(formData, regValues);
+}
+
+function updateRegisters() {
+  let regs = regInputContainer.children;
+  for (let i = 0; i < regs.length; i++) {
+    regs[i].children[1].querySelector("input").value = regValues[i];
+  }
 }

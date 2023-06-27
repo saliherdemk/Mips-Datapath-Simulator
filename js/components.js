@@ -89,15 +89,15 @@ class Alu extends Component {
   update() {
     let aluOp = this.isAdd ? "010" : this.additionalInput.value.toString();
     let inp1 = binToDec(this.inputs[0].value);
-    let inp2 = binToDec(this.inputs[1].value);
-
+    let inp2Val = this.inputs[1].value;
+    let isAddress = inp2Val[1] == "x";
+    let inp2 = isAddress ? binToDec(hexToBin(inp2Val)) : binToDec(inp2Val);
     let result;
     // if (!inp1 || !inp2 || inp1 == "X" || inp2 == "X") {
     //   this.outputs[0].changeValue(false);
     //   this.outputs[1].changeValue("X");
     //   return;
     // }
-
     switch (aluOp) {
       case "010":
         result = inp1 + inp2;
@@ -117,7 +117,9 @@ class Alu extends Component {
         break;
     }
     this.outputs[0].changeValue(result == "00000");
-    this.outputs[1].changeValue(dectoBin(result, 5));
+
+    result = dectoBin(result, 5);
+    this.outputs[1].changeValue(isAddress ? binToHex(result) : result);
   }
 
   show() {
@@ -207,12 +209,13 @@ class Registers extends Component {
     let decValue1 = regValues[binToDec(this.inputs[0].value) - 1];
     this.outputs[0].changeValue(dectoBin(decValue1, 5));
     //  && this.inputs[2].value
-    if (this.inputs[1].value !== "X") {
-      let decValue2 = regValues[binToDec(this.inputs[1].value) - 1];
-      this.outputs[1].changeValue(dectoBin(decValue2, 5));
-      return;
+    let decValue2 = regValues[binToDec(this.inputs[1].value) - 1];
+    this.outputs[1].changeValue(dectoBin(decValue2, 5));
+    // this.outputs[1].changeValue("X");
+    if (this.additionalInput.value) {
+      regValues[binToDec(this.inputs[2])] = this.inputs[3];
+      updateRegisters();
     }
-    this.outputs[1].changeValue("X");
   }
 
   show() {
@@ -345,7 +348,7 @@ class Ellipse extends Component {
       this.output.changeValue(value.slice(2) + value.slice(0, 2));
     } else if (this.text == "Sign\nExtend") {
       this.output.changeValue(
-        value == "X" ? "X" : value[0].repeat(32 - value.length) + value
+        (value = binToHex(value[0].repeat(32 - value.length) + value))
       );
     } else if ((this.text = "Alu\nControl")) {
       let aluop1 = this.additionalInput.value[0] == "1"; // t
@@ -354,7 +357,6 @@ class Ellipse extends Component {
       let f1 = value[4] == "1"; //f
       let f2 = value[3] == "1"; //t
       let f3 = value[2] == "1"; //f
-      console.log(f1, value, value[4]);
 
       let op3 = "";
       let op2 = (f1 && aluop1) || aluop0; // 0
@@ -410,7 +412,7 @@ class Control extends Component {
     this.outputs[3].changeValue(opCode == "100011"); //memread
     this.outputs[4].changeValue(opCode == "100011"); // memtoreg
     this.outputs[5].changeValue(
-      ["000000", "001000"].includes(opCode)
+      ["000000"].includes(opCode)
         ? "10"
         : ["100011", "101011"].includes(opCode)
         ? "00"

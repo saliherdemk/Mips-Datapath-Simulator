@@ -144,48 +144,46 @@
       </div>
       <p id="instruction-code" class="text-center"></p>
 
-      <form
-        id="reg-form"
-        class="w-full max-h-[400px] relative overflow-hidden transition-all text-right"
+      <div
+        class="w-full max-h-[500px] relative overflow-hidden transition-all"
+        id="container"
         isExpanded="true"
-        onsubmit="setRegisters(event)"
       >
-        <p class="text-lg text-center h-10">Registers</p>
+        <form class="text-right" id="reg-form" onsubmit="setRegisters(event)">
+          <p class="text-lg text-center h-10">Registers</p>
 
-        <div class="grid grid-cols-8 gap-4" id="reg-input-container">
-          <div class="border-2">
-            <p class="text-center">$0</p>
-            <div class="text-center">
-              <input
-                type="text"
-                class="text-center border-2 rounded mb-1"
-                disabled
-                placeholder="..."
-                value="0"
-                size="2"
-                maxlength="2"
-                name="reg0"
-              />
+          <div class="grid grid-cols-8 gap-4" id="reg-input-container">
+            <div class="border-2">
+              <p class="text-center">$0</p>
+              <div class="text-center">
+                <input
+                  type="text"
+                  class="text-center border-2 rounded mb-1"
+                  disabled
+                  placeholder="..."
+                  value="0"
+                  size="2"
+                  maxlength="2"
+                  name="reg0"
+                />
+              </div>
             </div>
           </div>
-        </div>
-        <button
-          type="submit"
-          class="bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 my-2 rounded"
-        >
-          Assign
-        </button>
-      </form>
-      <p class="text-lg text-center h-10">Memory</p>
+          <button
+            type="submit"
+            class="bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 my-2 rounded"
+          >
+            Assign
+          </button>
+        </form>
 
-      <div class="relative overflow-x-auto w-full">
-        <div class="grid grid-cols-5 hover:grid-cols-6">
-          <div>a</div>
-          <div>a</div>
-          <div>a</div>
-          <div>a</div>
-          <div>a</div>
-          <div>a</div>
+        <p class="text-lg text-center h-10">Memory</p>
+
+        <div class="relative overflow-x-auto w-full flex gap-4 pb-2">
+          <div class="flex">
+            <div class="border-2 border-gray-500 border-r-0 p-3">0xFFFFF0</div>
+            <div class="border-2 border-gray-500 p-3">5</div>
+          </div>
         </div>
       </div>
     </div>
