@@ -14,7 +14,8 @@ var regValues = Array(32).fill("0");
 var memValues = [];
 var instructionType = "Add";
 var pcValues = {};
-var currAddress = "0x00000158";
+// var currAddress = "0x00000158";
+var currAddress = "00000000000000000000000101011000";
 
 function startCycle(code) {
   pcValues[currAddress] = code;
@@ -170,23 +171,21 @@ function binToDec(bin) {
   return parseInt(bin, 2);
 }
 
-function binToHex(bin) {
-  let hex = parseInt(bin, 2).toString(16).toUpperCase();
-  while (hex.length < 8) {
-    hex = "0" + hex;
-  }
-  return "0x" + hex;
-}
+// function binToHex(bin) {
+//   let hex = parseInt(bin, 2).toString(16).toUpperCase();
+//   while (hex.length < 8) {
+//     hex = "0" + hex;
+//   }
+//   return "0x" + hex;
+// }
 
-function hexToBin(hex) {
-  hex = hex.substring(2);
-  var bin = "";
-  for (var i = 0; i < hex.length; i++) {
-    let letter = hex[i];
-    bin += dectoBin(letter, 4);
-  }
-  return bin;
-}
+// function hexToBin(hex, size) {
+//   bin = parseInt(hex.substring(2), 16).toString(2);
+//   while (bin.length < size) {
+//     bin = "0" + bin;
+//   }
+//   return bin;
+// }
 
 function toggleForm() {
   if (container.getAttribute("isExpanded") == "true") {
