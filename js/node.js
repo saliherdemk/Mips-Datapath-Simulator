@@ -8,6 +8,7 @@ class Node {
     this.rollover = false;
     this.hasValue = false;
     this.isDontCare = false;
+    this.changeValue(value);
   }
 
   changeValue(value) {

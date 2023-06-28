@@ -53,13 +53,19 @@ class Pc extends Component {
 }
 
 class Alu extends Component {
-  constructor(x, y, isAdd) {
+  constructor(x, y, isAdd, defaultValue = false) {
     super(x, y, 100, 150, isAdd ? "Add" : "Alu", 2.5, 2);
     this.isAdd = isAdd;
+    this.wires = [];
     this.inputs = [];
     this.outputs = [];
     this.additionalInput;
+    this.defaultValue = defaultValue;
     this.generateIO();
+  }
+
+  setWires(wires) {
+    this.wires = wires;
   }
 
   generateIO() {
@@ -82,28 +88,34 @@ class Alu extends Component {
     );
 
     this.inputs.push(new Node(this.x, this.y + 30, false));
-    this.inputs.push(new Node(this.x, this.y + 120, false));
+    this.inputs.push(new Node(this.x, this.y + 120, this.defaultValue));
     nodes = nodes.concat(this.outputs).concat(this.inputs);
   }
 
   update() {
     let aluOp = this.isAdd ? "010" : this.additionalInput.value.toString();
-    let inp1 = binToDec(this.inputs[0].value);
+    let inp1Val = this.inputs[0].value;
+    let inp1 =
+      inp1Val[1] == "x" ? binToDec(hexToBin(inp1Val)) : binToDec(inp1Val);
     let inp2Val = this.inputs[1].value;
     let isAddress = inp2Val[1] == "x";
     let inp2 = isAddress ? binToDec(hexToBin(inp2Val)) : binToDec(inp2Val);
+    if (this.isAdd) {
+      let val = dectoBin(inp1 + inp2);
+      this.outputs[0].changeValue(val);
+      this.wires.length > 1 &&
+        (this.wires[0].endNode.changeValue(val) ||
+          this.wires[1].endNode.changeValue(val.substring(0, 4)));
+      return;
+    }
+
     let result;
-    // if (!inp1 || !inp2 || inp1 == "X" || inp2 == "X") {
-    //   this.outputs[0].changeValue(false);
-    //   this.outputs[1].changeValue("X");
-    //   return;
-    // }
+
     switch (aluOp) {
       case "010":
         result = inp1 + inp2;
         break;
       case "110":
-        // sub and beq
         result = inp1 - inp2;
         break;
       case "000":
@@ -162,7 +174,8 @@ class InstructionMemory extends Component {
   }
 
   update() {
-    let code = this.input.value.replaceAll(" ", "");
+    let code = pcValues[this.input.value].replaceAll(" ", "");
+    this.output.changeValue(code);
 
     this.wires[0].endNode.changeValue(code.substring(6));
     this.wires[1].endNode.changeValue(code.substring(0, 6));
@@ -205,7 +218,6 @@ class Registers extends Component {
   }
 
   update() {
-    // console.log(regValues[binToDec(this.inputs[0].value) - 1]);
     let decValue1 = regValues[binToDec(this.inputs[0].value) - 1];
     this.outputs[0].changeValue(dectoBin(decValue1, 5));
     //  && this.inputs[2].value
@@ -312,8 +324,8 @@ class Mux extends Component {
 }
 
 class Ellipse extends Component {
-  constructor(x, y, text, hasAdditional = false) {
-    super(x, y, 66, 66, text, 7, 2.5);
+  constructor(x, y, text, r, hasAdditional = false) {
+    super(x, y, r, r, text, 7, 2.5);
     this.input;
     this.output;
     this.hasAdditional = hasAdditional;
@@ -345,12 +357,13 @@ class Ellipse extends Component {
     let value = this.input.value;
 
     if (this.text == "Shift\nLeft 2") {
+      value = "00" + value;
       this.output.changeValue(value.slice(2) + value.slice(0, 2));
     } else if (this.text == "Sign\nExtend") {
       this.output.changeValue(
         (value = binToHex(value[0].repeat(32 - value.length) + value))
       );
-    } else if ((this.text = "Alu\nControl")) {
+    } else if (this.text == "Alu\nControl") {
       let aluop1 = this.additionalInput.value[0] == "1"; // t
       let aluop0 = this.additionalInput.value[1] == "1"; // f
       let f0 = value[5] == "1"; // t
@@ -367,6 +380,10 @@ class Ellipse extends Component {
       // 3 2 1 0
 
       this.output.changeValue(op3 + +op2 + +op1 + +op0);
+    } else if (this.text == "Truncate") {
+      this.output.changeValue(
+        this.additionalInput.value.substring(0, 4) + hexToBin(this.input.value)
+      );
     }
   }
 

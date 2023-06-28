@@ -3,7 +3,7 @@ var wires = [];
 var points = [];
 var nodes = [];
 var cnv;
-var im;
+var pc;
 
 function init() {
   setSelectOptions();
@@ -12,11 +12,11 @@ function init() {
   let originY = 25;
   let skyColor = color(5, 176, 239);
 
-  let pc = new Pc(originX + 50, originY + 350);
-  let alu1 = new Alu(originX + 140, originY + 50, true);
+  pc = new Pc(originX + 50, originY + 350);
+  let alu1 = new Alu(originX + 140, originY + 50, true, "00100");
   let alu2 = new Alu(originX + 715, originY + 95, true);
   let alu3 = new Alu(originX + 650, originY + 325, false);
-  im = new InstructionMemory(originX + 150, originY + 350);
+  let im = new InstructionMemory(originX + 150, originY + 350);
   let register = new Registers(originX + 400, originY + 350);
   let dm = new DataMemory(originX + 825, originY + 400);
   let mux1 = new Mux(originX + 325, originY + 410);
@@ -24,15 +24,22 @@ function init() {
   let mux3 = new Mux(originX + 975, originY + 300, true);
   let mux4 = new Mux(originX + 1100, originY, true);
   let mux5 = new Mux(originX + 950, originY + 50);
-  let signExtend = new Ellipse(originX + 450, originY + 525, "Sign\nExtend");
+  let signExtend = new Ellipse(
+    originX + 450,
+    originY + 525,
+    "Sign\nExtend",
+    66
+  );
   let aluControl = new Ellipse(
     originX + 580,
     originY + 565,
     "Alu\nControl",
+    66,
     true
   );
-  let shift = new Ellipse(originX + 600, originY + 195, "Shift\nLeft 2");
-  let shift2 = new Ellipse(originX + 400, originY, "Shift\nLeft 2");
+  let shift = new Ellipse(originX + 600, originY + 195, "Shift\nLeft 2", 66);
+  let shift2 = new Ellipse(originX + 400, originY, "Shift\nLeft 2", 66);
+  let truncate = new Ellipse(originX + 540, originY + 18, "", 30, true);
 
   let control = new Control(
     originX + 340,
@@ -69,8 +76,7 @@ function init() {
   let branchNode = new Node(originX + 825, originY + 175);
   let branchNode1 = new Node(originX + 850, originY + 230);
   let alu1Node = new Node(originX + 650, originY + 125);
-  let addToShiftNode = new Node(originX + 500, originY + 125);
-  let topShiftNode = new Node(originX + 550, originY + 33);
+  let addToShiftNode = new Node(originX + 554.5, originY + 125);
 
   components.push(
     pc,
@@ -90,7 +96,8 @@ function init() {
     shift,
     control,
     and,
-    shift2
+    shift2,
+    truncate
   );
 
   let wire1 = new Wire(im.output, shift2.input, false, 0, "", 0, 0, true);
@@ -103,14 +110,30 @@ function init() {
 
   im.setWires([wire1, wire2, wire3, wire4, wire5, wire6, wire7]);
 
+  let wire8 = new Wire(alu1.outputs[0], alu1Node, false, 0, "", 0, 0, true);
+  let wire9 = new Wire(
+    alu1.outputs[0],
+    addToShiftNode,
+    false,
+    0,
+    "",
+    0,
+    0,
+    true
+  );
+
+  alu1.setWires([wire8, wire9]);
+
   wires.push(
-    // new Wire(pc.output, im.input),
+    new Wire(pc.output, im.input),
     wire1,
     wire2,
     wire3,
     wire4,
     wire5,
     wire6,
+    wire8,
+    wire9,
     new Wire(pc.output, alu1.inputs[0]),
     new Wire(i20Node, register.inputs[1]),
     new Wire(i20Node, mux1.inputs[0]),
@@ -131,12 +154,12 @@ function init() {
     new Wire(seNode, signExtend.input),
 
     new Wire(shift.output, alu2.inputs[1]),
-    new Wire(alu1.outputs[0], addToShiftNode),
-    new Wire(addToShiftNode, alu1Node),
-    new Wire(addToShiftNode, topShiftNode, true),
-    new Wire(topShiftNode, mux4.inputs[0], true),
 
-    new Wire(addToShiftNode, alu1Node),
+    new Wire(addToShiftNode, truncate.additionalInput, true),
+
+    new Wire(truncate.output, mux4.inputs[0], false),
+    new Wire(shift2.output, truncate.input, true),
+
     new Wire(alu1Node, alu2.inputs[0]),
     new Wire(alu1Node, mux5.inputs[0], true),
     new Wire(alu2.outputs[0], mux5.inputs[1]),
@@ -209,8 +232,7 @@ function init() {
     new Wire(branchNode, branchNode1, false, skyColor),
     new Wire(branchNode1, and.input1, false, skyColor),
     new Wire(and.output, mux5.additionalInput),
-    new Wire(mux5.output, mux4.inputs[1], false),
-    new Wire(shift2.output, topShiftNode)
+    new Wire(mux5.output, mux4.inputs[1], false)
   );
 
   points.push(
@@ -221,8 +243,7 @@ function init() {
     new Point(originX + 775, originY + 425),
     new Point(originX + 425, originY + 558),
     new Point(originX + 650, originY + 125),
-    new Point(originX + 500, originY + 125),
-    new Point(originX + 500, originY + 35)
+    new Point(originX + 554.5, originY + 125)
   );
 }
 
