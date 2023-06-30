@@ -19,7 +19,8 @@ var currAddress = "00000000000000000000000101011000";
 
 function startCycle(code) {
   pcValues[currAddress] = code;
-  pc.output.changeValue(currAddress);
+  pc.input.changeValue(currAddress);
+  goOneCycle();
 }
 
 function setSelectOptions() {

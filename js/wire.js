@@ -1,5 +1,5 @@
 class Wire {
-  constructor(
+  constructor({
     startNode,
     endNode,
     backwards = false,
@@ -7,8 +7,8 @@ class Wire {
     text = "",
     textXOffset = 0,
     textYOffset = 0,
-    isManual = false
-  ) {
+    isManuel = false,
+  }) {
     this.startNode = startNode;
     this.endNode = endNode;
     this.backwards = backwards;
@@ -16,11 +16,11 @@ class Wire {
     this.text = text;
     this.textXOffset = textXOffset;
     this.textYOffset = textYOffset;
-    this.isManual = isManual;
+    this.isManuel = isManuel;
   }
 
   update() {
-    this.endNode.changeValue(this.startNode.value);
+    !this.isManuel && this.endNode.changeValue(this.startNode.value);
   }
 
   drawText() {
@@ -38,7 +38,6 @@ class Wire {
   }
 
   draw() {
-    !this.isManual && this.update();
     stroke(this.wireColor);
     beginShape();
     vertex(this.startNode.x, this.startNode.y);

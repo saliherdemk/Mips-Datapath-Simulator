@@ -7,6 +7,18 @@ class Component {
     this.text = text;
     this.textXOffset = textXOffset;
     this.textYOffset = textYOffset;
+    this.isVisited = false;
+    this.wires = [];
+  }
+
+  setWires(wires) {
+    this.wires = wires;
+  }
+
+  updateWires() {
+    for (let i = 0; i < this.wires.length; i++) {
+      this.wires[i].update();
+    }
   }
 
   drawText() {
@@ -26,6 +38,12 @@ class Component {
   draw() {
     this.show();
     this.drawText();
+    this.isVisited &&
+      text(
+        "OK",
+        this.x + this.width / this.textXOffset,
+        this.y + this.height / this.textYOffset
+      );
   }
 }
 
@@ -47,6 +65,10 @@ class Pc extends Component {
     nodes.push(this.input, this.output);
   }
 
+  update() {
+    this.output.changeValue(this.input.value);
+  }
+
   show() {
     rect(this.x, this.y, this.width, this.height);
   }
@@ -62,10 +84,6 @@ class Alu extends Component {
     this.additionalInput;
     this.defaultValue = defaultValue;
     this.generateIO();
-  }
-
-  setWires(wires) {
-    this.wires = wires;
   }
 
   generateIO() {
@@ -102,7 +120,7 @@ class Alu extends Component {
     if (this.isAdd) {
       let val = dectoBin(inp1 + inp2, 32);
       this.outputs[0].changeValue(val);
-      this.wires.length > 1 &&
+      this.wires[0].isManuel &&
         (this.wires[0].endNode.changeValue(val) ||
           this.wires[1].endNode.changeValue(val.substring(0, 4)));
       return;
@@ -134,7 +152,6 @@ class Alu extends Component {
   }
 
   show() {
-    this.inputs[0].value && this.update();
     beginShape();
     vertex(this.x, this.y);
     vertex(this.x + this.width, this.y + this.height / 5);
@@ -157,10 +174,6 @@ class InstructionMemory extends Component {
     this.wires = [];
   }
 
-  setWires(wires) {
-    this.wires = wires;
-  }
-
   generateIO() {
     this.input = new Node(this.x, this.y + this.height / 2, false);
     this.output = new Node(
@@ -175,7 +188,6 @@ class InstructionMemory extends Component {
   update() {
     let code = pcValues[this.input.value].replaceAll(" ", "");
     this.output.changeValue(code);
-
     this.wires[0].endNode.changeValue(code.substring(6));
     this.wires[1].endNode.changeValue(code.substring(0, 6));
     this.wires[2].endNode.changeValue(code.substring(6, 11));
@@ -186,7 +198,6 @@ class InstructionMemory extends Component {
   }
 
   show() {
-    this.input.value && this.update();
     rect(this.x, this.y, this.width, this.height);
   }
 }
@@ -230,7 +241,6 @@ class Registers extends Component {
   }
 
   show() {
-    this.inputs[0].value && this.update();
     rect(this.x, this.y, this.width, this.height);
   }
 }
@@ -264,6 +274,7 @@ class DataMemory extends Component {
     nodes.push(this.output);
   }
 
+  update() {}
   show() {
     rect(this.x, this.y, this.width, this.height);
   }
@@ -317,7 +328,6 @@ class Mux extends Component {
   }
 
   show() {
-    this.update();
     rect(this.x, this.y, this.width, this.height, 55);
   }
 }
@@ -388,7 +398,6 @@ class Ellipse extends Component {
   }
 
   show() {
-    this.input.value && this.update();
     rect(this.x, this.y, this.width, this.height, 50);
   }
 }
@@ -510,7 +519,6 @@ class Control extends Component {
   }
 
   show() {
-    this.input.value && this.update();
     stroke(5, 176, 239);
     rect(this.x, this.y, this.width, this.height, 50);
   }
@@ -535,12 +543,11 @@ class AndGate extends Component {
     nodes.push(this.input1, this.input2, this.output);
   }
 
-  updateNode() {
+  update() {
     this.output.changeValue(this.input2.value && this.input1.value);
   }
 
   show() {
-    this.input2 && this.updateNode();
     noFill();
     arc(
       this.x + 26,

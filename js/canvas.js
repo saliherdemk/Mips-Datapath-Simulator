@@ -38,7 +38,7 @@ function init() {
     true
   );
   let shift = new Ellipse(originX + 600, originY + 195, "Shift\nLeft 2", 66);
-  let shift2 = new Ellipse(originX + 400, originY, "Shift\nLeft 2", 66);
+  let topShift = new Ellipse(originX + 400, originY, "Shift\nLeft 2", 66);
   let truncate = new Ellipse(originX + 540, originY + 18, "", 30, true);
 
   let control = new Control(
@@ -63,7 +63,9 @@ function init() {
   let jump_3 = new Node(originX + 1117, originY - 20);
   let memToRegNode = new Node(originX + 992.5, originY + 210);
   let aluControlNode = new Node(originX + 588, originY + 700);
-  let alu3Node = new Node(originX + 700, originY + 598);
+  let aluCOutputNode = new Node(originX + 700, originY + 598);
+  let alu3SecondNode = new Node(originX + 775, originY + 425);
+
   let memWriteNode = new Node(originX + 850, originY + 265);
   let aluSrcNode = new Node(originX + 560, originY + 285);
   let aluSrcNode1 = new Node(originX + 598, originY + 495);
@@ -77,169 +79,475 @@ function init() {
   let branchNode1 = new Node(originX + 850, originY + 230);
   let alu1Node = new Node(originX + 650, originY + 125);
   let addToShiftNode = new Node(originX + 554.5, originY + 125);
+  let regOutput1Node = new Node(originX + 500, originY + 450);
 
   components.push(
     pc,
     alu1,
-    alu2,
-    alu3,
     im,
-    register,
-    dm,
-    mux1,
-    mux2,
-    mux3,
-    mux4,
-    mux5,
-    signExtend,
-    aluControl,
-    shift,
+    topShift,
     control,
+    mux1,
+    signExtend,
+    register,
+    mux2,
+    aluControl,
+    alu3,
+    shift,
+    alu2,
+    truncate,
+    dm,
     and,
-    shift2,
-    truncate
+    mux3,
+    mux5,
+    mux4
   );
 
-  let wire1 = new Wire(im.output, shift2.input, false, 0, "", 0, 0, true);
-  let wire2 = new Wire(im.output, control.input, false, 0, "", 0, 0, true);
-  let wire3 = new Wire(im.output, register.inputs[0], false, 0, "", 0, 0, true);
-  let wire4 = new Wire(im.output, i20Node, false, 0, "", 0, 0, true);
-  let wire5 = new Wire(im.output, mux1.inputs[1], false, 0, "", 0, 0, true);
-  let wire6 = new Wire(im.output, seNode, false, 0, "", 0, 0, true);
-  let wire7 = new Wire(im.output, aluNode, false, 0, "", 0, 0, true);
+  let wire0 = new Wire({ startNode: pc.output, endNode: im.input });
+  let wire1 = new Wire({ startNode: pc.output, endNode: alu1.inputs[0] });
 
-  im.setWires([wire1, wire2, wire3, wire4, wire5, wire6, wire7]);
+  pc.setWires([wire0, wire1]);
 
-  let wire8 = new Wire(alu1.outputs[0], alu1Node, false, 0, "", 0, 0, true);
-  let wire9 = new Wire(
-    alu1.outputs[0],
-    addToShiftNode,
-    false,
-    0,
-    "",
-    0,
-    0,
-    true
-  );
+  let wire2 = new Wire({
+    isManuel: true,
+    startNode: im.output,
+    endNode: topShift.input,
+  });
+  let wire3 = new Wire({
+    isManuel: true,
+    startNode: im.output,
+    endNode: control.input,
+  });
+  let wire4 = new Wire({
+    isManuel: true,
+    startNode: im.output,
+    endNode: register.inputs[0],
+  });
+  let wire5 = new Wire({
+    isManuel: true,
+    startNode: im.output,
+    endNode: i20Node,
+  });
+  let wire6 = new Wire({
+    isManuel: true,
+    startNode: im.output,
+    endNode: mux1.inputs[1],
+  });
+  let wire7 = new Wire({
+    isManuel: true,
+    startNode: im.output,
+    endNode: seNode,
+  });
+  let wire8 = new Wire({
+    isManuel: true,
+    startNode: im.output,
+    endNode: aluNode,
+  });
+  let wire5_1 = new Wire({
+    startNode: i20Node,
+    endNode: register.inputs[1],
+  });
+  let wire5_2 = new Wire({
+    startNode: i20Node,
+    endNode: mux1.inputs[0],
+  });
+  let wire7_1 = new Wire({
+    startNode: seNode,
+    endNode: signExtend.input,
+  });
+  let wire8_1 = new Wire({
+    startNode: aluNode,
+    endNode: aluControl.input,
+  });
 
-  alu1.setWires([wire8, wire9]);
-
-  wires.push(
-    new Wire(pc.output, im.input),
-    wire1,
+  im.setWires([
     wire2,
     wire3,
     wire4,
     wire5,
     wire6,
+    wire7,
     wire8,
-    wire9,
-    new Wire(pc.output, alu1.inputs[0]),
-    new Wire(i20Node, register.inputs[1]),
-    new Wire(i20Node, mux1.inputs[0]),
-    new Wire(mux1.output, register.inputs[2]),
-    new Wire(signExtend.output, shift.input),
-    new Wire(signExtend.output, mux2.inputs[1]),
-    new Wire(register.outputs[0], alu3.inputs[0]),
-    new Wire(register.outputs[1], mux2.inputs[0]),
-    new Wire(mux2.output, alu3.inputs[1]),
-    new Wire(alu3.outputs[1], dm.inputs[0]),
-    new Wire(alu3.outputs[1], mux3.inputs[1]),
-    new Wire(dm.output, mux3.inputs[0]),
-    new Wire(register.outputs[1], dm.inputs[1]),
-    new Wire(mux3.output, mux3toReg4_1),
-    new Wire(mux3toReg4_1, mux3toReg4_2),
-    new Wire(mux3toReg4_2, register.inputs[3], true),
-    new Wire(aluNode, aluControl.input),
-    new Wire(seNode, signExtend.input),
+    wire5_1,
+    wire5_2,
+    wire7_1,
+    wire8_1,
+  ]);
 
-    new Wire(shift.output, alu2.inputs[1]),
+  let wire11 = new Wire({
+    isManuel: true,
+    startNode: alu1.outputs[0],
+    endNode: alu1Node,
+  });
+  let wire11_1 = new Wire({
+    startNode: alu1Node,
+    endNode: alu2.inputs[0],
+  });
+  let wire11_2 = new Wire({
+    startNode: alu1Node,
+    endNode: mux5.inputs[0],
+    backwards: true,
+  });
+  let wire12 = new Wire({
+    isManuel: true,
+    startNode: alu1.outputs[0],
+    endNode: addToShiftNode,
+  });
+  let wire12_1 = new Wire({
+    startNode: addToShiftNode,
+    endNode: truncate.additionalInput,
+    backwards: true,
+  });
 
-    new Wire(addToShiftNode, truncate.additionalInput, true),
+  alu1.setWires([wire11, wire12, wire11_1, wire11_2, wire12_1]);
 
-    new Wire(truncate.output, mux4.inputs[0], false),
-    new Wire(shift2.output, truncate.input, true),
+  let wire13 = new Wire({
+    startNode: mux1.output,
+    endNode: register.inputs[2],
+  });
+  mux1.setWires([wire13]);
 
-    new Wire(alu1Node, alu2.inputs[0]),
-    new Wire(alu1Node, mux5.inputs[0], true),
-    new Wire(alu2.outputs[0], mux5.inputs[1]),
-    new Wire(mux4.output, mux4toPc_1),
-    new Wire(mux4toPc_1, pc.input, true),
-    new Wire(control.outputs[0], regDest_1, false, skyColor, "RegDest", 30, -5),
-    new Wire(regDest_1, regDest_2, true, skyColor),
-    new Wire(regDest_2, regDest_3, true, skyColor),
-    new Wire(regDest_3, regDest_4, false, skyColor),
-    new Wire(regDest_4, mux1.additionalInput, true, skyColor),
-    new Wire(control.outputs[1], jump_1, false, skyColor, "Jump", 35, -5),
-    new Wire(jump_1, jump_2, true, skyColor),
-    new Wire(jump_2, jump_3, false, skyColor),
+  let wire14 = new Wire({ startNode: signExtend.output, endNode: shift.input });
+  let wire15 = new Wire({
+    startNode: signExtend.output,
+    endNode: mux2.inputs[1],
+  });
+  signExtend.setWires([wire14, wire15]);
 
-    new Wire(jump_3, mux4.additionalInput, true, skyColor),
-    new Wire(
-      control.outputs[3],
-      memReadNode_1,
-      false,
-      skyColor,
-      "MemRead",
-      35,
-      0
-    ),
-    new Wire(
-      control.outputs[4],
-      memToRegNode,
-      false,
-      skyColor,
-      "MemToReg",
-      35,
-      0
-    ),
-    new Wire(memToRegNode, mux3.additionalInput, true, skyColor),
-    new Wire(
-      control.outputs[5],
-      aluControlNode,
-      false,
-      skyColor,
-      "ALUOp",
-      10,
-      -3
-    ),
-    new Wire(aluControlNode, aluControl.additionalInput, false, skyColor),
-    new Wire(aluControl.output, alu3Node),
-    new Wire(alu3Node, alu3.additionalInput, true),
-    new Wire(
-      control.outputs[6],
-      memWriteNode,
-      false,
-      skyColor,
-      "MemWrite",
-      40,
-      -5
-    ),
-    new Wire(memWriteNode, dm.additionalInputs[0], false, skyColor),
-    new Wire(control.outputs[7], aluSrcNode, false, skyColor, "ALUSrc", 50, -4),
-    new Wire(aluSrcNode, aluSrcNode1, true, skyColor),
+  let wire16 = new Wire({
+    startNode: register.outputs[0],
+    endNode: alu3.inputs[0],
+  });
+  let wire17 = new Wire({
+    startNode: register.outputs[1],
+    endNode: regOutput1Node,
+  });
+  let wire17_1 = new Wire({
+    startNode: regOutput1Node,
+    endNode: mux2.inputs[0],
+  });
+  let wire17_2 = new Wire({ startNode: regOutput1Node, endNode: dm.inputs[1] });
 
-    new Wire(aluSrcNode1, mux2.additionalInput, true, skyColor),
-    new Wire(control.outputs[8], regNode, true, skyColor, "RegWrite", 65, 20),
-    new Wire(regNode, register.additionalInput, true, skyColor),
-    new Wire(memReadNode_1, memReadNode_2, true, skyColor),
-    new Wire(memReadNode_2, memReadNode_3, true, skyColor),
-    new Wire(memReadNode_3, dm.additionalInputs[1], true, skyColor),
-    new Wire(control.outputs[2], branchNode, false, skyColor, "Branch", 35, 2),
-    new Wire(alu3.outputs[0], aluZeroNode1, true),
-    new Wire(aluZeroNode1, aluZeroNode2, true),
-    new Wire(aluZeroNode2, and.input2, true),
-    new Wire(branchNode, branchNode1, false, skyColor),
-    new Wire(branchNode1, and.input1, false, skyColor),
-    new Wire(and.output, mux5.additionalInput),
-    new Wire(mux5.output, mux4.inputs[1], false)
-  );
+  register.setWires([wire16, wire17, wire17_1, wire17_2]);
+
+  let wire18 = new Wire({ startNode: mux2.output, endNode: alu3.inputs[1] });
+  mux2.setWires([wire18]);
+
+  let wire19 = new Wire({
+    startNode: alu3.outputs[1],
+    endNode: alu3SecondNode,
+  });
+  let wire19_1 = new Wire({
+    startNode: alu3SecondNode,
+    endNode: dm.inputs[0],
+    backwards: true,
+  });
+  let wire19_2 = new Wire({
+    startNode: alu3SecondNode,
+    endNode: mux3.inputs[1],
+    backwards: true,
+  });
+  alu3.setWires([wire19, wire19_1, wire19_2]);
+
+  let wire20 = new Wire({ startNode: dm.output, endNode: mux3.inputs[0] });
+  dm.setWires([wire20]);
+
+  let wire21 = new Wire({ startNode: mux3.output, endNode: mux3toReg4_1 });
+  let wire21_1 = new Wire({ startNode: mux3toReg4_1, endNode: mux3toReg4_2 });
+  let wire21_1_1 = new Wire({
+    startNode: mux3toReg4_2,
+    endNode: register.inputs[3],
+    backwards: true,
+  });
+  mux3.setWires([wire21, wire21_1, wire21_1_1]);
+
+  let wire22 = new Wire({ startNode: shift.output, endNode: alu2.inputs[1] });
+  shift.setWires([wire22]);
+
+  let wire23 = new Wire({
+    startNode: truncate.output,
+    endNode: mux4.inputs[0],
+  });
+  truncate.setWires([wire23]);
+
+  let wire24 = new Wire({
+    startNode: topShift.output,
+    endNode: truncate.input,
+    backwards: true,
+  });
+  topShift.setWires([wire24]);
+
+  let wire25 = new Wire({
+    startNode: alu2.outputs[0],
+    endNode: mux5.inputs[1],
+  });
+  alu2.setWires([wire25]);
+
+  let wire26 = new Wire({ startNode: mux4.output, endNode: mux4toPc_1 });
+  let wire26_1 = new Wire({
+    startNode: mux4toPc_1,
+    endNode: pc.input,
+    backwards: true,
+  });
+  mux4.setWires([wire26, wire26_1]);
+
+  let wire27 = new Wire({
+    startNode: control.outputs[0],
+    endNode: regDest_1,
+    wireColor: skyColor,
+    text: "RegDest",
+    textXOffset: 30,
+    textYOffset: -5,
+  });
+  let wire27_1 = new Wire({
+    startNode: regDest_1,
+    endNode: regDest_2,
+    backwards: true,
+    wireColor: skyColor,
+  });
+  let wire27_1_1 = new Wire({
+    startNode: regDest_2,
+    endNode: regDest_3,
+    backwards: true,
+    wireColor: skyColor,
+  });
+  let wire27_1_1_1 = new Wire({
+    startNode: regDest_3,
+    endNode: regDest_4,
+    wireColor: skyColor,
+  });
+  let wire27_1_1_1_1 = new Wire({
+    startNode: regDest_4,
+    endNode: mux1.additionalInput,
+    backwards: true,
+    wireColor: skyColor,
+  });
+
+  let wire28 = new Wire({
+    startNode: control.outputs[1],
+    endNode: jump_1,
+    wireColor: skyColor,
+    text: "Jump",
+    textXOffset: 35,
+    textYOffset: -5,
+  });
+  let wire28_1 = new Wire({
+    startNode: jump_1,
+    endNode: jump_2,
+    backwards: true,
+    wireColor: skyColor,
+  });
+  let wire28_1_1 = new Wire({
+    startNode: jump_2,
+    endNode: jump_3,
+    wireColor: skyColor,
+  });
+  let wire28_1_1_1 = new Wire({
+    startNode: jump_3,
+    endNode: mux4.additionalInput,
+    backwards: true,
+    wireColor: skyColor,
+  });
+  let wire29 = new Wire({
+    startNode: control.outputs[3],
+    endNode: memReadNode_1,
+    wireColor: skyColor,
+    text: "MemRead",
+    textXOffset: 35,
+  });
+  let wire29_1 = new Wire({
+    startNode: memReadNode_1,
+    endNode: memReadNode_2,
+    backwards: true,
+    wireColor: skyColor,
+  });
+  let wire29_1_1 = new Wire({
+    startNode: memReadNode_2,
+    endNode: memReadNode_3,
+    backwards: true,
+    wireColor: skyColor,
+  });
+  let wire29_1_1_1 = new Wire({
+    startNode: memReadNode_3,
+    endNode: dm.additionalInputs[1],
+    backwards: true,
+    wireColor: skyColor,
+  });
+  let wire30 = new Wire({
+    startNode: control.outputs[4],
+    endNode: memToRegNode,
+    wireColor: skyColor,
+    text: "MemToReg",
+    textXOffset: 35,
+  });
+
+  let wire30_1 = new Wire({
+    startNode: memToRegNode,
+    endNode: mux3.additionalInput,
+    backwards: true,
+    wireColor: skyColor,
+  });
+  let wire31 = new Wire({
+    startNode: control.outputs[5],
+    endNode: aluControlNode,
+    wireColor: skyColor,
+    text: "ALUOp",
+    textXOffset: 10,
+    textYOffset: -3,
+  });
+  let wire31_1 = new Wire({
+    startNode: aluControlNode,
+    endNode: aluControl.additionalInput,
+    wireColor: skyColor,
+  });
+  let wire32 = new Wire({
+    startNode: control.outputs[6],
+    endNode: memWriteNode,
+    wireColor: skyColor,
+    text: "MemWrite",
+    textXOffset: 40,
+    textYOffset: -5,
+  });
+  let wire32_1 = new Wire({
+    startNode: memWriteNode,
+    endNode: dm.additionalInputs[0],
+    wireColor: skyColor,
+  });
+
+  let wire33 = new Wire({
+    startNode: control.outputs[7],
+    endNode: aluSrcNode,
+    wireColor: skyColor,
+    text: "ALUSrc",
+    textXOffset: 50,
+    textYOffset: -4,
+  });
+  let wire33_1 = new Wire({
+    startNode: aluSrcNode,
+    endNode: aluSrcNode1,
+    backwards: true,
+    wireColor: skyColor,
+  });
+
+  let wire33_1_1 = new Wire({
+    startNode: aluSrcNode1,
+    endNode: mux2.additionalInput,
+    backwards: true,
+    wireColor: skyColor,
+  });
+  let wire34 = new Wire({
+    startNode: control.outputs[8],
+    endNode: regNode,
+    backwards: true,
+    wireColor: skyColor,
+    text: "RegWrite",
+    textXOffset: 65,
+    textYOffset: 20,
+  });
+  let wire34_1 = new Wire({
+    startNode: regNode,
+    endNode: register.additionalInput,
+    backwards: true,
+    wireColor: skyColor,
+  });
+
+  let wire35 = new Wire({
+    startNode: alu3.outputs[0],
+    endNode: aluZeroNode1,
+    backwards: true,
+  });
+  let wire35_1 = new Wire({
+    startNode: aluZeroNode1,
+    endNode: aluZeroNode2,
+    backwards: true,
+  });
+  let wire35_1_1 = new Wire({
+    startNode: aluZeroNode2,
+    endNode: and.input2,
+    backwards: true,
+  });
+  let wire36 = new Wire({
+    startNode: control.outputs[2],
+    endNode: branchNode,
+    wireColor: skyColor,
+    text: "Branch",
+    textXOffset: 35,
+    textYOffset: 2,
+  });
+  let wire36_1 = new Wire({
+    startNode: branchNode,
+    endNode: branchNode1,
+    wireColor: skyColor,
+  });
+  let wire36_1_1 = new Wire({
+    startNode: branchNode1,
+    endNode: and.input1,
+    wireColor: skyColor,
+  });
+
+  control.setWires([
+    wire27,
+    wire28,
+    wire29,
+    wire30,
+    wire31,
+    wire32,
+    wire33,
+    wire34,
+    wire35,
+    wire36,
+    wire27_1,
+    wire27_1_1,
+    wire27_1_1_1,
+    wire27_1_1_1_1,
+    wire28_1,
+    wire28_1_1,
+    wire28_1_1_1,
+    wire29_1,
+    wire29_1_1,
+    wire29_1_1_1,
+    wire30_1,
+    wire31_1,
+    wire32_1,
+    wire33_1,
+    wire33_1_1,
+    wire34_1,
+    wire35_1,
+    wire35_1_1,
+    wire36_1,
+    wire36_1_1,
+  ]);
+
+  let wire37 = new Wire({
+    startNode: aluControl.output,
+    endNode: aluCOutputNode,
+  });
+  let wire37_1 = new Wire({
+    startNode: aluCOutputNode,
+    endNode: alu3.additionalInput,
+    backwards: true,
+  });
+  aluControl.setWires([wire37, wire37_1]);
+
+  let wire38 = new Wire({
+    startNode: and.output,
+    endNode: mux5.additionalInput,
+  });
+  and.setWires([wire38]);
+  let wire39 = new Wire({ startNode: mux5.output, endNode: mux4.inputs[1] });
+  mux5.setWires([wire39]);
+
+  wires = [];
+  components.forEach((component) => {
+    wires = [...wires, ...component.wires];
+  });
 
   points.push(
     new Point(originX + 125, originY + 425),
     new Point(originX + 300, originY + 400),
     new Point(originX + 540, originY + 453),
     new Point(originX + 525, originY + 450),
+
     new Point(originX + 775, originY + 425),
     new Point(originX + 425, originY + 558),
     new Point(originX + 650, originY + 125),
@@ -272,6 +580,14 @@ function draw() {
 
   for (let i = 0; i < nodes.length; i++) {
     nodes[i].draw();
+  }
+}
+
+function goOneCycle() {
+  for (let i = 0; i < components.length; i++) {
+    components[i].update();
+    components[i].updateWires();
+    components[i].isVisited = true;
   }
 }
 
