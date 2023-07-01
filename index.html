@@ -29,17 +29,17 @@
                 name="inst-inp"
                 onchange="setInstruction(event)"
               >
-                <option value="add">Add</option>
-                <option value="sub">Sub</option>
-                <option value="and">And</option>
-                <option value="or">Or</option>
-                <option value="jr">Jr</option>
-                <option value="addi">Addi</option>
-                <option value="lw">Lw</option>
-                <option value="sw">Sw</option>
-                <option value="beq">Beq</option>
-                <option value="j">J</option>
-                <option value="jal">Jal</option>
+                <option value="Add">Add</option>
+                <option value="Sub">Sub</option>
+                <option value="And">And</option>
+                <option value="Or">Or</option>
+                <option value="Jr">Jr</option>
+                <option value="Addi">Addi</option>
+                <option value="Lw">Lw</option>
+                <option value="Sw">Sw</option>
+                <option value="Beq">Beq</option>
+                <option value="J">J</option>
+                <option value="Jal">Jal</option>
               </select>
             </div>
 
@@ -187,6 +187,20 @@
         </div>
       </div>
     </div>
+    <div class="text-right px-24">
+      <button
+        onclick="openPopups()"
+        class="bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 my-2 rounded"
+      >
+        Open Popups
+      </button>
+      <button
+        onclick="closePopups()"
+        class="bg-rose-500 hover:bg-blue-700 text-white font-bold py-2 px-4 my-2 rounded"
+      >
+        Close Popups
+      </button>
+    </div>
 
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.1/p5.min.js"
@@ -194,6 +208,8 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     ></script>
+    <script src="js/organizer.js"></script>
+
     <script src="js/script.js"></script>
     <script src="js/data.js"></script>
     <script src="js/canvas.js"></script>

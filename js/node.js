@@ -47,18 +47,28 @@ class Node {
   onClick() {
     if (this.rollover) {
       this.isPopupOpen = !this.isPopupOpen;
+      this.rollover = false;
     }
   }
 
+  openPopup() {
+    this.isPopupOpen = true;
+  }
+
+  closePopup() {
+    this.isPopupOpen = false;
+  }
+
   showPopup() {
-    let width = this.value.length * 10 + 50;
+    let val = this.value.length > 6 ? binToHex(this.value) : this.value;
+    let width = val.length * 10 + 50;
 
     fill(255);
     rect(this.x - width / 2, this.y - 50, width, 40, 20);
     fill(0);
     noStroke();
     textSize(15);
-    text(this.value, this.x - width / 2 + 25, this.y - 25);
+    text(val, this.x - width / 2 + 25, this.y - 25);
     fill(255);
     stroke(0);
     strokeWeight(2);

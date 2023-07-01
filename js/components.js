@@ -56,7 +56,11 @@ class Pc extends Component {
   }
 
   generateIO() {
-    this.input = new Node(this.x, this.y + this.height / 2, false);
+    this.input = new Node(
+      this.x,
+      this.y + this.height / 2,
+      "00000000000000000000000101011000"
+    );
     this.output = new Node(
       this.x + this.width,
       this.y + this.height / 2,
@@ -66,7 +70,7 @@ class Pc extends Component {
   }
 
   update() {
-    this.output.changeValue(this.input.value);
+    this.output.changeValue(organizer.setCurrAddress(this.input.value));
   }
 
   show() {
@@ -186,7 +190,7 @@ class InstructionMemory extends Component {
   }
 
   update() {
-    let code = pcValues[this.input.value].replaceAll(" ", "");
+    let code = organizer.getPcValues(this.input.value).replaceAll(" ", "");
     this.output.changeValue(code);
     this.wires[0].endNode.changeValue(code.substring(6));
     this.wires[1].endNode.changeValue(code.substring(0, 6));
@@ -228,6 +232,7 @@ class Registers extends Component {
   }
 
   update() {
+    let regValues = organizer.getRegValues();
     let decValue1 = regValues[binToDec(this.inputs[0].value) - 1];
     this.outputs[0].changeValue(dectoBin(decValue1, 5));
     //  && this.inputs[2].value
@@ -281,13 +286,14 @@ class DataMemory extends Component {
 }
 
 class Mux extends Component {
-  constructor(x, y, toTop = false) {
+  constructor(x, y, toTop = false, updateAddress = false) {
     super(x, y, 35, 80, "M\nU\nX", 3, 3);
     this.inputs = [];
     this.output;
     this.additionalInput;
     this.toTop = toTop;
     this.generateIO();
+    this.updateAddress = updateAddress;
   }
 
   generateIO() {
@@ -320,11 +326,13 @@ class Mux extends Component {
       this.output.changeValue(
         this.toTop ? this.inputs[0].value : this.inputs[1].value
       );
-      return;
+    } else {
+      this.output.changeValue(
+        this.toTop ? this.inputs[1].value : this.inputs[0].value
+      );
     }
-    this.output.changeValue(
-      this.toTop ? this.inputs[1].value : this.inputs[0].value
-    );
+
+    this.updateAddress && organizer.setCurrAddress(this.output.value);
   }
 
   show() {

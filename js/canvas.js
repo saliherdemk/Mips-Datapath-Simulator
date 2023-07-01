@@ -22,7 +22,7 @@ function init() {
   let mux1 = new Mux(originX + 325, originY + 410);
   let mux2 = new Mux(originX + 580, originY + 400, false);
   let mux3 = new Mux(originX + 975, originY + 300, true);
-  let mux4 = new Mux(originX + 1100, originY, true);
+  let mux4 = new Mux(originX + 1100, originY, true, true);
   let mux5 = new Mux(originX + 950, originY + 50);
   let signExtend = new Ellipse(
     originX + 450,
@@ -580,14 +580,6 @@ function draw() {
 
   for (let i = 0; i < nodes.length; i++) {
     nodes[i].draw();
-  }
-}
-
-function goOneCycle() {
-  for (let i = 0; i < components.length; i++) {
-    components[i].update();
-    components[i].updateWires();
-    components[i].isVisited = true;
   }
 }
 

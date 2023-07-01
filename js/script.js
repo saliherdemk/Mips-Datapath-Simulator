@@ -8,19 +8,21 @@ const regForm = document.getElementById("reg-form");
 const instFormInputs = document.querySelectorAll(".inst-form-input");
 const instructionCodeContainer = document.getElementById("instruction-code");
 
-var instructionCode;
-var instruction = "add";
-var regValues = Array(32).fill("0");
-var memValues = [];
-var instructionType = "Add";
-var pcValues = {};
-// var currAddress = "0x00000158";
-var currAddress = "00000000000000000000000101011000";
+const organizer = new Organizer();
 
 function startCycle(code) {
-  pcValues[currAddress] = code;
-  pc.input.changeValue(currAddress);
+  organizer.updatePcValues(code);
   goOneCycle();
+}
+
+function goOneCycle() {
+  for (let i = 0; i < components.length; i++) {
+    setTimeout(() => {
+      components[i].update();
+      components[i].updateWires();
+      components[i].isVisited = true;
+    }, i * 1000);
+  }
 }
 
 function setSelectOptions() {
@@ -59,7 +61,7 @@ function setRegInputs() {
 }
 
 function setInstruction(e) {
-  instruction = e.target.value;
+  organizer.setInstruction(e.target.value);
   setInputs();
 }
 
@@ -80,23 +82,24 @@ function showSecondInput(index) {
 }
 
 function updateIC() {
-  instructionCodeContainer.innerText = instructionCode;
+  instructionCodeContainer.innerText = organizer.getICode();
 }
 
 function setInputs() {
   resetInputs();
-  if (instruction == "jr") {
+  let instruction = organizer.getInstruction();
+  if (instruction == "Jr") {
     showInput([0]);
-  } else if (["j", "jal"].includes(instruction)) {
+  } else if (["J", "Jal"].includes(instruction)) {
     showInput[0];
     showSecondInput(0);
-  } else if (instruction == "addi") {
+  } else if (instruction == "Addi") {
     showInput([0, 1, 2]);
     showSecondInput(2);
-  } else if (["lw", "sw"].includes(instruction)) {
+  } else if (["Lw", "Sw"].includes(instruction)) {
     showInput([0, 1, 2]);
     showSecondInput(1);
-  } else if (instruction == "beq") {
+  } else if (instruction == "Beq") {
     showInput([0, 1, 2]);
     showSecondInput(2);
     input3Label.innerText = "Target";
@@ -113,8 +116,8 @@ function go(e) {
       inpValues.push(inp.value);
     }
   });
-  instructionType = inpValues[0];
-  let opCode = opCodes[instructionType];
+  let instruction = organizer.setInstruction(inpValues[0]).toLowerCase();
+  let opCode = opCodes[instruction];
   let icArray = [opCode];
   let codeLength = 6;
   let iData;
@@ -140,7 +143,7 @@ function go(e) {
     icArray.push(icArray.splice(1, 1)[0]);
   }
   if (type == "R") {
-    let funcCode = functionBits[instructionType];
+    let funcCode = functionBits[instruction];
     icArray.push(dectoBin(0, 5));
     icArray.push(funcCode);
     if (funcCode == "001000") {
@@ -155,9 +158,9 @@ function go(e) {
     icArray.push(dectoBin(iData, 32 - codeLength));
   }
 
-  instructionCode = icArray.join(" ");
+  organizer.setICode(icArray.join(" "));
   updateIC();
-  startCycle(instructionCode);
+  startCycle(organizer.getICode());
 }
 
 function dectoBin(num, size) {
@@ -172,13 +175,13 @@ function binToDec(bin) {
   return parseInt(bin, 2);
 }
 
-// function binToHex(bin) {
-//   let hex = parseInt(bin, 2).toString(16).toUpperCase();
-//   while (hex.length < 8) {
-//     hex = "0" + hex;
-//   }
-//   return "0x" + hex;
-// }
+function binToHex(bin) {
+  let hex = parseInt(bin, 2).toString(16).toUpperCase();
+  while (hex.length < 8) {
+    hex = "0" + hex;
+  }
+  return "0x" + hex;
+}
 
 // function hexToBin(hex, size) {
 //   bin = parseInt(hex.substring(2), 16).toString(2);
@@ -201,12 +204,25 @@ function toggleForm() {
 function setRegisters(e) {
   e.preventDefault();
   const formData = new FormData(regForm);
-  regValues = [...formData.values()];
+  organizer.setRegValues([...formData.values()]);
 }
 
 function updateRegisters() {
   let regs = regInputContainer.children;
+  let regValues = organizer.getRegValues();
   for (let i = 0; i < regs.length; i++) {
     regs[i].children[1].querySelector("input").value = regValues[i];
+  }
+}
+
+function openPopups() {
+  for (let i = 0; i < nodes.length; i++) {
+    nodes[i].openPopup();
+  }
+}
+
+function closePopups() {
+  for (let i = 0; i < nodes.length; i++) {
+    nodes[i].closePopup();
   }
 }
