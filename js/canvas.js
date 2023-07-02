@@ -4,6 +4,7 @@ var points = [];
 var nodes = [];
 var cnv;
 var pc;
+var register;
 
 function init() {
   setSelectOptions();
@@ -17,7 +18,7 @@ function init() {
   let alu2 = new Alu(originX + 715, originY + 95, true);
   let alu3 = new Alu(originX + 650, originY + 325, false);
   let im = new InstructionMemory(originX + 150, originY + 350);
-  let register = new Registers(originX + 400, originY + 350);
+  register = new Registers(originX + 400, originY + 350);
   let dm = new DataMemory(originX + 825, originY + 400);
   let mux1 = new Mux(originX + 325, originY + 410);
   let mux2 = new Mux(originX + 580, originY + 400, false);

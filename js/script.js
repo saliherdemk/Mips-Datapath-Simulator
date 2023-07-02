@@ -17,12 +17,13 @@ function startCycle(code) {
 
 function goOneCycle() {
   for (let i = 0; i < components.length; i++) {
-    setTimeout(() => {
-      components[i].update();
-      components[i].updateWires();
-      components[i].isVisited = true;
-    }, i * 1000);
+    // setTimeout(() => {
+    components[i].update();
+    components[i].updateWires();
+    components[i].isVisited = true;
+    // }, i * 200);
   }
+  register.update(true);
 }
 
 function setSelectOptions() {
@@ -207,12 +208,12 @@ function setRegisters(e) {
   organizer.setRegValues([...formData.values()]);
 }
 
-function updateRegisters() {
+function updateRegisters(regValues) {
   let regs = regInputContainer.children;
-  let regValues = organizer.getRegValues();
-  for (let i = 0; i < regs.length; i++) {
-    regs[i].children[1].querySelector("input").value = regValues[i];
+  for (let i = 0; i < regValues.length; i++) {
+    regs[i + 1].children[1].querySelector("input").value = regValues[i];
   }
+  organizer.setRegValues(regValues);
 }
 
 function openPopups() {

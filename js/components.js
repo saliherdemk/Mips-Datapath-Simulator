@@ -231,17 +231,20 @@ class Registers extends Component {
     nodes = nodes.concat(this.inputs).concat(this.outputs);
   }
 
-  update() {
+  update(writeToReg = false) {
     let regValues = organizer.getRegValues();
-    let decValue1 = regValues[binToDec(this.inputs[0].value) - 1];
-    this.outputs[0].changeValue(dectoBin(decValue1, 5));
-    //  && this.inputs[2].value
-    let decValue2 = regValues[binToDec(this.inputs[1].value) - 1];
-    this.outputs[1].changeValue(dectoBin(decValue2, 5));
-    // this.outputs[1].changeValue("X");
-    if (this.additionalInput.value) {
-      regValues[binToDec(this.inputs[2])] = this.inputs[3];
-      updateRegisters();
+    this.outputs[0].changeValue(
+      dectoBin(regValues[binToDec(this.inputs[0].value) - 1])
+    );
+    this.outputs[1].changeValue(
+      dectoBin(regValues[binToDec(this.inputs[1].value) - 1])
+    );
+    if (writeToReg && this.additionalInput.value) {
+      regValues[binToDec(this.inputs[2].value) - 1] = binToDec(
+        this.inputs[3].value
+      ).toString();
+
+      updateRegisters(regValues);
     }
   }
 

@@ -2,7 +2,7 @@ class Organizer {
   constructor() {
     this.instructionCode = "";
     this.instruction = "add";
-    this.regValues = Array(32).fill("0");
+    this.regValues = Array(31).fill("0");
     this.memValues = [];
     this.pcValues = {};
     this.currAddress = "00000000000000000000000101011000";
