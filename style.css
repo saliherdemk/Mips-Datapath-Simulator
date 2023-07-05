@@ -1,12 +1,7 @@
 body {
   margin: 0 0;
   overflow-y: scroll;
-}
-
-canvas {
-  margin-left: 20%;
-  margin-top: 2%;
-  position: relative;
+  min-width: 1200px;
 }
 
 .arrow {

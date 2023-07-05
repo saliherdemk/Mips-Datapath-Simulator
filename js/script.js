@@ -3,6 +3,8 @@ const regInput2 = [...document.querySelectorAll(".reg-input-2")];
 const input3Label = document.getElementById("input3-label");
 const regSelects = document.querySelectorAll(".reg-select");
 const regInputContainer = document.getElementById("reg-input-container");
+const memContainer = document.getElementById("mem-container");
+
 const container = document.getElementById("container");
 const regForm = document.getElementById("reg-form");
 const instFormInputs = document.querySelectorAll(".inst-form-input");
@@ -214,6 +216,24 @@ function updateRegisters(regValues) {
     regs[i + 1].children[1].querySelector("input").value = regValues[i];
   }
   organizer.setRegValues(regValues);
+}
+
+function updateMemories() {
+  let tempContainer = document.createElement("div");
+  let memValues = organizer.getMemValues();
+  for (const [key, value] of Object.entries(memValues)) {
+    let con = document.createElement("div");
+    con.classList.add("flex");
+    let child1 = document.createElement("div");
+    child1.classList.add("border-2", "border-gray-500", "border-r-0", "p-3");
+    child1.innerText = key;
+    let child2 = document.createElement("div");
+    child2.classList.add("border-2", "border-gray-500", "p-3");
+    child2.innerText = value;
+    con.append(child1, child2);
+    tempContainer.append(con);
+  }
+  memContainer.innerHTML = tempContainer.innerHTML;
 }
 
 function openPopups() {

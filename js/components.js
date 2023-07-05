@@ -151,7 +151,7 @@ class Alu extends Component {
     }
     this.outputs[0].changeValue(result == "00000");
 
-    result = dectoBin(result, 5);
+    result = dectoBin(result, inp1Val.length + inp2Val.length > 12 ? 32 : 5);
     this.outputs[1].changeValue(result);
   }
 
@@ -190,7 +190,7 @@ class InstructionMemory extends Component {
   }
 
   update() {
-    let code = organizer.getPcValues(this.input.value).replaceAll(" ", "");
+    let code = organizer.getPcValue(this.input.value).replaceAll(" ", "");
     this.output.changeValue(code);
     this.wires[0].endNode.changeValue(code.substring(6));
     this.wires[1].endNode.changeValue(code.substring(0, 6));
@@ -282,7 +282,22 @@ class DataMemory extends Component {
     nodes.push(this.output);
   }
 
-  update() {}
+  update() {
+    if (this.additionalInputs[1].value) {
+      this.output.changeValue(
+        organizer.getMemValue(binToHex(this.inputs[0].value))
+      );
+    }
+
+    if (this.additionalInputs[0].value) {
+      organizer.updateMemValue(
+        binToHex(this.inputs[0].value),
+        binToDec(this.inputs[1].value)
+      );
+      updateMemories();
+    }
+  }
+
   show() {
     rect(this.x, this.y, this.width, this.height);
   }

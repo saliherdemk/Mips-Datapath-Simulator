@@ -558,7 +558,7 @@ function init() {
 
 function setup() {
   cnv = createCanvas(1200, 750);
-  cnv.parent(select("body"));
+  cnv.parent(select("#canvas-container"));
   init();
 }
 

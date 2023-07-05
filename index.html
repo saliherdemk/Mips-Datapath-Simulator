@@ -179,12 +179,10 @@
 
         <p class="text-lg text-center h-10">Memory</p>
 
-        <div class="relative overflow-x-auto w-full flex gap-4 pb-2">
-          <div class="flex">
-            <div class="border-2 border-gray-500 border-r-0 p-3">0xFFFFF0</div>
-            <div class="border-2 border-gray-500 p-3">5</div>
-          </div>
-        </div>
+        <div
+          class="relative overflow-x-auto w-full flex gap-4 pb-2"
+          id="mem-container"
+        ></div>
       </div>
     </div>
     <div class="text-right px-24">
@@ -201,6 +199,8 @@
         Close Popups
       </button>
     </div>
+
+    <div id="canvas-container" class="flex justify-center py-5"></div>
 
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.1/p5.min.js"

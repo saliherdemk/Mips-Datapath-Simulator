@@ -33,15 +33,23 @@ class Organizer {
     this.regValues = values;
   }
 
+  getMemValue(address) {
+    if (!this.memValues[address]) {
+      this.updateMemValue(address, 0);
+      updateMemories();
+    }
+    return this.memValues[address];
+  }
+
+  updateMemValue(address, value) {
+    this.memValues[address] = value;
+  }
+
   getMemValues() {
     return this.memValues;
   }
 
-  setMemValues(values) {
-    this.memValues = values;
-  }
-
-  getPcValues(key) {
+  getPcValue(key) {
     return this.pcValues[key];
   }
 
