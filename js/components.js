@@ -399,20 +399,20 @@ class Ellipse extends Component {
         (value = value[0].repeat(32 - value.length) + value)
       );
     } else if (this.text == "Alu\nControl") {
-      let aluop1 = this.additionalInput.value[0] == "1"; // t
-      let aluop0 = this.additionalInput.value[1] == "1"; // f
-      let f0 = value[5] == "1"; // t
-      let f1 = value[4] == "1"; //f
-      let f2 = value[3] == "1"; //t
-      let f3 = value[2] == "1"; //f
+      let aluop1 = this.additionalInput.value[0] == "1";
+      let aluop0 = this.additionalInput.value[1] == "1";
 
+      let f0 = value[5] == "1";
+      let f1 = value[4] == "1";
+      let f2 = value[3] == "1";
+      let f3 = value[2] == "1";
+
+      let a1 = aluop0 && aluop1;
+      let a2 = (f1 && aluop1) || aluop0;
       let op3 = "";
-      let op2 = (f1 && aluop1) || aluop0; // 0
-      let op1 = !f2 || !aluop1; // 0
-      let op0 = (f0 || f3) && aluop1; // 0
-
-      // 0 0 1 0
-      // 3 2 1 0
+      let op2 = a1 ^ a2; // (!a1 && a2) || (!a2 && a1)
+      let op1 = !f2 || !aluop1 || a1;
+      let op0 = (f0 || f3) && aluop1 && !aluop0;
 
       this.output.changeValue(op3 + +op2 + +op1 + +op0);
     } else {
