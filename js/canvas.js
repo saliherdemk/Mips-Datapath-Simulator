@@ -25,7 +25,7 @@ function init() {
   let mux3 = new Mux(originX + 975, originY + 300, true);
   let mux4 = new Mux(originX + 980, originY + 6.5, true, true);
   let mux5 = new Mux(originX + 900, originY + 50);
-  let mux6 = new Mux(originX + 1040, originY + 60);
+  let mux6 = new Mux(originX + 1060, originY + 60);
 
   let signExtend = new Ellipse(
     originX + 450,
@@ -83,7 +83,7 @@ function init() {
   let regOutput1Node = new Node(originX + 500, originY + 450);
   let andOutputNode = new Node(originX + 892.5, originY + 305);
   let reg0Node1 = new Node(originX + 600, originY + 355);
-  let reg0Node2 = new Node(originX + 900, originY + 300);
+  let reg0Node2 = new Node(originX + 945, originY + 275);
 
   components.push(
     pc,
@@ -229,10 +229,15 @@ function init() {
     endNode: alu3.inputs[0],
   });
 
-  // let wire16_2 = new Wire({
-  //   startNode: reg0Node1,
-  //   endNode: reg0Node2,
-  // });
+  let wire16_2 = new Wire({
+    startNode: reg0Node1,
+    endNode: reg0Node2,
+    backwards: true,
+  });
+  let wire16_3 = new Wire({
+    startNode: reg0Node2,
+    endNode: mux6.inputs[1],
+  });
 
   // let wire16_2_1 = new Wire({
   //   startNode: reg0Node2,
@@ -249,7 +254,15 @@ function init() {
   });
   let wire17_2 = new Wire({ startNode: regOutput1Node, endNode: dm.inputs[1] });
 
-  register.setWires([wire16, wire17, wire16_1, wire17_1, wire17_2]);
+  register.setWires([
+    wire16,
+    wire17,
+    wire16_1,
+    wire16_2,
+    wire16_3,
+    wire17_1,
+    wire17_2,
+  ]);
 
   let wire18 = new Wire({ startNode: mux2.output, endNode: alu3.inputs[1] });
   mux2.setWires([wire18]);
@@ -304,7 +317,7 @@ function init() {
   });
   alu2.setWires([wire25]);
 
-  let wire26 = new Wire({ startNode: mux4.output, endNode: mux4toPc_1 });
+  let wire26 = new Wire({ startNode: mux4.output, endNode: mux6.inputs[0] });
   let wire26_1 = new Wire({
     startNode: mux4toPc_1,
     endNode: pc.input,
@@ -550,8 +563,16 @@ function init() {
   });
 
   and.setWires([wire38, wire38_1]);
+
   let wire39 = new Wire({ startNode: mux5.output, endNode: mux4.inputs[1] });
   mux5.setWires([wire39]);
+
+  let wire40 = new Wire({
+    startNode: mux6.output,
+    endNode: mux4toPc_1,
+  });
+
+  mux6.setWires([wire40]);
 
   wires = [];
   components.forEach((component) => {
@@ -567,7 +588,8 @@ function init() {
     new Point(originX + 775, originY + 425),
     new Point(originX + 425, originY + 558),
     new Point(originX + 650, originY + 125),
-    new Point(originX + 554.5, originY + 125)
+    new Point(originX + 554.5, originY + 125),
+    new Point(originX + 600, originY + 355)
   );
 }
 
