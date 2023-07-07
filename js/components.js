@@ -285,7 +285,7 @@ class DataMemory extends Component {
   update() {
     if (this.additionalInputs[1].value) {
       this.output.changeValue(
-        organizer.getMemValue(binToHex(this.inputs[0].value))
+        dectoBin(organizer.getMemValue(binToHex(this.inputs[0].value)))
       );
     }
 
