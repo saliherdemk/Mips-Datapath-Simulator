@@ -460,7 +460,7 @@ class Control extends Component {
 
     this.outputs[0].changeValue(opCode == "000000"); // regdest
     this.outputs[1].changeValue(opCode == "000010" || opCode == "000011"); //jump
-    this.outputs[2].changeValue(opCode == "000010" || opCode == "000011"); //jr
+    this.outputs[2].changeValue(opCode == "000000"); //jr
 
     this.outputs[3].changeValue(opCode == "000100"); //branch
     this.outputs[4].changeValue(opCode == "100011"); //memread
