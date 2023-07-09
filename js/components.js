@@ -390,6 +390,7 @@ class Ellipse extends Component {
     // https://www.comp.nus.edu.sg/~adi-yoga/CS2100/ch08c2/
     // https://www.cs.princeton.edu/courses/archive/fall15/cos375/lectures/08-Control-3x1.pdf
     let value = this.input.value;
+    let aluOp = this.additionalInput?.value;
 
     if (this.text == "Shift\nLeft 2") {
       value = "00" + value;
@@ -399,8 +400,8 @@ class Ellipse extends Component {
         (value = value[0].repeat(32 - value.length) + value)
       );
     } else if (this.text == "Alu\nControl") {
-      let aluop1 = this.additionalInput.value[0] == "1";
-      let aluop0 = this.additionalInput.value[1] == "1";
+      let aluop1 = aluOp[0] == "1";
+      let aluop0 = aluOp[1] == "1";
 
       let f0 = value[5] == "1";
       let f1 = value[4] == "1";
@@ -415,11 +416,10 @@ class Ellipse extends Component {
       let op0 = (f0 || f3) && aluop1 && !aluop0;
 
       this.output.changeValue(op3 + +op2 + +op1 + +op0);
+      this.wires[0].endNode.changeValue(value == "001000" && aluOp == "10");
     } else {
       // truncate
-      this.output.changeValue(
-        this.additionalInput.value + "" + this.input.value
-      );
+      this.output.changeValue(aluOp + "" + this.input.value);
     }
   }
 

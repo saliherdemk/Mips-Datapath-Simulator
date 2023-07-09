@@ -248,3 +248,10 @@ function closePopups() {
     nodes[i].closePopup();
   }
 }
+function gradientLine(x1, y1, x2, y2, color1, color2) {
+  var grad = this.drawingContext.createLinearGradient(x1, y1, x2, y2);
+  grad.addColorStop(0, color1);
+  grad.addColorStop(1, color2);
+
+  this.drawingContext.strokeStyle = grad;
+}

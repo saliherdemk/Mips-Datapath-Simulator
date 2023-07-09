@@ -8,6 +8,7 @@ class Wire {
     textXOffset = 0,
     textYOffset = 0,
     isManuel = false,
+    isGradient = false,
   }) {
     this.startNode = startNode;
     this.endNode = endNode;
@@ -17,6 +18,7 @@ class Wire {
     this.textXOffset = textXOffset;
     this.textYOffset = textYOffset;
     this.isManuel = isManuel;
+    this.isGradient = isGradient;
   }
 
   update() {
@@ -38,7 +40,16 @@ class Wire {
   }
 
   draw() {
-    stroke(this.wireColor);
+    this.isGradient
+      ? gradientLine(
+          this.startNode.x,
+          this.startNode.y,
+          this.endNode.x,
+          this.endNode.y,
+          color(0),
+          this.wireColor
+        )
+      : stroke(this.wireColor);
     beginShape();
     vertex(this.startNode.x, this.startNode.y);
     vertex(this.startNode.x + (this.backwards ? 0 : 25), this.startNode.y);
