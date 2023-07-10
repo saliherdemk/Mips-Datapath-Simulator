@@ -12,8 +12,9 @@ class Node {
     this.changeValue(value);
   }
 
-  setWires(wires) {
-    this.wires = wires;
+  setDontCare(value) {
+    this.isDontCare = value;
+    this.changeValue(this.value);
   }
 
   changeValue(value) {
@@ -21,15 +22,18 @@ class Node {
     // value must be identical with normal cpu (combinational logic)
     this.value = value;
     this.hasValue = value !== false && value !== true;
-    this.colorValue = this.hasValue
-      ? value == "X"
-        ? color(0, 255, 255)
-        : color(0, 0, 255)
+    this.colorValue = this.isDontCare
+      ? color(0, 255, 255)
+      : this.hasValue
+      ? color(0, 0, 255)
       : this.value
       ? color(0, 255, 0)
       : color(255, 0, 0);
   }
 
+  setWires(wires) {
+    this.wires = wires;
+  }
   showValue() {
     fill(0);
     noStroke();

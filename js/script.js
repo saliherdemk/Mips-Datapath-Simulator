@@ -147,7 +147,6 @@ function go(e) {
   }
   if (type == "R") {
     let funcCode = functionBits[instruction];
-    console.log(instruction, funcCode);
     icArray.push(dectoBin(0, 5));
     icArray.push(funcCode);
     if (funcCode == "001000") {

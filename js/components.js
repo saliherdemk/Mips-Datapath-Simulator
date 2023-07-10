@@ -347,7 +347,6 @@ class Mux extends Component {
       ? 1
       : 0;
     this.output.changeValue(this.inputs[inputIndex].value);
-    console.log(this.inputs);
     this.inputs[+!inputIndex].setDontCare(true);
     this.inputs[+inputIndex].setDontCare(false);
 
