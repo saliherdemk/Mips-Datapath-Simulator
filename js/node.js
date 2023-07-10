@@ -8,7 +8,12 @@ class Node {
     this.rollover = false;
     this.hasValue = false;
     this.isDontCare = false;
+    this.wires = [];
     this.changeValue(value);
+  }
+
+  setWires(wires) {
+    this.wires = wires;
   }
 
   changeValue(value) {

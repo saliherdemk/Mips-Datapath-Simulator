@@ -232,13 +232,16 @@ class Registers extends Component {
   }
 
   update(writeToReg = false) {
+    this.inputs[2].setDontCare(!this.additionalInput.value);
+    this.inputs[3].setDontCare(!this.additionalInput.value);
     let regValues = organizer.getRegValues();
     this.outputs[0].changeValue(
-      dectoBin(regValues[binToDec(this.inputs[0].value) - 1])
+      dectoBin(regValues[binToDec(this.inputs[0].value) - 1], 32)
     );
     this.outputs[1].changeValue(
-      dectoBin(regValues[binToDec(this.inputs[1].value) - 1])
+      dectoBin(regValues[binToDec(this.inputs[1].value) - 1], 32)
     );
+
     if (writeToReg && this.additionalInput.value) {
       regValues[binToDec(this.inputs[2].value) - 1] = binToDec(
         this.inputs[3].value
@@ -336,19 +339,17 @@ class Mux extends Component {
   }
 
   update() {
-    if (this.additionalInput.value == "X") {
-      this.output.changeValue("X");
-      return;
-    }
-    if (this.additionalInput.value) {
-      this.output.changeValue(
-        this.toTop ? this.inputs[0].value : this.inputs[1].value
-      );
-    } else {
-      this.output.changeValue(
-        this.toTop ? this.inputs[1].value : this.inputs[0].value
-      );
-    }
+    const inputIndex = this.additionalInput.value
+      ? this.toTop
+        ? 0
+        : 1
+      : this.toTop
+      ? 1
+      : 0;
+    this.output.changeValue(this.inputs[inputIndex].value);
+    console.log(this.inputs);
+    this.inputs[+!inputIndex].setDontCare(true);
+    this.inputs[+inputIndex].setDontCare(false);
 
     this.updateAddress && organizer.setCurrAddress(this.output.value);
   }
@@ -557,22 +558,23 @@ class AndGate extends Component {
     super(x, y, 55, 55, "And", 4.5, 1.7);
     this.x = x;
     this.y = y;
-    this.input1;
-    this.input2;
+    this.inputs = [];
     this.output;
     this.generateIO();
   }
 
   generateIO() {
-    this.input1 = new Node(this.x, this.y + 10, false);
-    this.input2 = new Node(this.x, this.y + 35, false);
+    this.inputs = [
+      new Node(this.x, this.y + 10, false),
+      new Node(this.x, this.y + 35, false),
+    ];
     this.output = new Node(this.x + this.width, this.y + 25, false);
 
-    nodes.push(this.input1, this.input2, this.output);
+    nodes.push(this.inputs[0], this.inputs[1], this.output);
   }
 
   update() {
-    this.output.changeValue(this.input2.value && this.input1.value);
+    this.output.changeValue(this.inputs[0].value && this.inputs[1].value);
   }
 
   show() {

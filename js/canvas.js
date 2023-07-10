@@ -148,7 +148,7 @@ function init() {
   let wire0 = new Wire({ startNode: pc.output, endNode: im.input });
   let wire1 = new Wire({ startNode: pc.output, endNode: alu1.inputs[0] });
 
-  pc.setWires([wire0, wire1]);
+  pc.output.setWires([wire0, wire1]);
 
   let wire2 = new Wire({
     isManuel: true,
@@ -202,7 +202,7 @@ function init() {
     endNode: aluControl.input,
   });
 
-  im.setWires([
+  im.output.setWires([
     wire2,
     wire3,
     wire4,
@@ -247,20 +247,27 @@ function init() {
     backwards: true,
   });
 
-  alu1.setWires([wire11, wire12, wire11_1, wire11_1_1, wire11_2, wire12_1]);
+  alu1.outputs[0].setWires([
+    wire11,
+    wire12,
+    wire11_1,
+    wire11_1_1,
+    wire11_2,
+    wire12_1,
+  ]);
 
   let wire13 = new Wire({
     startNode: mux1.output,
     endNode: register.inputs[2],
   });
-  mux1.setWires([wire13]);
+  mux1.output.setWires([wire13]);
 
   let wire14 = new Wire({ startNode: signExtend.output, endNode: shift.input });
   let wire15 = new Wire({
     startNode: signExtend.output,
     endNode: mux2.inputs[1],
   });
-  signExtend.setWires([wire14, wire15]);
+  signExtend.output.setWires([wire14, wire15]);
 
   let wire16 = new Wire({
     startNode: register.outputs[0],
@@ -298,23 +305,15 @@ function init() {
     endNode: dm.inputs[1],
     backwards: true,
   });
-
-  register.setWires([
-    wire16,
-    wire17,
-    wire16_1,
-    wire16_2,
-    wire16_2_1,
-    wire17_1,
-    wire17_2,
-  ]);
+  register.outputs[0].setWires([wire16, wire16_1, wire16_2, wire16_2_1]);
+  register.outputs[1].setWires([wire17, wire17_1, wire17_2]);
 
   let wire18 = new Wire({ startNode: mux2.output, endNode: alu3.inputs[1] });
-  mux2.setWires([wire18]);
+  mux2.output.setWires([wire18]);
 
   let wire35 = new Wire({
     startNode: alu3.outputs[0],
-    endNode: and.input2,
+    endNode: and.inputs[1],
   });
 
   let wire19 = new Wire({
@@ -331,10 +330,11 @@ function init() {
     endNode: mux3.inputs[1],
     backwards: true,
   });
-  alu3.setWires([wire19, wire35, wire19_1, wire19_2]);
+  alu3.outputs[0].setWires([wire35]);
+  alu3.outputs[1].setWires([wire19, wire19_1, wire19_2]);
 
   let wire20 = new Wire({ startNode: dm.output, endNode: mux3.inputs[0] });
-  dm.setWires([wire20]);
+  dm.output.setWires([wire20]);
 
   let wire21 = new Wire({ startNode: mux3.output, endNode: mux3toReg4_2 });
 
@@ -343,33 +343,33 @@ function init() {
     endNode: register.inputs[3],
     backwards: true,
   });
-  mux3.setWires([wire21, wire21_1_1]);
+  mux3.output.setWires([wire21, wire21_1_1]);
 
   let wire22 = new Wire({ startNode: shift.output, endNode: alu2.inputs[1] });
-  shift.setWires([wire22]);
+  shift.output.setWires([wire22]);
 
   let wire23 = new Wire({
     startNode: truncate.output,
     endNode: mux4.inputs[0],
   });
-  truncate.setWires([wire23]);
+  truncate.output.setWires([wire23]);
 
   let wire24 = new Wire({
     startNode: topShift.output,
     endNode: truncate.input,
     backwards: true,
   });
-  topShift.setWires([wire24]);
+  topShift.output.setWires([wire24]);
 
   let wire25 = new Wire({
     startNode: alu2.outputs[0],
     endNode: mux5.inputs[1],
   });
-  alu2.setWires([wire25]);
+  alu2.outputs[0].setWires([wire25]);
 
   let wire26 = new Wire({ startNode: mux4.output, endNode: muxJR.inputs[0] });
 
-  mux4.setWires([wire26]);
+  mux4.output.setWires([wire26]);
 
   let wire27 = new Wire({
     startNode: control.outputs[0],
@@ -523,34 +523,19 @@ function init() {
   });
   let wire36_1 = new Wire({
     startNode: branchNode,
-    endNode: and.input1,
+    endNode: and.inputs[0],
     wireColor: skyColor,
   });
 
-  control.setWires([
-    wire27,
-    wire28,
-    wire29,
-    wire30,
-    wire31,
-    wire32,
-    wire33,
-    wire34,
-    wire36,
-    wire27_1,
-    wire27_1_1,
-    wire28_1,
-    wire28_1_1,
-    wire29_1,
-    wire29_1_1,
-    wire30_1,
-    wire31_1,
-    wire32_1,
-    wire33_1,
-    wire33_1_1,
-    wire34_1,
-    wire36_1,
-  ]);
+  control.outputs[0].setWires([wire27, wire27_1, wire27_1_1]);
+  control.outputs[1].setWires([wire28, wire28_1, wire28_1_1]);
+  control.outputs[3].setWires([wire36, wire36_1]);
+  control.outputs[4].setWires([wire29, wire29_1, wire29_1_1]);
+  control.outputs[5].setWires([wire30, wire30_1]);
+  control.outputs[6].setWires([wire31, wire31_1]);
+  control.outputs[7].setWires([wire32, wire32_1]);
+  control.outputs[8].setWires([wire33, wire33_1, wire33_1_1]);
+  control.outputs[9].setWires([wire34, wire34_1]);
 
   let wireJr = new Wire({
     startNode: aluControl.output,
@@ -578,7 +563,7 @@ function init() {
     endNode: alu3.additionalInput,
     backwards: true,
   });
-  aluControl.setWires([wireJr, wire37, wire37_1, wireJr_1]);
+  aluControl.output.setWires([wireJr, wire37, wire37_1, wireJr_1]);
 
   let wire38 = new Wire({
     startNode: and.output,
@@ -591,10 +576,10 @@ function init() {
     backwards: true,
   });
 
-  and.setWires([wire38, wire38_1]);
+  and.output.setWires([wire38, wire38_1]);
 
   let wire39 = new Wire({ startNode: mux5.output, endNode: mux4.inputs[1] });
-  mux5.setWires([wire39]);
+  mux5.output.setWires([wire39]);
 
   let wire40 = new Wire({
     startNode: muxJR.output,
@@ -607,11 +592,17 @@ function init() {
     backwards: true,
   });
 
-  muxJR.setWires([wire40, wire40_1]);
+  muxJR.output.setWires([wire40, wire40_1]);
 
   wires = [];
   components.forEach((component) => {
-    wires = [...wires, ...component.wires];
+    componentWires = component?.output
+      ? component.output.wires
+      : component.outputs.reduce(function (a, b) {
+          return a.concat(b.wires);
+        }, []);
+    component.setWires(componentWires);
+    wires = [...wires, ...componentWires];
   });
 
   points.push(
