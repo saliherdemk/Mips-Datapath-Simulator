@@ -18,6 +18,9 @@ function startCycle(code) {
 }
 
 function goOneCycle() {
+  for (let i = 0; i < nodes.length; i++) {
+    nodes[i].setDontCare(false);
+  }
   for (let i = 0; i < components.length; i++) {
     // setTimeout(() => {
     components[i].update();
@@ -26,6 +29,10 @@ function goOneCycle() {
     // }, i * 200);
   }
   register.update(true);
+
+  for (let i = components.length - 1; i >= 0; i--) {
+    components[i].updateDontCare();
+  }
 }
 
 function setSelectOptions() {
@@ -253,4 +260,8 @@ function gradientLine(x1, y1, x2, y2, color1, color2) {
   grad.addColorStop(1, color2);
 
   this.drawingContext.strokeStyle = grad;
+}
+
+function findWiresByEndNode(node) {
+  return wires.find((wire) => wire.endNode == node);
 }

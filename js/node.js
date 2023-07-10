@@ -14,6 +14,17 @@ class Node {
 
   setDontCare(value) {
     this.isDontCare = value;
+    if (this.isDontCare) {
+      this.wires?.forEach((w) => {
+        if (!w.endNode.isDontCare) {
+          this.setDontCare(false);
+          return;
+        }
+      });
+      let nodeWires = findWiresByEndNode(this);
+
+      nodeWires?.startNode.setDontCare(true);
+    }
     this.changeValue(this.value);
   }
 

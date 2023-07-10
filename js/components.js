@@ -15,6 +15,7 @@ class Component {
     this.wires = wires;
   }
 
+  updateDontCare() {}
   updateWires() {
     for (let i = 0; i < this.wires.length; i++) {
       this.wires[i].update();
@@ -112,6 +113,15 @@ class Alu extends Component {
     this.inputs.push(new Node(this.x, this.y + 30, false));
     this.inputs.push(new Node(this.x, this.y + 120, this.defaultValue));
     nodes = nodes.concat(this.outputs).concat(this.inputs);
+  }
+
+  updateDontCare() {
+    let dontCare =
+      this.outputs[0].isDontCare && this.outputs[1]
+        ? this.outputs[1].isDontCare
+        : true;
+    this.inputs[0].setDontCare(dontCare);
+    this.inputs[1].setDontCare(dontCare);
   }
 
   update() {
@@ -285,6 +295,17 @@ class DataMemory extends Component {
     nodes.push(this.output);
   }
 
+  updateDontCare() {
+    if (this.additionalInputs[0].value) {
+      this.inputs[0].setDontCare(false);
+      this.inputs[1].setDontCare(false);
+      return;
+    }
+    let dontCare = this.output.isDontCare;
+    this.inputs[0].setDontCare(dontCare);
+    this.inputs[1].setDontCare(dontCare);
+  }
+
   update() {
     if (this.additionalInputs[1].value) {
       this.output.changeValue(
@@ -338,6 +359,14 @@ class Mux extends Component {
     nodes = nodes.concat(this.inputs);
   }
 
+  updateDontCare() {
+    if (this.output.isDontCare) {
+      this.inputs[0].setDontCare(true);
+      this.inputs[1].setDontCare(true);
+      this.additionalInput.setDontCare(true);
+    }
+  }
+
   update() {
     const inputIndex = this.additionalInput.value
       ? this.toTop
@@ -384,6 +413,12 @@ class Ellipse extends Component {
       false
     );
     nodes.push(this.input, this.output);
+  }
+
+  updateDontCare() {
+    let dontCare = this.output.isDontCare;
+    this.input.setDontCare(dontCare);
+    this.additionalInput?.setDontCare(dontCare);
   }
 
   update() {
@@ -570,6 +605,11 @@ class AndGate extends Component {
     this.output = new Node(this.x + this.width, this.y + 25, false);
 
     nodes.push(this.inputs[0], this.inputs[1], this.output);
+  }
+
+  updateDontCare() {
+    !this.inputs[0].value && this.inputs[1].setDontCare(true);
+    !this.inputs[1].value && this.inputs[0].setDontCare(true);
   }
 
   update() {
