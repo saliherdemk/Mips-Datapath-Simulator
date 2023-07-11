@@ -1,10 +1,11 @@
 class Node {
-  constructor(x, y, value = false) {
+  constructor(x, y, value = false, isPopupShownBottom = false) {
     this.x = x;
     this.y = y;
     this.value = value;
     this.colorValue = color(255, 0, 0);
     this.isPopupOpen = false;
+    this.isPopupShownBottom = isPopupShownBottom;
     this.rollover = false;
     this.hasValue = false;
     this.isDontCare = false;
@@ -70,14 +71,15 @@ class Node {
 
   showPopup() {
     let val = this.value.length > 6 ? binToHex(this.value) : this.value;
-    let width = val.length * 10 + 50;
+    let width = val.length * 9;
 
     fill(255);
-    rect(this.x - width / 2, this.y - 50, width, 40, 20);
+    rect(this.x - width / 2 - 10, this.y - 50, width + 16, 40, 20);
     fill(0);
     noStroke();
     textSize(15);
-    text(val, this.x - width / 2 + 25, this.y - 25);
+    text(val, this.x - width / 2 - 2, this.y - 25);
+
     fill(255);
     stroke(0);
     strokeWeight(2);

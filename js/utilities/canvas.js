@@ -9,7 +9,7 @@ var register;
 function init() {
   setSelectOptions();
   setRegInputs();
-  let originX = 0;
+  let originX = 100;
   let originY = 25;
   let skyColor = color(5, 176, 239);
 
@@ -620,7 +620,7 @@ function init() {
 }
 
 function setup() {
-  cnv = createCanvas(1200, 750);
+  cnv = createCanvas(1300, 750);
   cnv.parent(select("#canvas-container"));
 
   init();
