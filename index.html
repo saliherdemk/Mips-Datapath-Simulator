@@ -16,9 +16,23 @@
         src="media/githubLogo.png"
         alt=""
         id="github"
-        style="position: absolute; right: 0px"
+        class="absolute right-0"
       />
     </a>
+
+    <button class="fixed bottom-2 right-3" onclick="toggleLejant()">
+      <div class="shadow-lg rounded hidden" id="lejant">
+        <img src="media/lejant.png" alt="" />
+      </div>
+      <img
+        src="media/tip.png"
+        width="50"
+        height="50"
+        alt=""
+        class="float-right"
+      />
+    </button>
+
     <div class="flex flex-col justify-center items-center py-5 px-[15%]">
       <div
         class="w-full text-center p-5 h-25 flex justify-center items-center relative"

@@ -623,14 +623,14 @@ function setup() {
   cnv = createCanvas(1200, 750);
   cnv.parent(select("#canvas-container"));
 
-  // init();
-  initNodesForLejant();
+  init();
+  // initNodesForLejant();
 }
 
 function draw() {
   background(255);
 
-  seeLejant();
+  // seeLejant();
 
   noFill();
   for (let i = 0; i < wires.length; i++) {

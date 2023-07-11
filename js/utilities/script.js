@@ -10,6 +10,8 @@ const regForm = document.getElementById("reg-form");
 const instFormInputs = document.querySelectorAll(".inst-form-input");
 const instructionCodeContainer = document.getElementById("instruction-code");
 
+const lejant = document.getElementById("lejant");
+
 const organizer = new Organizer();
 
 function startCycle(code) {
@@ -264,4 +266,8 @@ function gradientLine(x1, y1, x2, y2, color1, color2) {
 
 function findWiresByEndNode(node) {
   return wires.find((wire) => wire.endNode == node);
+}
+
+function toggleLejant() {
+  lejant.classList.toggle("hidden");
 }
