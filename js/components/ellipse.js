@@ -13,15 +13,17 @@ class Ellipse extends Component {
       this.additionalInput = new Node(
         this.x + this.width / 2,
         this.y + this.height,
-        false
+        false,
+        "bottom"
       );
       nodes.push(this.additionalInput);
     }
-    this.input = new Node(this.x, this.y + this.height / 2, false);
+    this.input = new Node(this.x, this.y + this.height / 2, false, "left");
     this.output = new Node(
       this.x + this.width,
       this.y + this.height / 2,
-      false
+      false,
+      this.text == "Shift\nLeft 2" ? "bottom" : "right"
     );
     nodes.push(this.input, this.output);
   }

@@ -9,7 +9,14 @@ class Registers extends Component {
 
   generateIO() {
     for (let i = 0; i < 4; i++) {
-      this.inputs.push(new Node(this.x, this.y + 20 + i * 30, false));
+      this.inputs.push(
+        new Node(
+          this.x,
+          this.y + 20 + i * 30,
+          false,
+          i == 3 ? "bottom" : "right"
+        )
+      );
     }
 
     for (let i = 1; i < 3; i++) {

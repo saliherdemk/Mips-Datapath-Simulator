@@ -12,7 +12,8 @@ class InstructionMemory extends Component {
     this.output = new Node(
       this.x + this.width,
       this.y + this.height / 2,
-      false
+      false,
+      "bottom"
     );
 
     nodes.push(this.input, this.output);

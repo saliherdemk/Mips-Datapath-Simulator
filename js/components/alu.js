@@ -14,7 +14,9 @@ class Alu extends Component {
     if (!this.isAdd) {
       this.additionalInput = new Node(
         this.x + this.width / 2,
-        this.y + this.height / 1.1
+        this.y + this.height / 1.1,
+        false,
+        "bottom"
       );
       this.outputs.push(
         new Node(this.x + this.width, this.y + this.height / 3, false)
@@ -25,12 +27,20 @@ class Alu extends Component {
       new Node(
         this.x + this.width,
         this.y + this.height / (!this.isAdd ? 1.5 : 2),
-        false
+        false,
+        "right"
       )
     );
 
     this.inputs.push(new Node(this.x, this.y + 30, false));
-    this.inputs.push(new Node(this.x, this.y + 120, this.defaultValue));
+    this.inputs.push(
+      new Node(
+        this.x,
+        this.y + 120,
+        this.defaultValue,
+        this.additionalInput ? "right" : "top"
+      )
+    );
     nodes = nodes.concat(this.outputs).concat(this.inputs);
   }
 

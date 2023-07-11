@@ -20,7 +20,7 @@ function init() {
   let im = new InstructionMemory(originX + 150, originY + 350);
   register = new Registers(originX + 400, originY + 350);
   let dm = new DataMemory(originX + 825, originY + 400);
-  let mux1 = new Mux(originX + 325, originY + 410);
+  let mux1 = new Mux(originX + 310, originY + 410);
   let mux2 = new Mux(originX + 580, originY + 400, false);
   let mux3 = new Mux(originX + 975, originY + 300, true);
   let mux4 = new Mux(originX + 980, originY + 6.5, true);
@@ -41,7 +41,7 @@ function init() {
     true
   );
   let shift = new Ellipse(originX + 600, originY + 195, "Shift\nLeft 2", 66);
-  let topShift = new Ellipse(originX + 400, originY, "Shift\nLeft 2", 66);
+  let topShift = new Ellipse(originX + 325, originY, "Shift\nLeft 2", 66);
   let truncate = new Ellipse(originX + 540, originY + 18, "", 30, true);
 
   let control = new Control(
@@ -51,7 +51,7 @@ function init() {
   );
   let and = new AndGate(originX + 800, originY + 290);
 
-  let i20Node = new Node(im.output.x + 25, register.inputs[1].y);
+  let i20Node = new Node(im.output.x + 15, register.inputs[1].y);
 
   let mux3toReg4_2 = new Node(register.inputs[3].x - 25, mux3.output.y + 350);
 
@@ -607,7 +607,7 @@ function init() {
 
   points.push(
     new Point(originX + 125, originY + 425),
-    new Point(originX + 300, originY + 400),
+    new Point(originX + 290, originY + 400),
     new Point(originX + 540, originY + 453),
     new Point(originX + 520, originY + 450),
     new Point(originX + 790, originY + 425),

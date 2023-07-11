@@ -9,13 +9,21 @@ class DataMemory extends Component {
 
   generateIO() {
     for (let i = 1; i < 3; i++) {
-      this.inputs.push(new Node(this.x, this.y + (this.height * i) / 3, false));
+      this.inputs.push(
+        new Node(
+          this.x,
+          this.y + (this.height * i) / 3,
+          false,
+          i == 1 ? "top" : "right"
+        )
+      );
     }
 
     this.output = new Node(
       this.x + this.width,
       this.y + this.height / 3,
-      false
+      false,
+      "right"
     );
 
     this.additionalInputs.push(

@@ -11,7 +11,9 @@ class Mux extends Component {
 
   generateIO() {
     for (let i = 1; i < 3; i++) {
-      this.inputs.push(new Node(this.x, this.y + (this.height * i) / 3, false));
+      this.inputs.push(
+        new Node(this.x, this.y + (this.height * i) / 3, false, "left")
+      );
     }
 
     this.output = new Node(

@@ -10,7 +10,8 @@ class Pc extends Component {
     this.input = new Node(
       this.x,
       this.y + this.height / 2,
-      "00000000000000000000000101011000"
+      "00000000000000000000000101011000",
+      "top"
     );
     this.output = new Node(
       this.x + this.width,
