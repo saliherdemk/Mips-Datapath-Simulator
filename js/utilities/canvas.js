@@ -23,9 +23,9 @@ function init() {
   let mux1 = new Mux(originX + 325, originY + 410);
   let mux2 = new Mux(originX + 580, originY + 400, false);
   let mux3 = new Mux(originX + 975, originY + 300, true);
-  let mux4 = new Mux(originX + 980, originY + 6.5, true, true);
+  let mux4 = new Mux(originX + 980, originY + 6.5, true);
   let mux5 = new Mux(originX + 880, originY + 50);
-  let muxJR = new Mux(originX + 1060, originY + 80);
+  let muxJR = new Mux(originX + 1060, originY + 80, false, true);
 
   let signExtend = new Ellipse(
     originX + 450,
@@ -61,13 +61,13 @@ function init() {
   let muxJRtoPc_1 = new Node(pc.input.x - 25, pc.input.y - 435);
 
   let regDest_1 = new Node(
-    control.outputs[0].x - 125,
-    control.outputs[0].y - 35
+    control.outputs[1].x - 125,
+    control.outputs[1].y - 50
   );
 
   let regDest_2 = new Node(mux1.additionalInput.x, mux1.additionalInput.y + 25);
 
-  let jump_1 = new Node(control.outputs[1].x + 220, control.outputs[1].y);
+  let jump_1 = new Node(control.outputs[2].x + 220, control.outputs[2].y);
 
   let jump_2 = new Node(mux4.additionalInput.x, mux4.additionalInput.y - 25);
 
@@ -372,7 +372,7 @@ function init() {
   mux4.output.setWires([wire26]);
 
   let wire27 = new Wire({
-    startNode: control.outputs[0],
+    startNode: control.outputs[1],
     endNode: regDest_1,
     wireColor: skyColor,
     text: "RegDest",
@@ -393,7 +393,7 @@ function init() {
   });
 
   let wire28 = new Wire({
-    startNode: control.outputs[1],
+    startNode: control.outputs[2],
     endNode: jump_1,
     wireColor: skyColor,
     text: "Jump",
@@ -622,11 +622,15 @@ function init() {
 function setup() {
   cnv = createCanvas(1200, 750);
   cnv.parent(select("#canvas-container"));
-  init();
+
+  // init();
+  initNodesForLejant();
 }
 
 function draw() {
   background(255);
+
+  seeLejant();
 
   noFill();
   for (let i = 0; i < wires.length; i++) {
@@ -651,4 +655,42 @@ function mousePressed() {
   for (let i = 0; i < nodes.length; i++) {
     nodes[i].onClick();
   }
+}
+
+function initNodesForLejant() {
+  nodes.push(new Node(500, 100, false));
+  nodes.push(new Node(500, 130, true));
+  nodes.push(new Node(500, 160, "true"));
+  let a = new Node(500, 250, true);
+  a.setDontCare(true);
+  let b = new Node(500, 220, false);
+  b.setDontCare(true);
+  let c = new Node(500, 190, "true");
+  c.setDontCare(true);
+  nodes.push(a, b, c);
+}
+
+function seeLejant() {
+  stroke(0);
+  strokeWeight(1);
+  fill(0, 0, 0);
+  textSize(16);
+  text("False", 525, 105);
+
+  textSize(17);
+  text("True", 525, 135);
+
+  textSize(17);
+  text("Hover to see value", 525, 165);
+
+  textSize(17);
+  text("Don't Care (Hover to see value)", 525, 195);
+
+  textSize(17);
+  text("False but Don't Care", 525, 225);
+
+  textSize(17);
+  text("True but Don't Care", 525, 255);
+
+  strokeWeight(2);
 }

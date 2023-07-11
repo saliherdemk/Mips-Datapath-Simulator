@@ -29,8 +29,6 @@ class Node {
   }
 
   changeValue(value) {
-    // only color will change
-    // value must be identical with normal cpu (combinational logic)
     this.value = value;
     this.hasValue = value !== false && value !== true;
     this.colorValue = this.isDontCare
@@ -44,15 +42,6 @@ class Node {
 
   setWires(wires) {
     this.wires = wires;
-  }
-  showValue() {
-    fill(0);
-    noStroke();
-    textSize(15);
-    text(this.value, this.x - 15, this.y);
-    fill(255);
-    stroke(0);
-    strokeWeight(2);
   }
 
   dist() {
@@ -98,6 +87,13 @@ class Node {
   show() {
     fill(this.colorValue);
     ellipse(this.x, this.y, 14);
+    if (this.isDontCare && !this.hasValue) {
+      strokeWeight(1);
+      fill(this.value ? color(0, 255, 0) : color(255, 0, 0));
+      arc(this.x, this.y, 14, 14, HALF_PI, PI + HALF_PI, PIE);
+    }
+    strokeWeight(2);
+
     noFill();
     this.hasValue && (this.isPopupOpen || this.rollover) && this.showPopup();
   }
