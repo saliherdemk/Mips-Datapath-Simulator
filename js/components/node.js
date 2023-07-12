@@ -69,42 +69,52 @@ class Node {
     this.isPopupOpen = false;
   }
 
-  // 10 - 80
   showPopup() {
     let val = this.value.length > 6 ? binToHex(this.value) : this.value;
     let width = val.length * 8 + (val.length < 8 ? 10 : 0);
     let [x, y] = [0, 0];
+    let [pX, pY] = [0, 0]; // popup target coordinates
 
     switch (this.popUpDirection) {
       case "top":
         x = this.x - width / 2 - 5;
         y = this.y - 40;
+        pX = this.x;
+        pY = y + 20;
         break;
       case "bottom":
         x = this.x - width / 2 - 5;
         y = this.y + 10;
+        pX = this.x;
+        pY = y + 10;
         break;
       case "left":
         x = this.x - width - 20;
         y = this.y - 15;
+        pX = this.x - 20;
+        pY = this.y;
         break;
       case "right":
         x = this.x + 10;
         y = this.y - 15;
+        pX = this.x + 20;
+        pY = this.y;
         break;
     }
 
     fill(255);
     rect(x, y, width + 10, 30, 20);
+
+    gradientLine(this.x, this.y, pX, pY, this.colorValue, color(255));
+    line(this.x, this.y, pX, pY);
+
     fill(0);
     noStroke();
     textSize(13);
     text(val, x + 10, y + 20);
 
-    fill(255);
     stroke(0);
     strokeWeight(2);
-    noFill();
   }
 
   show() {
