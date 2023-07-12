@@ -1,6 +1,6 @@
 class DataMemory extends Component {
   constructor(x, y) {
-    super(x, y, 100, 150, "Data Memory", 15, 1.1);
+    super(x, y, 120, 150, "Data Memory", 15, 1.1);
     this.inputs = [];
     this.output;
     this.additionalInputs = [];
@@ -10,20 +10,14 @@ class DataMemory extends Component {
   generateIO() {
     for (let i = 1; i < 3; i++) {
       this.inputs.push(
-        new Node(
-          this.x,
-          this.y + (this.height * i) / 3,
-          false,
-          i == 1 ? "top" : "right"
-        )
+        new Node(this.x, this.y + (this.height * i) / 3, false, "right")
       );
     }
 
     this.output = new Node(
       this.x + this.width,
       this.y + this.height / 3,
-      false,
-      "right"
+      false
     );
 
     this.additionalInputs.push(

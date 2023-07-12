@@ -1,6 +1,6 @@
 class Registers extends Component {
   constructor(x, y) {
-    super(x, y, 100, 150, "Registers", 4, 1.1);
+    super(x, y, 120, 150, "Registers", 4, 1.1);
     this.inputs = [];
     this.outputs = [];
     this.additionalInput;

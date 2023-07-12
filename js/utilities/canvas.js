@@ -13,19 +13,19 @@ function init() {
   let originY = 25;
   let skyColor = color(5, 176, 239);
 
-  pc = new Pc(originX + 50, originY + 350);
-  let alu1 = new Alu(originX + 140, originY + 50, true, "00100");
-  let alu2 = new Alu(originX + 715, originY + 90, true);
+  pc = new Pc(originX + 40, originY + 350);
+  let alu1 = new Alu(originX + 130, originY + 50, true, "00100");
+  let alu2 = new Alu(originX + 700, originY + 90, true);
   let alu3 = new Alu(originX + 650, originY + 325, false);
-  let im = new InstructionMemory(originX + 150, originY + 350);
-  register = new Registers(originX + 400, originY + 350);
-  let dm = new DataMemory(originX + 825, originY + 400);
+  let im = new InstructionMemory(originX + 140, originY + 350);
+  register = new Registers(originX + 380, originY + 350);
+  let dm = new DataMemory(originX + 825, originY + 410);
   let mux1 = new Mux(originX + 310, originY + 410);
   let mux2 = new Mux(originX + 580, originY + 400, false);
-  let mux3 = new Mux(originX + 975, originY + 300, true);
-  let mux4 = new Mux(originX + 980, originY + 6.5, true);
-  let mux5 = new Mux(originX + 880, originY + 50);
-  let muxJR = new Mux(originX + 1060, originY + 80, false, true);
+  let mux3 = new Mux(originX + 985, originY + 300, true);
+  let mux4 = new Mux(originX + 1000, originY + 6.5, true);
+  let mux5 = new Mux(originX + 855, originY + 50);
+  let muxJR = new Mux(originX + 1080, originY + 95, false, true);
 
   let signExtend = new Ellipse(
     originX + 450,
@@ -40,8 +40,8 @@ function init() {
     66,
     true
   );
-  let shift = new Ellipse(originX + 600, originY + 195, "Shift\nLeft 2", 66);
-  let topShift = new Ellipse(originX + 325, originY, "Shift\nLeft 2", 66);
+  let shift = new Ellipse(originX + 580, originY + 195, "Shift\nLeft 2", 66);
+  let topShift = new Ellipse(originX + 350, originY, "Shift\nLeft 2", 66);
   let truncate = new Ellipse(originX + 540, originY + 18, "", 30, true);
 
   let control = new Control(
@@ -49,9 +49,9 @@ function init() {
     originY + 125,
     "C\nO\nN\nT\nR\nO\nL"
   );
-  let and = new AndGate(originX + 800, originY + 290);
+  let and = new AndGate(originX + 790, originY + 290);
 
-  let i20Node = new Node(im.output.x + 15, register.inputs[1].y);
+  let i20Node = new Node(im.output.x + 25, register.inputs[1].y);
 
   let mux3toReg4_2 = new Node(register.inputs[3].x - 25, mux3.output.y + 350);
 
@@ -61,7 +61,7 @@ function init() {
   let muxJRtoPc_1 = new Node(pc.input.x - 25, pc.input.y - 435);
 
   let regDest_1 = new Node(
-    control.outputs[1].x - 125,
+    control.outputs[1].x - 135,
     control.outputs[1].y - 50
   );
 
@@ -606,14 +606,14 @@ function init() {
   });
 
   points.push(
-    new Point(originX + 125, originY + 425),
+    new Point(originX + 115, originY + 425),
     new Point(originX + 290, originY + 400),
     new Point(originX + 540, originY + 453),
     new Point(originX + 520, originY + 450),
     new Point(originX + 790, originY + 425),
     new Point(originX + 425, originY + 558),
-    new Point(originX + 650, originY + 76),
-    new Point(originX + 554.5, originY + 75),
+    new Point(originX + 635, originY + 76),
+    new Point(originX + 554.5, originY + 76),
     new Point(originX + 600, originY + 355),
     new Point(alu3.additionalInput.x, aluControl.output.y)
   );

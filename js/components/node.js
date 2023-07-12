@@ -69,37 +69,37 @@ class Node {
     this.isPopupOpen = false;
   }
 
+  // 10 - 80
   showPopup() {
     let val = this.value.length > 6 ? binToHex(this.value) : this.value;
-    let width = val.length * 9;
-    let directions = []; // x,y
+    let width = val.length * 8 + (val.length < 8 ? 10 : 0);
+    let [x, y] = [0, 0];
 
     switch (this.popUpDirection) {
       case "top":
-        directions = [this.x - width / 2 - 10, this.y - 40];
+        x = this.x - width / 2 - 5;
+        y = this.y - 40;
         break;
       case "bottom":
-        directions = [this.x - width / 2 - 10, this.y + 10];
+        x = this.x - width / 2 - 5;
+        y = this.y + 10;
         break;
       case "left":
-        directions = [this.x - width - 20, this.y - 15];
-
+        x = this.x - width - 20;
+        y = this.y - 15;
         break;
       case "right":
-        directions = [this.x + 10, this.y - 20];
-
-        break;
-
-      default:
+        x = this.x + 10;
+        y = this.y - 15;
         break;
     }
 
     fill(255);
-    rect(directions[0], directions[1], width + 10, 30, 20);
+    rect(x, y, width + 10, 30, 20);
     fill(0);
     noStroke();
     textSize(13);
-    text(val, directions[0] + 10, directions[1] + 20);
+    text(val, x + 10, y + 20);
 
     fill(255);
     stroke(0);
