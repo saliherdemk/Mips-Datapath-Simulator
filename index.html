@@ -16,9 +16,23 @@
         src="media/githubLogo.png"
         alt=""
         id="github"
-        style="position: absolute; right: 0px"
+        class="absolute right-0"
       />
     </a>
+
+    <button class="fixed bottom-2 right-3" onclick="toggleLejant()">
+      <div class="shadow-lg rounded hidden" id="lejant">
+        <img src="media/lejant.png" alt="" />
+      </div>
+      <img
+        src="media/tip.png"
+        width="50"
+        height="50"
+        alt=""
+        class="float-right"
+      />
+    </button>
+
     <div class="flex flex-col justify-center items-center py-5 px-[15%]">
       <div
         class="w-full text-center p-5 h-25 flex justify-center items-center relative"
@@ -159,7 +173,7 @@
       <p id="instruction-code" class="text-center"></p>
 
       <div
-        class="w-full max-h-[500px] relative overflow-hidden transition-all"
+        class="w-full max-h-[500px] relative overflow-hidden transition-all hidden"
         id="container"
         isExpanded="true"
       >
@@ -222,14 +236,24 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     ></script>
-    <script src="js/organizer.js"></script>
+    <!-- <script src="/js/compressed.js"></script> -->
 
-    <script src="js/script.js"></script>
-    <script src="js/data.js"></script>
-    <script src="js/canvas.js"></script>
-    <script src="js/node.js"></script>
-    <script src="js/point.js"></script>
-    <script src="js/wire.js"></script>
-    <script src="js/components.js"></script>
+    <script src="/js/data/data.js"></script>
+    <script src="/js/utilities/organizer.js"></script>
+    <script src="/js/utilities/script.js"></script>
+    <script src="/js/utilities/canvas.js"></script>
+    <script src="/js/components/node.js"></script>
+    <script src="/js/components/point.js"></script>
+    <script src="/js/components/wire.js"></script>
+    <script src="/js/components/component.js"></script>
+    <script src="/js/components/pc.js"></script>
+    <script src="/js/components/alu.js"></script>
+    <script src="/js/components/instructionMemory.js"></script>
+    <script src="/js/components/register.js"></script>
+    <script src="/js/components/dataMemory.js"></script>
+    <script src="/js/components/mux.js"></script>
+    <script src="/js/components/ellipse.js"></script>
+    <script src="/js/components/control.js"></script>
+    <script src="/js/components/and.js"></script>
   </body>
 </html>

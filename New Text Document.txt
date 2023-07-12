@@ -1,0 +1,17 @@
+data
+organizer
+script
+canvas
+node
+point
+wire
+component
+pc
+alu
+instructionMemory
+register
+dataMmeory
+mux
+ellipse
+control
+and

@@ -10,6 +10,8 @@ const regForm = document.getElementById("reg-form");
 const instFormInputs = document.querySelectorAll(".inst-form-input");
 const instructionCodeContainer = document.getElementById("instruction-code");
 
+const lejant = document.getElementById("lejant");
+
 const organizer = new Organizer();
 
 function startCycle(code) {
@@ -18,6 +20,9 @@ function startCycle(code) {
 }
 
 function goOneCycle() {
+  for (let i = 0; i < nodes.length; i++) {
+    nodes[i].setDontCare(false);
+  }
   for (let i = 0; i < components.length; i++) {
     // setTimeout(() => {
     components[i].update();
@@ -26,6 +31,10 @@ function goOneCycle() {
     // }, i * 200);
   }
   register.update(true);
+
+  for (let i = components.length - 1; i >= 0; i--) {
+    components[i].updateDontCare();
+  }
 }
 
 function setSelectOptions() {
@@ -147,7 +156,6 @@ function go(e) {
   }
   if (type == "R") {
     let funcCode = functionBits[instruction];
-    console.log(instruction, funcCode);
     icArray.push(dectoBin(0, 5));
     icArray.push(funcCode);
     if (funcCode == "001000") {
@@ -254,4 +262,12 @@ function gradientLine(x1, y1, x2, y2, color1, color2) {
   grad.addColorStop(1, color2);
 
   this.drawingContext.strokeStyle = grad;
+}
+
+function findWiresByEndNode(node) {
+  return wires.find((wire) => wire.endNode == node);
+}
+
+function toggleLejant() {
+  lejant.classList.toggle("hidden");
 }

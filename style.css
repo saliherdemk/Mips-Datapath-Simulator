@@ -2,6 +2,7 @@ body {
   margin: 0 0;
   overflow-y: scroll;
   min-width: 1200px;
+  position: relative;
 }
 
 .arrow {

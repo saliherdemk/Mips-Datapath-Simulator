@@ -9,23 +9,23 @@ var register;
 function init() {
   setSelectOptions();
   setRegInputs();
-  let originX = 0;
+  let originX = 100;
   let originY = 25;
   let skyColor = color(5, 176, 239);
 
-  pc = new Pc(originX + 50, originY + 350);
-  let alu1 = new Alu(originX + 140, originY + 50, true, "00100");
-  let alu2 = new Alu(originX + 715, originY + 90, true);
+  pc = new Pc(originX + 40, originY + 350);
+  let alu1 = new Alu(originX + 130, originY + 50, true, "00100");
+  let alu2 = new Alu(originX + 700, originY + 90, true);
   let alu3 = new Alu(originX + 650, originY + 325, false);
-  let im = new InstructionMemory(originX + 150, originY + 350);
-  register = new Registers(originX + 400, originY + 350);
-  let dm = new DataMemory(originX + 825, originY + 400);
-  let mux1 = new Mux(originX + 325, originY + 410);
+  let im = new InstructionMemory(originX + 140, originY + 350);
+  register = new Registers(originX + 380, originY + 350);
+  let dm = new DataMemory(originX + 825, originY + 410);
+  let mux1 = new Mux(originX + 310, originY + 410);
   let mux2 = new Mux(originX + 580, originY + 400, false);
-  let mux3 = new Mux(originX + 975, originY + 300, true);
-  let mux4 = new Mux(originX + 980, originY + 6.5, true, true);
-  let mux5 = new Mux(originX + 880, originY + 50);
-  let muxJR = new Mux(originX + 1060, originY + 80);
+  let mux3 = new Mux(originX + 985, originY + 300, true);
+  let mux4 = new Mux(originX + 1000, originY + 6.5, true);
+  let mux5 = new Mux(originX + 855, originY + 50);
+  let muxJR = new Mux(originX + 1080, originY + 95, false, true);
 
   let signExtend = new Ellipse(
     originX + 450,
@@ -40,8 +40,8 @@ function init() {
     66,
     true
   );
-  let shift = new Ellipse(originX + 600, originY + 195, "Shift\nLeft 2", 66);
-  let topShift = new Ellipse(originX + 400, originY, "Shift\nLeft 2", 66);
+  let shift = new Ellipse(originX + 580, originY + 195, "Shift\nLeft 2", 66);
+  let topShift = new Ellipse(originX + 350, originY, "Shift\nLeft 2", 66);
   let truncate = new Ellipse(originX + 540, originY + 18, "", 30, true);
 
   let control = new Control(
@@ -49,7 +49,7 @@ function init() {
     originY + 125,
     "C\nO\nN\nT\nR\nO\nL"
   );
-  let and = new AndGate(originX + 800, originY + 290);
+  let and = new AndGate(originX + 790, originY + 290);
 
   let i20Node = new Node(im.output.x + 25, register.inputs[1].y);
 
@@ -61,13 +61,13 @@ function init() {
   let muxJRtoPc_1 = new Node(pc.input.x - 25, pc.input.y - 435);
 
   let regDest_1 = new Node(
-    control.outputs[0].x - 125,
-    control.outputs[0].y - 35
+    control.outputs[1].x - 135,
+    control.outputs[1].y - 50
   );
 
   let regDest_2 = new Node(mux1.additionalInput.x, mux1.additionalInput.y + 25);
 
-  let jump_1 = new Node(control.outputs[1].x + 220, control.outputs[1].y);
+  let jump_1 = new Node(control.outputs[2].x + 220, control.outputs[2].y);
 
   let jump_2 = new Node(mux4.additionalInput.x, mux4.additionalInput.y - 25);
 
@@ -148,7 +148,7 @@ function init() {
   let wire0 = new Wire({ startNode: pc.output, endNode: im.input });
   let wire1 = new Wire({ startNode: pc.output, endNode: alu1.inputs[0] });
 
-  pc.setWires([wire0, wire1]);
+  pc.output.setWires([wire0, wire1]);
 
   let wire2 = new Wire({
     isManuel: true,
@@ -202,7 +202,7 @@ function init() {
     endNode: aluControl.input,
   });
 
-  im.setWires([
+  im.output.setWires([
     wire2,
     wire3,
     wire4,
@@ -247,20 +247,27 @@ function init() {
     backwards: true,
   });
 
-  alu1.setWires([wire11, wire12, wire11_1, wire11_1_1, wire11_2, wire12_1]);
+  alu1.outputs[0].setWires([
+    wire11,
+    wire12,
+    wire11_1,
+    wire11_1_1,
+    wire11_2,
+    wire12_1,
+  ]);
 
   let wire13 = new Wire({
     startNode: mux1.output,
     endNode: register.inputs[2],
   });
-  mux1.setWires([wire13]);
+  mux1.output.setWires([wire13]);
 
   let wire14 = new Wire({ startNode: signExtend.output, endNode: shift.input });
   let wire15 = new Wire({
     startNode: signExtend.output,
     endNode: mux2.inputs[1],
   });
-  signExtend.setWires([wire14, wire15]);
+  signExtend.output.setWires([wire14, wire15]);
 
   let wire16 = new Wire({
     startNode: register.outputs[0],
@@ -298,23 +305,15 @@ function init() {
     endNode: dm.inputs[1],
     backwards: true,
   });
-
-  register.setWires([
-    wire16,
-    wire17,
-    wire16_1,
-    wire16_2,
-    wire16_2_1,
-    wire17_1,
-    wire17_2,
-  ]);
+  register.outputs[0].setWires([wire16, wire16_1, wire16_2, wire16_2_1]);
+  register.outputs[1].setWires([wire17, wire17_1, wire17_2]);
 
   let wire18 = new Wire({ startNode: mux2.output, endNode: alu3.inputs[1] });
-  mux2.setWires([wire18]);
+  mux2.output.setWires([wire18]);
 
   let wire35 = new Wire({
     startNode: alu3.outputs[0],
-    endNode: and.input2,
+    endNode: and.inputs[1],
   });
 
   let wire19 = new Wire({
@@ -331,10 +330,11 @@ function init() {
     endNode: mux3.inputs[1],
     backwards: true,
   });
-  alu3.setWires([wire19, wire35, wire19_1, wire19_2]);
+  alu3.outputs[0].setWires([wire35]);
+  alu3.outputs[1].setWires([wire19, wire19_1, wire19_2]);
 
   let wire20 = new Wire({ startNode: dm.output, endNode: mux3.inputs[0] });
-  dm.setWires([wire20]);
+  dm.output.setWires([wire20]);
 
   let wire21 = new Wire({ startNode: mux3.output, endNode: mux3toReg4_2 });
 
@@ -343,36 +343,36 @@ function init() {
     endNode: register.inputs[3],
     backwards: true,
   });
-  mux3.setWires([wire21, wire21_1_1]);
+  mux3.output.setWires([wire21, wire21_1_1]);
 
   let wire22 = new Wire({ startNode: shift.output, endNode: alu2.inputs[1] });
-  shift.setWires([wire22]);
+  shift.output.setWires([wire22]);
 
   let wire23 = new Wire({
     startNode: truncate.output,
     endNode: mux4.inputs[0],
   });
-  truncate.setWires([wire23]);
+  truncate.output.setWires([wire23]);
 
   let wire24 = new Wire({
     startNode: topShift.output,
     endNode: truncate.input,
     backwards: true,
   });
-  topShift.setWires([wire24]);
+  topShift.output.setWires([wire24]);
 
   let wire25 = new Wire({
     startNode: alu2.outputs[0],
     endNode: mux5.inputs[1],
   });
-  alu2.setWires([wire25]);
+  alu2.outputs[0].setWires([wire25]);
 
   let wire26 = new Wire({ startNode: mux4.output, endNode: muxJR.inputs[0] });
 
-  mux4.setWires([wire26]);
+  mux4.output.setWires([wire26]);
 
   let wire27 = new Wire({
-    startNode: control.outputs[0],
+    startNode: control.outputs[1],
     endNode: regDest_1,
     wireColor: skyColor,
     text: "RegDest",
@@ -393,7 +393,7 @@ function init() {
   });
 
   let wire28 = new Wire({
-    startNode: control.outputs[1],
+    startNode: control.outputs[2],
     endNode: jump_1,
     wireColor: skyColor,
     text: "Jump",
@@ -523,34 +523,19 @@ function init() {
   });
   let wire36_1 = new Wire({
     startNode: branchNode,
-    endNode: and.input1,
+    endNode: and.inputs[0],
     wireColor: skyColor,
   });
 
-  control.setWires([
-    wire27,
-    wire28,
-    wire29,
-    wire30,
-    wire31,
-    wire32,
-    wire33,
-    wire34,
-    wire36,
-    wire27_1,
-    wire27_1_1,
-    wire28_1,
-    wire28_1_1,
-    wire29_1,
-    wire29_1_1,
-    wire30_1,
-    wire31_1,
-    wire32_1,
-    wire33_1,
-    wire33_1_1,
-    wire34_1,
-    wire36_1,
-  ]);
+  control.outputs[0].setWires([wire27, wire27_1, wire27_1_1]);
+  control.outputs[1].setWires([wire28, wire28_1, wire28_1_1]);
+  control.outputs[3].setWires([wire36, wire36_1]);
+  control.outputs[4].setWires([wire29, wire29_1, wire29_1_1]);
+  control.outputs[5].setWires([wire30, wire30_1]);
+  control.outputs[6].setWires([wire31, wire31_1]);
+  control.outputs[7].setWires([wire32, wire32_1]);
+  control.outputs[8].setWires([wire33, wire33_1, wire33_1_1]);
+  control.outputs[9].setWires([wire34, wire34_1]);
 
   let wireJr = new Wire({
     startNode: aluControl.output,
@@ -578,7 +563,7 @@ function init() {
     endNode: alu3.additionalInput,
     backwards: true,
   });
-  aluControl.setWires([wireJr, wire37, wire37_1, wireJr_1]);
+  aluControl.output.setWires([wireJr, wire37, wire37_1, wireJr_1]);
 
   let wire38 = new Wire({
     startNode: and.output,
@@ -591,10 +576,10 @@ function init() {
     backwards: true,
   });
 
-  and.setWires([wire38, wire38_1]);
+  and.output.setWires([wire38, wire38_1]);
 
   let wire39 = new Wire({ startNode: mux5.output, endNode: mux4.inputs[1] });
-  mux5.setWires([wire39]);
+  mux5.output.setWires([wire39]);
 
   let wire40 = new Wire({
     startNode: muxJR.output,
@@ -607,35 +592,45 @@ function init() {
     backwards: true,
   });
 
-  muxJR.setWires([wire40, wire40_1]);
+  muxJR.output.setWires([wire40, wire40_1]);
 
   wires = [];
   components.forEach((component) => {
-    wires = [...wires, ...component.wires];
+    componentWires = component?.output
+      ? component.output.wires
+      : component.outputs.reduce(function (a, b) {
+          return a.concat(b.wires);
+        }, []);
+    component.setWires(componentWires);
+    wires = [...wires, ...componentWires];
   });
 
   points.push(
-    new Point(originX + 125, originY + 425),
-    new Point(originX + 300, originY + 400),
+    new Point(originX + 115, originY + 425),
+    new Point(originX + 290, originY + 400),
     new Point(originX + 540, originY + 453),
     new Point(originX + 520, originY + 450),
     new Point(originX + 790, originY + 425),
     new Point(originX + 425, originY + 558),
-    new Point(originX + 650, originY + 76),
-    new Point(originX + 554.5, originY + 75),
+    new Point(originX + 635, originY + 76),
+    new Point(originX + 554.5, originY + 76),
     new Point(originX + 600, originY + 355),
     new Point(alu3.additionalInput.x, aluControl.output.y)
   );
 }
 
 function setup() {
-  cnv = createCanvas(1200, 750);
+  cnv = createCanvas(1300, 750);
   cnv.parent(select("#canvas-container"));
+
   init();
+  // initNodesForLejant();
 }
 
 function draw() {
   background(255);
+
+  // seeLejant();
 
   noFill();
   for (let i = 0; i < wires.length; i++) {
@@ -660,4 +655,42 @@ function mousePressed() {
   for (let i = 0; i < nodes.length; i++) {
     nodes[i].onClick();
   }
+}
+
+function initNodesForLejant() {
+  nodes.push(new Node(500, 100, false));
+  nodes.push(new Node(500, 130, true));
+  nodes.push(new Node(500, 160, "true"));
+  let a = new Node(500, 250, true);
+  a.setDontCare(true);
+  let b = new Node(500, 220, false);
+  b.setDontCare(true);
+  let c = new Node(500, 190, "true");
+  c.setDontCare(true);
+  nodes.push(a, b, c);
+}
+
+function seeLejant() {
+  stroke(0);
+  strokeWeight(1);
+  fill(0, 0, 0);
+  textSize(16);
+  text("False", 525, 105);
+
+  textSize(17);
+  text("True", 525, 135);
+
+  textSize(17);
+  text("Hover to see value", 525, 165);
+
+  textSize(17);
+  text("Don't Care (Hover to see value)", 525, 195);
+
+  textSize(17);
+  text("False but Don't Care", 525, 225);
+
+  textSize(17);
+  text("True but Don't Care", 525, 255);
+
+  strokeWeight(2);
 }
