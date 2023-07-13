@@ -6,6 +6,7 @@ class Organizer {
     this.memValues = [];
     this.pcValues = {};
     this.currAddress = "00000000000000000000000101011000";
+    this.valueTable = {};
   }
 
   setICode(code) {

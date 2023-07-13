@@ -102,7 +102,7 @@ class Node {
         break;
     }
 
-    fill(255);
+    fill(this.rollover ? color(251, 255, 113) : 255);
     rect(x, y, width + 10, 30, 20);
 
     gradientLine(this.x, this.y, pX, pY, this.colorValue, color(255));

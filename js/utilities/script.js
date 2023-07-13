@@ -14,6 +14,15 @@ const lejant = document.getElementById("lejant");
 
 const organizer = new Organizer();
 
+const hexDigits = {
+  10: "A",
+  11: "B",
+  12: "C",
+  13: "D",
+  14: "E",
+  15: "F",
+};
+
 function startCycle(code) {
   organizer.updatePcValues(code);
   goOneCycle();
@@ -188,20 +197,16 @@ function binToDec(bin) {
 }
 
 function binToHex(bin) {
-  let hex = parseInt(bin, 2).toString(16).toUpperCase();
-  while (hex.length < 8) {
-    hex = "0" + hex;
+  while (bin.length % 4) {
+    bin = "0" + bin;
   }
+  let hex = "";
+  bin.match(/.{4}/g).forEach((b) => {
+    let d = binToDec(b);
+    hex += hexDigits[d] || d;
+  });
   return "0x" + hex;
 }
-
-// function hexToBin(hex, size) {
-//   bin = parseInt(hex.substring(2), 16).toString(2);
-//   while (bin.length < size) {
-//     bin = "0" + bin;
-//   }
-//   return bin;
-// }
 
 function toggleForm() {
   if (container.getAttribute("isExpanded") == "true") {
