@@ -11,6 +11,7 @@ const instFormInputs = document.querySelectorAll(".inst-form-input");
 const instructionCodeContainer = document.getElementById("instruction-code");
 
 const lejant = document.getElementById("lejant");
+const valuesContainer = document.getElementById("valuesContainer");
 
 const organizer = new Organizer();
 
@@ -275,4 +276,8 @@ function findWiresByEndNode(node) {
 
 function toggleLejant() {
   lejant.classList.toggle("hidden");
+}
+
+function toggleValuesContainer() {
+  valuesContainer.classList.toggle("hidden");
 }
