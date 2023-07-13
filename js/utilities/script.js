@@ -279,5 +279,5 @@ function toggleLejant() {
 }
 
 function toggleValuesContainer() {
-  valuesContainer.classList.toggle("hidden");
+  valuesContainer.classList.toggle("translate-x-0");
 }

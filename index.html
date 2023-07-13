@@ -32,20 +32,24 @@
         class="float-right"
       />
     </button>
-
-    <!-- <button class="fixed top-[20%] left-3" onclick="toggleValuesContainer()">
-      <div class="shadow-lg rounded" id="valuesContainer">
-        <img src="media/lejant.png" alt="" />
-      </div>
-      <img
-        src="media/tip.png"
-        width="50"
-        height="50"
-        alt=""
-        class="float-right"
-      />
-    </button> -->
-
+    <!-- -translate-x-full -->
+    <div
+      id="valuesContainer"
+      class="fixed py-12 h-full left-0 w-64 transition-transform flex items-start -translate-x-3/4"
+    >
+      <aside class="h-full flex-1 bg-gray-50 overflow-y-auto">
+        <!-- <div class="px-3 py-4 overflow-y-auto bg-gray-50"></div> -->
+      </aside>
+      <button type="button" onclick="toggleValuesContainer()">
+        <img
+          src="media/tip.png"
+          width="50"
+          height="50"
+          alt=""
+          class="float-right"
+        />
+      </button>
+    </div>
     <div class="flex flex-col justify-center items-center py-5 px-[15%]">
       <div
         class="w-full text-center p-5 h-25 flex justify-center items-center relative"
