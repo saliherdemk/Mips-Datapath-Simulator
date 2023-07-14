@@ -30,6 +30,7 @@ function startCycle(code) {
 }
 
 function goOneCycle() {
+  organizer.setValueTable({});
   for (let i = 0; i < nodes.length; i++) {
     nodes[i].setDontCare(false);
   }
@@ -45,6 +46,8 @@ function goOneCycle() {
   for (let i = components.length - 1; i >= 0; i--) {
     components[i].updateDontCare();
   }
+
+  updateValuesContainer();
 }
 
 function setSelectOptions() {
@@ -270,8 +273,12 @@ function gradientLine(x1, y1, x2, y2, color1, color2) {
   this.drawingContext.strokeStyle = grad;
 }
 
-function findWiresByEndNode(node) {
-  return wires.find((wire) => wire.endNode == node);
+function findWiresByEndNodeId(nodeId) {
+  return wires.find((wire) => wire.endNode.id == nodeId);
+}
+
+function findNodeById(id) {
+  return nodes.find((node) => node.id == id);
 }
 
 function toggleLejant() {
@@ -280,4 +287,34 @@ function toggleLejant() {
 
 function toggleValuesContainer() {
   valuesContainer.classList.toggle("translate-x-0");
+}
+
+function updateValuesContainer() {
+  const aside = valuesContainer.children[0];
+  aside.innerHTML = ""; // gets aside tag
+  let table = organizer.getValueTable();
+  for (const [key, value] of Object.entries(table)) {
+    let d1 = document.createElement("div");
+    d1.setAttribute("node-id", key);
+    d1.classList.add("border-2", "text-center", "m-4", "bg-white");
+
+    d1.addEventListener("mouseover", () => {
+      findNodeById(key).setIsHighlighted(true);
+    });
+
+    d1.addEventListener("mouseleave", () => {
+      findNodeById(key).setIsHighlighted(false);
+    });
+
+    let d2 = document.createElement("div");
+    d2.innerText = value[0];
+    d2.classList.add("border-b-2", "p-2");
+
+    let d3 = document.createElement("div");
+    d3.innerText = value[1];
+    d3.classList.add("p-4");
+
+    d1.append(d2, d3);
+    aside.append(d1);
+  }
 }

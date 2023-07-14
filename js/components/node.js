@@ -9,8 +9,20 @@ class Node {
     this.rollover = false;
     this.hasValue = false;
     this.isDontCare = false;
+    this.isHighlighted = false;
     this.wires = [];
+    this.id;
     this.changeValue(value);
+    this.setId();
+  }
+
+  setId() {
+    this.id = currId;
+    currId += 1;
+  }
+
+  setIsHighlighted(value) {
+    this.isHighlighted = value;
   }
 
   setDontCare(value) {
@@ -22,7 +34,7 @@ class Node {
           return;
         }
       });
-      let nodeWires = findWiresByEndNode(this);
+      let nodeWires = findWiresByEndNodeId(this.id);
 
       nodeWires?.startNode.setDontCare(true);
     }
@@ -36,9 +48,12 @@ class Node {
       ? color(0, 255, 255)
       : this.hasValue
       ? color(0, 0, 255)
-      : this.value
+      : value
       ? color(0, 255, 0)
       : color(255, 0, 0);
+
+    value.length > 6 &&
+      organizer.updateValueTable(this.id, [binToHex(value), value]);
   }
 
   setWires(wires) {
@@ -102,7 +117,7 @@ class Node {
         break;
     }
 
-    fill(this.rollover ? color(251, 255, 113) : 255);
+    fill(this.isHighlighted ? color(251, 255, 113) : 255);
     rect(x, y, width + 10, 30, 20);
 
     gradientLine(this.x, this.y, pX, pY, this.colorValue, color(255));
@@ -128,7 +143,9 @@ class Node {
     strokeWeight(2);
 
     noFill();
-    this.hasValue && (this.isPopupOpen || this.rollover) && this.showPopup();
+    this.hasValue &&
+      (this.isPopupOpen || this.rollover || this.isHighlighted) &&
+      this.showPopup();
   }
 
   draw() {

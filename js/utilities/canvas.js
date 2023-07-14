@@ -5,6 +5,7 @@ var nodes = [];
 var cnv;
 var pc;
 var register;
+var currId = 0;
 
 function init() {
   setSelectOptions();

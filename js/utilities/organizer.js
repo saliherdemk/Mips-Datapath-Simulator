@@ -66,4 +66,15 @@ class Organizer {
     this.currAddress = values;
     return this.currAddress;
   }
+
+  setValueTable(values) {
+    this.valueTable = values;
+  }
+
+  getValueTable() {
+    return this.valueTable;
+  }
+  updateValueTable(id, valueArr) {
+    this.valueTable[id] = valueArr;
+  }
 }
