@@ -15,6 +15,12 @@ const valuesContainer = document.getElementById("valuesContainer");
 
 const organizer = new Organizer();
 
+// const WHITE = color(255);
+// const SKY = color(5, 176, 239);
+// const GREEN = color(0, 255, 0);
+// const RED = color(255, 0, 0);
+// const LIGHTBLUE = color(0, 255, 255);
+
 const hexDigits = {
   10: "A",
   11: "B",
@@ -45,6 +51,10 @@ function goOneCycle() {
 
   for (let i = components.length - 1; i >= 0; i--) {
     components[i].updateDontCare();
+  }
+
+  for (let i = 0; i < nodes.length; i++) {
+    nodes[i].addNodeToValueTable();
   }
 
   updateValuesContainer();
@@ -291,13 +301,19 @@ function toggleValuesContainer() {
 }
 
 function updateValuesContainer() {
-  const aside = valuesContainer.children[0].children[1];
-  aside.innerHTML = ""; // gets aside tag
+  const aside = valuesContainer.children[1]; // gets aside tag
+  aside.innerHTML = "";
   let table = organizer.getValueTable();
   for (const [key, value] of Object.entries(table)) {
     let d1 = document.createElement("div");
     d1.setAttribute("node-id", key);
-    d1.classList.add("border-2", "m-4", "bg-white", "rounded");
+    d1.classList.add(
+      "border-2",
+      "m-4",
+      "bg-white",
+      "rounded",
+      "hover:shadow-lg"
+    );
 
     d1.addEventListener("mouseover", () => {
       findNodeById(key).setIsHighlighted(true);

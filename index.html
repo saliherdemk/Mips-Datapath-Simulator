@@ -227,13 +227,14 @@
         Close Popups
       </button>
     </div>
+
     <div
       id="valuesContainer"
-      class="fixed py-12 h-full top-6 left-0 z-40 flex items-start transition-all -translate-x-[calc(100%_-_50px)]"
+      class="fixed h-full text-center w-[410px] top-[10%] left-0 z-40 transition-all -translate-x-[calc(100%_-_40px)]"
     >
-      <div class="h-full bg-white text-center w-96 relative">
+      <div class="relative">
         <div
-          class="h-[50px] text-lg bg-white flex flex-col items-center justify-center sticky top-0 shadow"
+          class="h-[50px] w-full text-lg bg-white flex flex-col items-center justify-center sticky top-0 shadow"
         >
           Binary Equivalent of Hex Values
           <span class="text-xs text-gray-500"
@@ -241,20 +242,32 @@
           >
         </div>
 
-        <aside
-          class="bg-[#f6f6f6] h-[calc(100%_-_50px)] overflow-y-scroll"
-        ></aside>
+        <button
+          type="button"
+          class="absolute top-0 right-3 h-[50px]"
+          onclick="toggleValuesContainer()"
+        >
+          <svg
+            class="w-6 h-6"
+            aria-hidden="true"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+            width="50"
+            height="50"
+          >
+            <path
+              clip-rule="evenodd"
+              fill-rule="evenodd"
+              d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
+            ></path>
+          </svg>
+        </button>
       </div>
 
-      <button type="button" onclick="toggleValuesContainer()">
-        <img
-          src="media/tip.png"
-          width="50"
-          height="50"
-          alt=""
-          class="float-right"
-        />
-      </button>
+      <aside
+        class="bg-[#f6f6f6] h-[calc(100%_-_50px)] overflow-y-scroll w-[calc(100%_-_40px)]"
+      ></aside>
     </div>
 
     <div id="canvas-container" class="flex justify-center py-5"></div>

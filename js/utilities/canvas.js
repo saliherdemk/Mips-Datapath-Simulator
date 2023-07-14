@@ -672,9 +672,14 @@ function initNodesForLejant() {
 }
 
 function seeLejant() {
+  fill(0, 0, 0);
+
   stroke(0);
   strokeWeight(1);
-  fill(0, 0, 0);
+
+  textSize(17);
+  text("Click Node to toggle popup visibilty", 490, 50);
+
   textSize(16);
   text("False", 525, 105);
 

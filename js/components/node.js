@@ -51,9 +51,11 @@ class Node {
       : value
       ? color(0, 255, 0)
       : color(255, 0, 0);
+  }
 
-    value.length > 6 &&
-      organizer.updateValueTable(this.id, [binToHex(value), value]);
+  addNodeToValueTable() {
+    this.value.length > 6 &&
+      organizer.updateValueTable(this.id, [binToHex(this.value), this.value]);
   }
 
   setWires(wires) {
