@@ -216,10 +216,11 @@ function toggleForm() {
   if (container.getAttribute("isExpanded") == "true") {
     container.style.maxHeight = "0px";
     container.setAttribute("isExpanded", "false");
-  } else {
-    container.style.maxHeight = "500px";
-    container.setAttribute("isExpanded", "true");
+    return;
   }
+
+  container.style.maxHeight = "500px";
+  container.setAttribute("isExpanded", "true");
 }
 
 function setRegisters(e) {
@@ -290,13 +291,13 @@ function toggleValuesContainer() {
 }
 
 function updateValuesContainer() {
-  const aside = valuesContainer.children[0];
+  const aside = valuesContainer.children[0].children[1];
   aside.innerHTML = ""; // gets aside tag
   let table = organizer.getValueTable();
   for (const [key, value] of Object.entries(table)) {
     let d1 = document.createElement("div");
     d1.setAttribute("node-id", key);
-    d1.classList.add("border-2", "text-center", "m-4", "bg-white");
+    d1.classList.add("border-2", "m-4", "bg-white", "rounded");
 
     d1.addEventListener("mouseover", () => {
       findNodeById(key).setIsHighlighted(true);

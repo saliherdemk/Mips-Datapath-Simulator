@@ -229,9 +229,23 @@
     </div>
     <div
       id="valuesContainer"
-      class="fixed py-12 h-full top-6 left-0 w-auto z-40 transition-transform flex items-start"
+      class="fixed py-12 h-full top-6 left-0 z-40 flex items-start transition-all -translate-x-[calc(100%_-_50px)]"
     >
-      <aside class="h-full flex-1 bg-gray-200 overflow-y-auto"></aside>
+      <div class="h-full bg-white text-center w-96 relative">
+        <div
+          class="h-[50px] text-lg bg-white flex flex-col items-center justify-center sticky top-0 shadow"
+        >
+          Binary Equivalent of Hex Values
+          <span class="text-xs text-gray-500"
+            >(Hover to highlight the node on datapath)</span
+          >
+        </div>
+
+        <aside
+          class="bg-[#f6f6f6] h-[calc(100%_-_50px)] overflow-y-scroll"
+        ></aside>
+      </div>
+
       <button type="button" onclick="toggleValuesContainer()">
         <img
           src="media/tip.png"
