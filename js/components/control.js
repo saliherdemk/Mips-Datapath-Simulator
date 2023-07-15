@@ -24,13 +24,11 @@ class Control extends Component {
     // Since there is no way to determinate weather if this signal X or not with combinational logic,
     // I reimplement this with brute force way. Sorry for this mess.
 
-    this.outputs[0].changeValue(opCode == "000011"); //jal
-
+    this.outputs[0].changeValue(opCode == "000011"); // jal
     this.outputs[1].changeValue(opCode == "000000"); // regdest
-    this.outputs[2].changeValue(opCode == "000010" || opCode == "000011"); //jump
-
-    this.outputs[3].changeValue(opCode == "000100"); //branch
-    this.outputs[4].changeValue(opCode == "100011"); //memread
+    this.outputs[2].changeValue(opCode == "000010" || opCode == "000011"); // jump
+    this.outputs[3].changeValue(opCode == "000100"); // branch
+    this.outputs[4].changeValue(opCode == "100011"); // memread
     this.outputs[5].changeValue(opCode == "100011"); // memtoreg
     this.outputs[6].changeValue(
       ["000000"].includes(opCode)
@@ -40,16 +38,16 @@ class Control extends Component {
         : opCode == "000100"
         ? "01"
         : "11" //X
-    ); //aluop
-    this.outputs[7].changeValue(opCode == "101011"); //memwrite
-    this.outputs[8].changeValue(opCode != "000000" && opCode != "000100"); //alusrc
+    ); // aluop
+    this.outputs[7].changeValue(opCode == "101011"); // memwrite
+    this.outputs[8].changeValue(opCode != "000000" && opCode != "000100"); // alusrc
     this.outputs[9].changeValue(
       !["101011", "000010", "000100"].includes(opCode)
-    ); //regwrite
+    ); // regwrite
   }
 
   drawText() {
-    fill(5, 176, 239);
+    fill(colors.SKY);
     noStroke();
     textSize(15);
     text(
@@ -57,13 +55,13 @@ class Control extends Component {
       this.x + this.width / this.textXOffset,
       this.y + this.height / this.textYOffset
     );
-    fill(255);
-    stroke(0);
+    fill(colors.WHITE);
+    stroke(colors.BLACK);
     strokeWeight(2);
   }
 
   show() {
-    stroke(5, 176, 239);
+    stroke(colors.SKY);
     rect(this.x, this.y, this.width, this.height, 50);
   }
 }

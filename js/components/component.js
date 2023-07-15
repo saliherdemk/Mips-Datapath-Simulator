@@ -15,7 +15,10 @@ class Component {
     this.wires = wires;
   }
 
-  updateDontCare() {}
+  updateDontCare() {
+    null;
+  }
+
   updateWires() {
     for (let i = 0; i < this.wires.length; i++) {
       this.wires[i].update();
@@ -23,7 +26,7 @@ class Component {
   }
 
   drawText() {
-    fill(0);
+    fill(colors.BLACK);
     noStroke();
     textSize(15);
     text(
@@ -31,8 +34,8 @@ class Component {
       this.x + this.width / this.textXOffset,
       this.y + this.height / this.textYOffset
     );
-    fill(255);
-    stroke(0);
+    fill(colors.WHITE);
+    stroke(colors.BLACK);
     strokeWeight(2);
   }
 

@@ -27,7 +27,6 @@ class Wire {
 
   drawText() {
     fill(this.wireColor);
-    // noStroke();
     textSize(13);
     text(
       this.text,
@@ -35,7 +34,7 @@ class Wire {
       this.startNode.y + this.textYOffset
     );
     noFill();
-    stroke(0);
+    stroke(colors.BLACK);
     strokeWeight(2);
   }
 
@@ -46,7 +45,7 @@ class Wire {
           this.startNode.y,
           this.endNode.x,
           this.endNode.y,
-          color(0),
+          colors.BLACK,
           this.wireColor
         )
       : stroke(this.wireColor);
@@ -56,7 +55,7 @@ class Wire {
     vertex(this.startNode.x + (this.backwards ? 0 : 25), this.endNode.y);
     vertex(this.endNode.x, this.endNode.y);
     endShape();
-    stroke(0);
+    stroke(colors.BLACK);
     this.drawText();
   }
 }

@@ -1,13 +1,16 @@
 class Point {
-  constructor(x, y, r = 10) {
+  constructor(x, y, clr = colors.BLACK) {
     this.x = x;
     this.y = y;
-    this.r = r;
+    this.r = 12;
+    this.color = clr;
   }
 
   draw() {
-    fill(0);
+    noStroke();
+    fill(this.color);
     ellipse(this.x, this.y, this.r);
     noFill();
+    stroke(colors.BLACK);
   }
 }

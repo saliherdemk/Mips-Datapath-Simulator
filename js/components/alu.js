@@ -1,12 +1,11 @@
 class Alu extends Component {
-  constructor(x, y, isAdd, defaultValue = false) {
+  constructor(x, y, isAdd) {
     super(x, y, 100, 150, isAdd ? "Add" : "Alu", 2.5, 2);
     this.isAdd = isAdd;
     this.wires = [];
     this.inputs = [];
     this.outputs = [];
     this.additionalInput;
-    this.defaultValue = defaultValue;
     this.generateIO();
   }
 
@@ -37,7 +36,7 @@ class Alu extends Component {
       new Node(
         this.x,
         this.y + 120,
-        this.defaultValue,
+        false,
         this.additionalInput ? "right" : "top"
       )
     );
@@ -58,7 +57,6 @@ class Alu extends Component {
     let inp1Val = this.inputs[0].value;
     let inp1 = binToDec(inp1Val);
     let inp2Val = this.inputs[1].value;
-    // let isAddress = inp2Val[1] == "x";
     let inp2 = binToDec(inp2Val);
     if (this.isAdd) {
       let val = dectoBin(inp1 + inp2, 32);

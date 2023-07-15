@@ -3,7 +3,7 @@ class Node {
     this.x = x;
     this.y = y;
     this.value = value;
-    this.colorValue = color(255, 0, 0);
+    this.colorValue = colors.RED;
     this.isPopupOpen = false;
     this.popUpDirection = popUpDirection;
     this.rollover = false;
@@ -45,12 +45,12 @@ class Node {
     this.value = value;
     this.hasValue = value !== false && value !== true;
     this.colorValue = this.isDontCare
-      ? color(0, 255, 255)
+      ? colors.LIGHTBLUE
       : this.hasValue
-      ? color(0, 0, 255)
+      ? colors.DARKBLUE
       : value
-      ? color(0, 255, 0)
-      : color(255, 0, 0);
+      ? colors.GREEN
+      : colors.RED;
   }
 
   addNodeToValueTable() {
@@ -90,7 +90,7 @@ class Node {
     let val = this.value.length > 6 ? binToHex(this.value) : this.value;
     let width = val.length * 8 + (val.length < 8 ? 10 : 0);
     let [x, y] = [0, 0];
-    let [pX, pY] = [0, 0]; // popup target coordinates
+    let [pX, pY] = [0, 0]; // target popup coordinates
 
     switch (this.popUpDirection) {
       case "top":
@@ -119,18 +119,18 @@ class Node {
         break;
     }
 
-    fill(this.isHighlighted ? color(251, 255, 113) : 255);
+    fill(this.isHighlighted ? colors.YELLOW : colors.WHITE);
     rect(x, y, width + 10, 30, 20);
 
-    gradientLine(this.x, this.y, pX, pY, this.colorValue, color(255));
+    gradientLine(this.x, this.y, pX, pY, this.colorValue, colors.WHITE);
     line(this.x, this.y, pX, pY);
 
-    fill(0);
+    fill(colors.BLACK);
     noStroke();
     textSize(13);
     text(val, x + 10, y + 20);
 
-    stroke(0);
+    stroke(colors.BLACK);
     strokeWeight(2);
   }
 
@@ -139,7 +139,7 @@ class Node {
     ellipse(this.x, this.y, 14);
     if (this.isDontCare && !this.hasValue) {
       strokeWeight(1);
-      fill(this.value ? color(0, 255, 0) : color(255, 0, 0));
+      fill(this.value ? colors.GREEN : colors.RED);
       arc(this.x, this.y, 14, 14, HALF_PI, PI + HALF_PI, PIE);
     }
     strokeWeight(2);

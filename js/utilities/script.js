@@ -15,12 +15,6 @@ const valuesContainer = document.getElementById("valuesContainer");
 
 const organizer = new Organizer();
 
-// const WHITE = color(255);
-// const SKY = color(5, 176, 239);
-// const GREEN = color(0, 255, 0);
-// const RED = color(255, 0, 0);
-// const LIGHTBLUE = color(0, 255, 255);
-
 const hexDigits = {
   10: "A",
   11: "B",
