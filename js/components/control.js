@@ -24,7 +24,7 @@ class Control extends Component {
     // Since there is no way to determinate weather if this signal X or not with combinational logic,
     // I reimplement this with brute force way. Sorry for this mess.
 
-    this.outputs[0].changeValue(opCode == "000000"); //jr
+    this.outputs[0].changeValue(opCode == "000011"); //jal
 
     this.outputs[1].changeValue(opCode == "000000"); // regdest
     this.outputs[2].changeValue(opCode == "000010" || opCode == "000011"); //jump
