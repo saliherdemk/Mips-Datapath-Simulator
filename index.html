@@ -205,7 +205,12 @@
           </button>
         </form>
 
-        <p class="text-lg text-center h-10">Memory</p>
+        <p class="text-lg text-center h-10 flex flex-col mb-3">
+          Memory
+          <span class="text-xs text-center text-gray-500">
+            (All values are zero at the beggining)
+          </span>
+        </p>
 
         <div
           class="relative overflow-x-auto w-full flex gap-4 pb-2"
@@ -213,7 +218,7 @@
         ></div>
       </div>
     </div>
-    <div class="text-right px-24">
+    <div class="text-right px-24 px-[15%]">
       <button
         onclick="openPopups()"
         class="bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 my-2 rounded"
