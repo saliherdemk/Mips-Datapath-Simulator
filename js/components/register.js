@@ -37,8 +37,13 @@ class Registers extends Component {
   }
 
   update(writeToReg = false) {
-    this.inputs[2].setDontCare(!this.additionalInput.value);
-    this.inputs[3].setDontCare(!this.additionalInput.value);
+    this.additionalInput.setDontCare(this.inputs[2].value == "00000");
+    this.inputs[2].setDontCare(
+      !this.additionalInput.value || this.additionalInput.isDontCare
+    );
+    this.inputs[3].setDontCare(
+      !this.additionalInput.value || this.additionalInput.isDontCare
+    );
     let regValues = organizer.getRegValues();
     this.outputs[0].changeValue(
       dectoBin(regValues[binToDec(this.inputs[0].value) - 1], 32)
