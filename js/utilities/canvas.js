@@ -1,11 +1,12 @@
 function setup() {
   cnv = createCanvas(1300, 750);
   cnv.parent(select("#canvas-container"));
+  frameRate(30);
 
   setSelectOptions();
   setRegInputs();
   initColors();
-  init();
+  initDatapath();
   // initNodesForLejant();
 }
 

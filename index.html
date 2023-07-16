@@ -3,7 +3,6 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.tailwindcss.com"></script>
 
     <link rel="stylesheet" href="style.css" />
@@ -11,7 +10,10 @@
     <title>Document</title>
   </head>
   <body>
-    <a href="https://github.com/saliherdemk" target="blank">
+    <a
+      href="https://github.com/saliherdemk/Mips-Datapath-Simulator"
+      target="blank"
+    >
       <img
         src="media/githubLogo.png"
         alt=""
@@ -37,7 +39,7 @@
       <div
         class="w-full text-center p-5 h-25 flex justify-center items-center relative"
       >
-        <form action="" id="inst-form" onsubmit="go(event)">
+        <form action="" id="inst-form" onsubmit="startCycle(event)">
           <div class="flex">
             <div class="px-4 block">
               <label
@@ -283,13 +285,14 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     ></script>
-    <!-- <script src="/js/compressed.js"></script> -->
     <script src="js/data/data.js"></script>
+
     <script src="js/utilities/organizer.js"></script>
+    <script src="js/utilities/variables.js"></script>
     <script src="js/utilities/script.js"></script>
-    <script src="js/utilities/init.js"></script>
+    <script src="js/utilities/cycle.js"></script>
+    <script src="js/utilities/initDatapath.js"></script>
     <script src="js/utilities/canvas.js"></script>
-    <script src="js/utilities/colors.js"></script>
 
     <script src="js/components/node.js"></script>
     <script src="js/components/point.js"></script>

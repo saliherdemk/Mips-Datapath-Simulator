@@ -1,59 +1,3 @@
-const regInput1 = [...document.querySelectorAll(".reg-input-1")];
-const regInput2 = [...document.querySelectorAll(".reg-input-2")];
-const input3Label = document.getElementById("input3-label");
-const regSelects = document.querySelectorAll(".reg-select");
-const regInputContainer = document.getElementById("reg-input-container");
-const memContainer = document.getElementById("mem-container");
-
-const container = document.getElementById("container");
-const regForm = document.getElementById("reg-form");
-const instFormInputs = document.querySelectorAll(".inst-form-input");
-const instructionCodeContainer = document.getElementById("instruction-code");
-
-const lejant = document.getElementById("lejant");
-const valuesContainer = document.getElementById("valuesContainer");
-
-const organizer = new Organizer();
-
-const hexDigits = {
-  10: "A",
-  11: "B",
-  12: "C",
-  13: "D",
-  14: "E",
-  15: "F",
-};
-
-function startCycle(code) {
-  organizer.updatePcValues(code);
-  goOneCycle();
-}
-
-function goOneCycle() {
-  organizer.setValueTable({});
-  for (let i = 0; i < nodes.length; i++) {
-    nodes[i].setDontCare(false);
-  }
-  for (let i = 0; i < components.length; i++) {
-    // setTimeout(() => {
-    components[i].update();
-    components[i].updateWires();
-    components[i].isVisited = true;
-    // }, i * 200);
-  }
-  register.update(true);
-
-  for (let i = components.length - 1; i >= 0; i--) {
-    components[i].updateDontCare();
-  }
-
-  for (let i = 0; i < nodes.length; i++) {
-    nodes[i].addNodeToValueTable();
-  }
-
-  updateValuesContainer();
-}
-
 function setSelectOptions() {
   regSelects.forEach((regSelect) => {
     for (let i = 1; i < 32; i++) {
@@ -110,10 +54,6 @@ function showSecondInput(index) {
   regInput2[index].classList.remove("hidden");
 }
 
-function updateIC() {
-  instructionCodeContainer.innerText = organizer.getICode();
-}
-
 function setInputs() {
   resetInputs();
   let instruction = organizer.getInstruction();
@@ -135,61 +75,6 @@ function setInputs() {
   } else {
     showInput([0, 1, 2]);
   }
-}
-
-function go(e) {
-  e.preventDefault();
-  let inpValues = [];
-  instFormInputs.forEach((inp) => {
-    if (!inp.parentElement.classList.contains("hidden")) {
-      inpValues.push(inp.value);
-    }
-  });
-  let instruction = organizer.setInstruction(inpValues[0]).toLowerCase();
-  let opCode = opCodes[instruction];
-  let icArray = [opCode];
-  let codeLength = 6;
-  let iData;
-
-  const type =
-    opCode === "000000"
-      ? "R"
-      : opCode === "000010" || opCode === "000011"
-      ? "J"
-      : "I";
-
-  for (let i = 1; i < inpValues.length; i++) {
-    const element = inpValues[i].split("$");
-    if (element.length == 2) {
-      icArray.push(dectoBin(element[1], 5));
-      codeLength += 5;
-    } else {
-      iData = element[0];
-    }
-  }
-
-  if (opCode != "000100" && opCode != "000010" && opCode != "000011") {
-    icArray.push(icArray.splice(1, 1)[0]);
-  }
-  if (type == "R") {
-    let funcCode = functionBits[instruction];
-    icArray.push(dectoBin(0, 5));
-    icArray.push(funcCode);
-    if (funcCode == "001000") {
-      icArray.splice(3, 0, dectoBin(0, 5));
-      icArray.splice(3, 0, dectoBin(0, 5));
-      codeLength += 10;
-    }
-    codeLength += 5 + funcCode.length;
-  }
-
-  if (iData) {
-    icArray.push(dectoBin(iData, 32 - codeLength));
-  }
-
-  organizer.setICode(icArray.join(" "));
-  updateIC();
-  startCycle(organizer.getICode());
 }
 
 function dectoBin(num, size) {
@@ -294,38 +179,14 @@ function toggleValuesContainer() {
   valuesContainer.classList.toggle("translate-x-0");
 }
 
-function updateValuesContainer() {
-  const aside = valuesContainer.children[1]; // gets aside tag
-  aside.innerHTML = "";
-  let table = organizer.getValueTable();
-  for (const [key, value] of Object.entries(table)) {
-    let d1 = document.createElement("div");
-    d1.setAttribute("node-id", key);
-    d1.classList.add(
-      "border-2",
-      "m-4",
-      "bg-white",
-      "rounded",
-      "hover:shadow-lg"
-    );
-
-    d1.addEventListener("mouseover", () => {
-      findNodeById(key).setIsHighlighted(true);
-    });
-
-    d1.addEventListener("mouseleave", () => {
-      findNodeById(key).setIsHighlighted(false);
-    });
-
-    let d2 = document.createElement("div");
-    d2.innerText = value[0];
-    d2.classList.add("border-b-2", "p-2");
-
-    let d3 = document.createElement("div");
-    d3.innerText = value[1];
-    d3.classList.add("p-4");
-
-    d1.append(d2, d3);
-    aside.append(d1);
-  }
+// p5.js functions can't access before the setup function. That's why this function must be called in setup.
+function initColors() {
+  colors.SKY = color(5, 176, 239);
+  colors.WHITE = color(255);
+  colors.RED = color(255, 0, 0);
+  colors.LIGHTBLUE = color(0, 255, 255);
+  colors.DARKBLUE = color(0, 0, 255);
+  colors.GREEN = color(0, 255, 0);
+  colors.BLACK = color(0);
+  colors.YELLOW = color(251, 255, 113);
 }

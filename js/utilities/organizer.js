@@ -54,8 +54,8 @@ class Organizer {
     return this.pcValues[key];
   }
 
-  updatePcValues(value) {
-    this.pcValues[this.currAddress] = value;
+  updatePcValues() {
+    this.pcValues[this.currAddress] = this.instructionCode;
   }
 
   getCurrAddress() {

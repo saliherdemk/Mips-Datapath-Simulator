@@ -1,15 +1,4 @@
-var components = [];
-var wires = [];
-var points = [];
-var nodes = [];
-var pc;
-var register;
-var currId = 0;
-
-function init() {
-  let originX = 120;
-  let originY = 25;
-
+function initDatapath() {
   pc = new Pc(originX - 50, originY + 350);
   let alu1 = new Alu(originX + 40, originY + 50, true);
   alu1.inputs[1].changeValue("00100");

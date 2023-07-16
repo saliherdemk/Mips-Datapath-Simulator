@@ -7,7 +7,6 @@ class Component {
     this.text = text;
     this.textXOffset = textXOffset;
     this.textYOffset = textYOffset;
-    this.isVisited = false;
     this.wires = [];
   }
 
@@ -42,11 +41,5 @@ class Component {
   draw() {
     this.show();
     this.drawText();
-    this.isVisited &&
-      text(
-        "OK",
-        this.x + this.width / this.textXOffset,
-        this.y + this.height / this.textYOffset
-      );
   }
 }
