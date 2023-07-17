@@ -188,5 +188,5 @@ function initColors() {
   colors.DARKBLUE = color(0, 0, 255);
   colors.GREEN = color(0, 255, 0);
   colors.BLACK = color(0);
-  colors.YELLOW = color(251, 255, 113);
+  colors.YELLOW = color(255, 255, 0);
 }
