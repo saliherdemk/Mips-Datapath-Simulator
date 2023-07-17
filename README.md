@@ -32,7 +32,7 @@ Basic datapath needs to modification for some instructions. I didn't find any re
 
 https://www.comp.nus.edu.sg/~adi-yoga/CS2100/ch08c2/
 
-then I modified to logic to cater for this.
+then I modified the logic to cater for this.
 
 https://electronics.stackexchange.com/questions/672873/alu-control-output-not-return-010-for-addi-instruction
 
