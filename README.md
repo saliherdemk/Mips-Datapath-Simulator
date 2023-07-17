@@ -1,6 +1,6 @@
 # Mips-Datapath-Simulator
 
-This is demonstration of how the most of the basic instruction works in Mips Architecture. It's complete datapath for
+This is demonstration of how the most of the basic instruction works in Mips Architecture. Supported Instruction set:
 
 | **Instruction** |        **Format**        |
 | :-------------: | :----------------------: |
