@@ -19,10 +19,6 @@ class Control extends Component {
 
   update() {
     let opCode = this.input.value;
-    // Normally, I made this component with combinational logic.
-    // But then I relize that I need to show that if this signal is true, false or X(don't care)
-    // Since there is no way to determinate weather if this signal X or not with combinational logic,
-    // I reimplement this with brute force way. Sorry for this mess.
 
     this.outputs[0].changeValue(opCode == "000011"); // jal
     this.outputs[1].changeValue(opCode == "000000"); // regdest

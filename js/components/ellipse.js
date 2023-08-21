@@ -41,7 +41,7 @@ class Ellipse extends Component {
     let aluOp = this.additionalInput?.value;
 
     if (this.text == "Shift\nLeft 2") {
-      value = "00" + value;
+      value = value.length < 32 ? "00" + value : value;
       this.output.changeValue(value.slice(2) + value.slice(0, 2));
     } else if (this.text == "Sign\nExtend") {
       this.output.changeValue(

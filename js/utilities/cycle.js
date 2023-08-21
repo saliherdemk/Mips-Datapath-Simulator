@@ -114,7 +114,7 @@ function updateValuesContainer() {
     d2.classList.add("border-b-2", "p-2");
 
     let d3 = document.createElement("div");
-    d3.innerText = value[1];
+    d3.innerText = value[1] + "\n" + value[1].length + " bits";
     d3.classList.add("p-4");
 
     d1.append(d2, d3);
