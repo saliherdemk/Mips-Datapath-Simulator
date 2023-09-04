@@ -20,7 +20,7 @@ class Alu extends Component {
       this.outputs.push(
         new Node(this.x + this.width, this.y + this.height / 3, false)
       );
-      nodes.push(this.additionalInput);
+      pathOrganizer.addNodes([this.additionalInput]);
     }
     this.outputs.push(
       new Node(
@@ -40,7 +40,12 @@ class Alu extends Component {
         this.additionalInput ? "right" : "top"
       )
     );
-    nodes = nodes.concat(this.outputs).concat(this.inputs);
+
+    let nodes = pathOrganizer
+      .getNodes()
+      .concat(this.outputs)
+      .concat(this.inputs);
+    pathOrganizer.setNodes(nodes);
   }
 
   updateDontCare() {

@@ -34,7 +34,7 @@ class Node {
           return;
         }
       });
-      let nodeWires = findWiresByEndNodeId(this.id);
+      let nodeWires = pathOrganizer.findWiresByEndNodeId(this.id);
 
       nodeWires?.startNode.setDontCare(true);
     }

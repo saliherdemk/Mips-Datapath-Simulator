@@ -15,7 +15,7 @@ class AndGate extends Component {
     ];
     this.output = new Node(this.x + this.width, this.y + 25, false);
 
-    nodes.push(this.inputs[0], this.inputs[1], this.output);
+    pathOrganizer.addNodes([this.inputs[0], this.inputs[1], this.output]);
   }
 
   updateDontCare() {

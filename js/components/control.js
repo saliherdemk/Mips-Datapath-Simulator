@@ -13,8 +13,9 @@ class Control extends Component {
         new Node(this.x + this.width, this.y + (this.height * i) / 11, false)
       );
     }
-    nodes.push(this.input);
-    nodes = nodes.concat(this.outputs);
+    pathOrganizer.addNodes([this.input]);
+    let nodes = pathOrganizer.getNodes().concat(this.outputs);
+    pathOrganizer.setNodes(nodes);
   }
 
   update() {

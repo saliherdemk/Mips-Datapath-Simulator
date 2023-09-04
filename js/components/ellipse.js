@@ -16,7 +16,7 @@ class Ellipse extends Component {
         false,
         "bottom"
       );
-      nodes.push(this.additionalInput);
+      pathOrganizer.addNodes([this.additionalInput]);
     }
     this.input = new Node(this.x, this.y + this.height / 2, false, "left");
     this.output = new Node(
@@ -25,7 +25,7 @@ class Ellipse extends Component {
       false,
       this.text == "Shift\nLeft 2" ? "bottom" : "right"
     );
-    nodes.push(this.input, this.output);
+    pathOrganizer.addNodes([this.input, this.output]);
   }
 
   updateDontCare() {

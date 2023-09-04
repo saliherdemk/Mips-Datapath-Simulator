@@ -19,7 +19,7 @@ class Pc extends Component {
       false,
       "bottom"
     );
-    nodes.push(this.input, this.output);
+    pathOrganizer.addNodes([this.input, this.output]);
   }
 
   update() {

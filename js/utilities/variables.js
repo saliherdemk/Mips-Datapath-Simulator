@@ -14,6 +14,7 @@ const lejant = document.getElementById("lejant");
 const valuesContainer = document.getElementById("valuesContainer");
 
 const organizer = new Organizer();
+const pathOrganizer = new PathOrganizer();
 
 const hexDigits = {
   10: "A",
@@ -26,13 +27,4 @@ const hexDigits = {
 
 const colors = {}; // See initColors function in script.js
 
-const originX = 120;
-const originY = 25;
-
-var components = [];
-var wires = [];
-var points = [];
-var nodes = [];
-var pc;
-var register;
-var currId = 0;
+var currId = 0; // Each node must have unique id. It's just counting.

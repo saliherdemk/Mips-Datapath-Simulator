@@ -1,11 +1,16 @@
 function initDatapath() {
-  pc = new Pc(originX - 50, originY + 350);
+  const originX = 120;
+  const originY = 25;
+
+  pc = pathOrganizer.setPc(new Pc(originX - 50, originY + 350));
   let alu1 = new Alu(originX + 40, originY + 50, true);
   alu1.inputs[1].changeValue("00100");
   let alu2 = new Alu(originX + 700, originY + 90, true);
   let alu3 = new Alu(originX + 650, originY + 325, false);
   let im = new InstructionMemory(originX + 50, originY + 350);
-  register = new Registers(originX + 380, originY + 350);
+  register = pathOrganizer.setRegister(
+    new Registers(originX + 380, originY + 350)
+  );
   let dm = new DataMemory(originX + 825, originY + 410);
   let mux1 = new Mux(originX + 220, originY + 410);
   let muxJal = new Mux(originX + 310, originY + 410);
@@ -108,7 +113,7 @@ function initDatapath() {
   let addToShiftNode = new Node(truncate.additionalInput.x, mux5.inputs[0].y);
   let andOutputNode = new Node(mux5.additionalInput.x, and.output.y);
 
-  components.push(
+  pathOrganizer.setComponents([
     pc,
     alu1,
     im,
@@ -130,9 +135,8 @@ function initDatapath() {
     mux5,
     mux4,
     muxJal1,
-
-    muxJR
-  );
+    muxJR,
+  ]);
 
   pc.output.setWires([
     new Wire({ startNode: pc.output, endNode: im.input }),
@@ -625,18 +629,8 @@ function initDatapath() {
     }),
   ]);
 
-  wires = [];
-  components.forEach((component) => {
-    componentWires = component?.output
-      ? component.output.wires
-      : component.outputs.reduce(function (a, b) {
-          return a.concat(b.wires);
-        }, []);
-    component.setWires(componentWires);
-    wires = [...wires, ...componentWires];
-  });
-
-  points.push(
+  pathOrganizer.setWires();
+  pathOrganizer.setPoints([
     new Point(pc.output.x + 25, pc.output.y),
     new Point(im.output.x + 50, register.inputs[1].y),
     new Point(signExtend.output.x + 25, mux2.inputs[1].y),
@@ -648,6 +642,6 @@ function initDatapath() {
     new Point(regNodes[5].x, regNodes[5].y),
     new Point(aluCOutputNode.x, aluCOutputNode.y),
     new Point(aluNodes[0].x, aluNodes[0].y),
-    new Point(muxJalNodes[1].x, muxJalNodes[1].y, colors.SKY)
-  );
+    new Point(muxJalNodes[1].x, muxJalNodes[1].y, colors.SKY),
+  ]);
 }

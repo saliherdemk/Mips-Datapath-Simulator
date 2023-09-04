@@ -33,8 +33,9 @@ class Mux extends Component {
       false
     );
 
-    nodes.push(this.additionalInput, this.output);
-    nodes = nodes.concat(this.inputs);
+    pathOrganizer.addNodes([this.additionalInput, this.output]);
+    let nodes = pathOrganizer.getNodes().concat(this.inputs);
+    pathOrganizer.setNodes(nodes);
   }
 
   updateDontCare() {

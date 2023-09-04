@@ -25,8 +25,13 @@ class DataMemory extends Component {
       new Node(this.x + this.width / 2, this.y + this.height, false)
     );
 
-    nodes = nodes.concat(this.inputs).concat(this.additionalInputs);
-    nodes.push(this.output);
+    let nodes = pathOrganizer
+      .getNodes()
+      .concat(this.inputs)
+      .concat(this.additionalInputs);
+    pathOrganizer.setNodes(nodes);
+
+    pathOrganizer.addNodes([this.output]);
   }
 
   updateDontCare() {

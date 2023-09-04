@@ -26,8 +26,12 @@ class Registers extends Component {
     }
 
     this.additionalInput = new Node(this.x + this.width / 2, this.y, false);
-    nodes.push(this.additionalInput);
-    nodes = nodes.concat(this.inputs).concat(this.outputs);
+    pathOrganizer.addNodes([this.additionalInput]);
+    let nodes = pathOrganizer
+      .getNodes()
+      .concat(this.inputs)
+      .concat(this.outputs);
+    pathOrganizer.setNodes(nodes);
   }
 
   updateDontCare() {

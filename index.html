@@ -10,6 +10,7 @@
     <title>Mips Datapath Simulator</title>
   </head>
   <body>
+    <!-- GitHub Logo Start -->
     <a
       href="https://github.com/saliherdemk/Mips-Datapath-Simulator"
       target="blank"
@@ -21,7 +22,9 @@
         class="absolute right-0"
       />
     </a>
+    <!-- GitHub Logo End -->
 
+    <!-- Lejant Start -->
     <button class="fixed bottom-2 right-3" onclick="toggleLejant()">
       <div class="shadow-lg rounded hidden" id="lejant">
         <img src="media/lejant.png" alt="" />
@@ -34,8 +37,10 @@
         class="float-right"
       />
     </button>
+    <!-- Lejant End -->
 
     <div class="flex flex-col justify-center items-center py-5 px-[15%]">
+      <!-- Instruction Inputs Start -->
       <div
         class="w-full text-center p-5 h-25 flex justify-center items-center relative"
       >
@@ -175,6 +180,8 @@
           <i class="arrow down"></i>
         </button>
       </div>
+      <!-- Instruction Inputs End -->
+
       <p id="instruction-code" class="text-center"></p>
 
       <div
@@ -182,6 +189,8 @@
         id="container"
         isExpanded="true"
       >
+        <!-- Registers Start -->
+
         <form class="text-right" id="reg-form" onsubmit="setRegisters(event)">
           <p class="text-lg text-center h-10">Registers</p>
 
@@ -209,7 +218,9 @@
             Assign
           </button>
         </form>
+        <!-- Registers End -->
 
+        <!-- Memory Start -->
         <p class="text-lg text-center h-10 flex flex-col mb-3">
           Memory
           <span class="text-xs text-center text-gray-500">
@@ -221,8 +232,11 @@
           class="relative overflow-x-auto w-full flex gap-4 pb-2"
           id="mem-container"
         ></div>
+        <!-- Memory End -->
       </div>
     </div>
+
+    <!-- Popup Buttons Start -->
     <div class="text-right px-24 px-[15%]">
       <button
         onclick="openPopups()"
@@ -237,7 +251,9 @@
         Close Popups
       </button>
     </div>
+    <!-- Popup Buttons End -->
 
+    <!-- Binary Sidebar Start -->
     <div
       id="valuesContainer"
       class="fixed h-full text-center w-[410px] top-[10%] left-0 z-40 transition-all -translate-x-[calc(100%_-_40px)]"
@@ -278,8 +294,19 @@
       <aside
         class="bg-[#f6f6f6] h-[calc(90%_-_50px)] overflow-y-scroll w-[calc(100%_-_40px)]"
       ></aside>
+      <!-- Binary Sidebar End -->
     </div>
 
+    <!-- Address Book Start -->
+    <!-- <div
+      id="address-book"
+      class="absolute w-56 h-96 bg-sky-500 top-0"
+      onmousemove=""
+      onmousedown=""
+    ></div> -->
+    <!-- Address Book End -->
+
+    <!-- Datapath Canvas -->
     <div id="canvas-container" class="flex justify-center py-5"></div>
 
     <script
@@ -291,6 +318,8 @@
     <script src="js/data/data.js"></script>
 
     <script src="js/utilities/organizer.js"></script>
+    <script src="js/utilities/pathOrganizer.js"></script>
+
     <script src="js/utilities/variables.js"></script>
     <script src="js/utilities/script.js"></script>
     <script src="js/utilities/cycle.js"></script>

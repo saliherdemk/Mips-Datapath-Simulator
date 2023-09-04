@@ -15,32 +15,15 @@ function draw() {
 
   // seeLejant();
 
-  noFill();
-  for (let i = 0; i < wires.length; i++) {
-    wires[i].draw();
-  }
-  fill(colors.WHITE);
-
-  for (let i = 0; i < components.length; i++) {
-    components[i].draw();
-  }
-
-  for (let i = 0; i < points.length; i++) {
-    points[i].draw();
-  }
-
-  for (let i = 0; i < nodes.length; i++) {
-    nodes[i].draw();
-  }
+  pathOrganizer.draw();
 }
 
 function mousePressed() {
-  for (let i = 0; i < nodes.length; i++) {
-    nodes[i].onClick();
-  }
+  pathOrganizer.onPress();
 }
 
 function initNodesForLejant() {
+  let nodes = [];
   nodes.push(new Node(500, 100, false));
   nodes.push(new Node(500, 130, true));
   nodes.push(new Node(500, 160, "true"));
@@ -51,6 +34,7 @@ function initNodesForLejant() {
   let c = new Node(500, 190, "true");
   c.setDontCare(true);
   nodes.push(a, b, c);
+  pathOrganizer.addNodes(nodes);
 }
 
 function seeLejant() {

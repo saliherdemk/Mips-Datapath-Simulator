@@ -7,25 +7,22 @@ function startCycle(e) {
 
 function resetDataPath() {
   organizer.setValueTable({});
-
-  components.map((c) => (c.isVisited = false));
-  for (let i = 0; i < nodes.length; i++) {
-    nodes[i].setDontCare(false);
-  }
+  pathOrganizer.resetDataPath();
 }
 
 function goOneCycle() {
   resetDataPath();
+  components = pathOrganizer.getComponents();
   for (let i = 0; i < components.length; i++) {
     components[i].update();
     components[i].updateWires();
   }
-  register.update(true);
+  pathOrganizer.getRegister().update(true);
 
   for (let i = components.length - 1; i >= 0; i--) {
     components[i].updateDontCare();
   }
-
+  let nodes = pathOrganizer.getNodes();
   for (let i = 0; i < nodes.length; i++) {
     nodes[i].addNodeToValueTable();
   }
@@ -102,11 +99,11 @@ function updateValuesContainer() {
     );
 
     d1.addEventListener("mouseover", () => {
-      findNodeById(key).setIsHighlighted(true);
+      pathOrganizer.findNodeById(key).setIsHighlighted(true);
     });
 
     d1.addEventListener("mouseleave", () => {
-      findNodeById(key).setIsHighlighted(false);
+      pathOrganizer.findNodeById(key).setIsHighlighted(false);
     });
 
     let d2 = document.createElement("div");

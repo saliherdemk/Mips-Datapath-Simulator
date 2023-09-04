@@ -15,7 +15,7 @@ class InstructionMemory extends Component {
       false
     );
 
-    nodes.push(this.input, this.output);
+    pathOrganizer.addNodes([this.input, this.output]);
   }
 
   update() {
