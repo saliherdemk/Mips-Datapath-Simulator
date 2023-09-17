@@ -179,3 +179,39 @@ function initColors() {
   colors.BLACK = color(0);
   colors.YELLOW = color(255, 255, 0);
 }
+
+// Resize for Adress Book (https://jsfiddle.net/pksurya/uhd963xa/30/)
+function initResize() {
+  window.addEventListener("mousemove", resize, false);
+  window.addEventListener("mouseup", stopResize, false);
+}
+
+function resize(e) {
+  addressBookContainer.style.width =
+    Math.max(e.clientX - addressBookContainer.offsetLeft, 200) + "px";
+  addressBookContainer.style.height =
+    Math.max(e.clientY - addressBookContainer.offsetTop, 200) + "px";
+}
+
+function stopResize() {
+  window.removeEventListener("mousemove", resize, false);
+  window.removeEventListener("mouseup", stopResize, false);
+}
+
+let offsetX, offsetY;
+
+// Draggable Address Book
+function mouseDownDraggable(e) {
+  offsetX = e.clientX - addressBookContainer.offsetLeft;
+  offsetY = e.clientY - addressBookContainer.offsetTop;
+  window.addEventListener("mousemove", drag);
+}
+
+function drag(e) {
+  addressBookContainer.style.left = e.clientX - offsetX + "px";
+  addressBookContainer.style.top = e.clientY - offsetY + "px";
+}
+
+window.addEventListener("mouseup", () => {
+  window.removeEventListener("mousemove", drag);
+});

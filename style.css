@@ -1,3 +1,7 @@
+* {
+  user-select: none;
+}
+
 body {
   margin: 0 0;
   overflow-y: scroll;
@@ -12,4 +16,42 @@ body {
   padding: 3px;
   transform: rotate(45deg);
   -webkit-transform: rotate(45deg);
+}
+
+/* https://codepen.io/vitalhead/pen/qzpYxy */
+.icon {
+  box-sizing: border-box;
+  display: inline-block;
+  font-size: inherit;
+  font-style: normal;
+  position: relative;
+  text-indent: -9999px;
+  vertical-align: middle;
+  line-height: 100%;
+}
+
+.icon::before,
+.icon::after {
+  content: "";
+  display: block;
+  position: absolute;
+}
+
+.icon-link::before {
+  border: 0.1rem solid currentColor;
+  border-right: 0;
+  border-top: 0;
+  border-left: 0;
+  height: 1.4em;
+  transform: translate(-84%, -84%) rotate(-45deg);
+  width: 1.4em;
+}
+.icon-link::after {
+  border: 0.1rem solid currentColor;
+  border-right: 0;
+  border-top: 0;
+  border-left: 0;
+  height: 0.7em;
+  transform: translate(-50%, -50%) rotate(-45deg);
+  width: 0.7em;
 }
