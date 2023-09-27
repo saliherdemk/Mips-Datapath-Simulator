@@ -14,6 +14,7 @@ const lejant = document.getElementById("lejant");
 const valuesContainer = document.getElementById("valuesContainer");
 
 const addressBookContainer = document.getElementById("address-book");
+const addressTable = document.getElementById("address-body");
 
 const organizer = new Organizer();
 const pathOrganizer = new PathOrganizer();

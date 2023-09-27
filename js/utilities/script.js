@@ -1,3 +1,44 @@
+function createImgLogo() {
+  var icon = document.createElement("img");
+  icon.src = "../../media/tip.png";
+  icon.width = "35";
+  icon.height = "35";
+
+  return icon;
+}
+
+function initAddresses() {
+  for (let i = 0; i < 400; i += 4) {
+    let tr = document.createElement("tr");
+    tr.classList.add("p-4");
+    let addressTd = document.createElement("td");
+    addressTd.classList.add("sticky", "left-0");
+    addressTd.innerText = binToHex(dectoBin(i + 344));
+
+    // see style.css 79
+    let valueTd = document.createElement("td");
+    valueTd.innerText = "000000 00000 00000 00000 00000 000000";
+
+    let meanTd = document.createElement("td");
+    meanTd.innerText = "Nothing";
+
+    let controlsTd = document.createElement("td");
+    controlsTd.classList.add("sticky", "right-0");
+
+    let a = document.createElement("button");
+    a.appendChild(createImgLogo());
+
+    let b = document.createElement("button");
+    b.append(createImgLogo());
+
+    controlsTd.append(a, b);
+
+    tr.append(addressTd, valueTd, meanTd, controlsTd);
+
+    addressTable.append(tr);
+  }
+}
+
 function setSelectOptions() {
   regSelects.forEach((regSelect) => {
     for (let i = 1; i < 32; i++) {
@@ -188,9 +229,9 @@ function initResize() {
 
 function resize(e) {
   addressBookContainer.style.width =
-    Math.max(e.clientX - addressBookContainer.offsetLeft, 200) + "px";
+    Math.max(e.clientX - addressBookContainer.offsetLeft, 330) + "px";
   addressBookContainer.style.height =
-    Math.max(e.clientY - addressBookContainer.offsetTop, 200) + "px";
+    Math.max(e.clientY - addressBookContainer.offsetTop, 95) + "px";
 }
 
 function stopResize() {

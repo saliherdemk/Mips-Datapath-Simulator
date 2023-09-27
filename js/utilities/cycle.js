@@ -37,6 +37,7 @@ function setMachineCode() {
       inpValues.push(inp.value);
     }
   });
+  inpValues = ["Add", "$0", "$0", "$0"];
   let instruction = organizer.setInstruction(inpValues[0]).toLowerCase();
   let opCode = opCodes[instruction];
   let icArray = [opCode];

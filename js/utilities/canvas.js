@@ -3,6 +3,7 @@ function setup() {
   cnv.parent(select("#canvas-container"));
   frameRate(30);
 
+  initAddresses();
   setSelectOptions();
   setRegInputs();
   initColors();

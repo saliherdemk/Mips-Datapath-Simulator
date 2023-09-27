@@ -298,26 +298,41 @@
     </div>
 
     <!-- Address Book Start -->
-    <!-- <div
+    <div
       id="address-book"
-      class="absolute w-56 h-96 top-28 left-24 rounded shadow bg-white z-40"
-    > -->
-    <!-- Draggable -->
-    <!-- <div
+      class="fixed w-56 h-96 top-28 left-24 rounded shadow bg-white z-40"
+    >
+      <!-- Draggable -->
+      <div
         class="w-full bg-gray-500 cursor-move text-center text-white py-2 rounded-t"
         onmousedown="mouseDownDraggable(event)"
       >
         Address Book
-      </div> -->
+      </div>
 
-    <!-- Resizer -->
-    <!-- <div
-        class="absolute right-0 bottom-0 h-4 w-4 cursor-se-resize text-xs flex justify-center items-center"
+      <!-- Addresses-->
+      <div id="addresses" class="h-[calc(100%_-_40px)] w-full overflow-auto">
+        <table class="w-full">
+          <thead>
+            <tr>
+              <th class="sticky left-0 p-3 bg-white min-w-[60px]">Address</th>
+              <th class="min-w-[388px]">Value</th>
+              <th class="min-w-[160px]">Meaning</th>
+              <th class="sticky right-0 bg-white min-w-[128px]">Controls</th>
+            </tr>
+          </thead>
+          <tbody id="address-body"></tbody>
+        </table>
+      </div>
+
+      <!-- Resizer -->
+      <div
+        class="absolute right-2 bottom-2 h-4 w-4 cursor-se-resize text-xs flex justify-center items-center"
         onmousedown="initResize()"
       >
         <i class="icon icon-link"></i>
       </div>
-    </div> -->
+    </div>
     <!-- Address Book End -->
 
     <!-- Datapath Canvas -->

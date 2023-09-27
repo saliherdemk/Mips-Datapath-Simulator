@@ -55,3 +55,31 @@ body {
   transform: translate(-50%, -50%) rotate(-45deg);
   width: 0.7em;
 }
+
+/* Custom Scrollbar for Address Book */
+
+#addresses::-webkit-scrollbar {
+  width: 7px;
+  background-color: lightgray;
+}
+
+#addresses::-webkit-scrollbar-thumb {
+  background-color: gray;
+  border-radius: 5px;
+}
+
+#addresses::-webkit-scrollbar:horizontal {
+  height: 7px;
+}
+
+#addresses::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(83, 82, 82);
+}
+
+td {
+  text-align: center;
+  vertical-align: middle;
+  border-bottom: 1px solid gray;
+  padding: 5px;
+  background-color: white;
+}
