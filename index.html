@@ -312,11 +312,14 @@
 
       <!-- Addresses-->
       <div id="addresses" class="h-[calc(100%_-_40px)] w-full overflow-auto">
+        <button onclick="decrementPageNumber()">decrement</button>
+        <button onclick="incrementPageNumber()">increment</button>
+
         <table class="w-full">
           <thead>
             <tr>
               <th class="sticky left-0 p-3 bg-white min-w-[60px]">Address</th>
-              <th class="min-w-[388px]">Value</th>
+              <th class="min-w-[388px]">Machine Code</th>
               <th class="min-w-[160px]">Meaning</th>
               <th class="sticky right-0 bg-white min-w-[128px]">Controls</th>
             </tr>
@@ -346,8 +349,9 @@
     ></script>
     <script src="js/data/data.js"></script>
 
-    <script src="js/utilities/organizer.js"></script>
-    <script src="js/utilities/pathOrganizer.js"></script>
+    <script src="js/utilities/organizers/organizer.js"></script>
+    <script src="js/utilities/organizers/pathOrganizer.js"></script>
+    <script src="js/utilities/organizers/addressOrganizer.js"></script>
 
     <script src="js/utilities/variables.js"></script>
     <script src="js/utilities/script.js"></script>

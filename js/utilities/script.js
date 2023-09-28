@@ -1,10 +1,37 @@
 function createImgLogo() {
   var icon = document.createElement("img");
-  icon.src = "../../media/tip.png";
-  icon.width = "35";
-  icon.height = "35";
+  icon.src = "../../media/reset.png";
+  icon.width = "25";
+  icon.height = "25";
 
   return icon;
+}
+
+function incrementPageNumber() {
+  addressOranizer.incrementCurrentPage();
+}
+
+function decrementPageNumber() {
+  addressOranizer.decrementCurrentPage();
+}
+
+function showRow(address) {}
+
+function setTdValues(atd, valuetd, meantd, controlstd) {
+  const trs = document.querySelectorAll("tr");
+  const els = addressOranizer.getElements();
+  for (let i = 0; i < els.length; i++) {
+    const element = els[i];
+
+    let tds = trs[i + 1].children;
+    for (let j = 0; j < tds.length; j++) {
+      if (j == tds.length - 1) {
+        tds[j].append(element[j], element[j + 1]);
+      } else {
+        tds[j].innerText = element[j];
+      }
+    }
+  }
 }
 
 function initAddresses() {
@@ -13,25 +40,14 @@ function initAddresses() {
     tr.classList.add("p-4");
     let addressTd = document.createElement("td");
     addressTd.classList.add("sticky", "left-0");
-    addressTd.innerText = binToHex(dectoBin(i + 344));
 
     // see style.css 79
     let valueTd = document.createElement("td");
-    valueTd.innerText = "000000 00000 00000 00000 00000 000000";
 
     let meanTd = document.createElement("td");
-    meanTd.innerText = "Nothing";
 
     let controlsTd = document.createElement("td");
     controlsTd.classList.add("sticky", "right-0");
-
-    let a = document.createElement("button");
-    a.appendChild(createImgLogo());
-
-    let b = document.createElement("button");
-    b.append(createImgLogo());
-
-    controlsTd.append(a, b);
 
     tr.append(addressTd, valueTd, meanTd, controlsTd);
 

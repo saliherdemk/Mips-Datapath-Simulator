@@ -18,6 +18,7 @@ const addressTable = document.getElementById("address-body");
 
 const organizer = new Organizer();
 const pathOrganizer = new PathOrganizer();
+const addressOranizer = new AddressOrganizer();
 
 const hexDigits = {
   10: "A",

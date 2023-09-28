@@ -1,7 +1,7 @@
 class Organizer {
   constructor() {
     this.instructionCode = "";
-    this.instruction = "add";
+    this.instruction = "add"; // for setting input
     this.regValues = Array(31).fill("0");
     this.memValues = [];
     this.pcValues = {};
@@ -50,13 +50,17 @@ class Organizer {
     return this.memValues;
   }
 
-  getPcValue(key) {
-    return this.pcValues[key];
+  updateFromAddressBook(machineCode, meaning) {
+    this.pcValues[this.currAddress] = [machineCode, meaning];
   }
 
-  updatePcValues() {
-    this.pcValues[this.currAddress] = this.instructionCode;
-  }
+  // getPcValue(key) {
+  //   return this.pcValues[key];
+  // }
+
+  // updatePcValues() {
+  //   this.pcValues[this.currAddress] = this.instructionCode;
+  // }
 
   getCurrAddress() {
     return this.currAddress;
