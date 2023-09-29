@@ -312,9 +312,6 @@
 
       <!-- Addresses-->
       <div id="addresses" class="h-[calc(100%_-_40px)] w-full overflow-auto">
-        <button onclick="decrementPageNumber()">decrement</button>
-        <button onclick="incrementPageNumber()">increment</button>
-
         <table class="w-full">
           <thead>
             <tr>
@@ -326,6 +323,23 @@
           </thead>
           <tbody id="address-body"></tbody>
         </table>
+        <div class="sticky bottom-0 left-0 flex justify-center items-center">
+          <button
+            class="bg-[#dee0ee] px-3 h-9 hover:bg-[#575b71] rounded-t"
+            onclick="decrementPageNumber()"
+          >
+            <img src="/media/minus.png" alt="" width="12" height="12" />
+          </button>
+          <span class="bg-white px-3 h-9 flex items-center" id="page-counter"
+            >0</span
+          >
+          <button
+            class="bg-[#dee0ee] px-3 h-9 hover:bg-[#575b71] rounded-t"
+            onclick="incrementPageNumber()"
+          >
+            <img src="/media/plus.png" alt="" width="12" height="12" />
+          </button>
+        </div>
       </div>
 
       <!-- Resizer -->

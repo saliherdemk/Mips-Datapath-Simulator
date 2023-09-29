@@ -1,11 +1,11 @@
 class AddressOrganizer {
   constructor() {
     this.currentPage = 0; // this is an index for elements
-    this.elements = []; // array of (arrays of elements)
+    this.elements = {};
   }
 
-  getElements() {
-    return this.elements;
+  getElementsByPage(pageIndex) {
+    return this.elements[pageIndex];
   }
 
   createRow(i) {
@@ -29,18 +29,37 @@ class AddressOrganizer {
   }
 
   initElements() {
-    for (let i = 0; i < 400; i += 4) {
-      this.elements.push(this.createRow(i));
+    let els = [];
+
+    for (
+      let i = this.currentPage * 100;
+      i < (this.currentPage + 1) * 100;
+      i += 4
+    ) {
+      els.push(this.createRow(i));
     }
-    setTdValues();
+    this.elements[this.currentPage] = els;
+    setTdValues(this.currentPage);
   }
 
   incrementCurrentPage() {
     this.currentPage += 1;
+    this.updatePageCounter();
+    if (this.elements.hasOwnProperty(this.currentPage)) {
+      setTdValues(this.currentPage);
+      return;
+    }
+    this.initElements();
   }
 
   decrementCurrentPage() {
-    this.currentPage = Max(this.currentPage - 1, 0);
+    this.currentPage = Math.max(this.currentPage - 1, 0);
+    setTdValues(this.currentPage);
+    this.updatePageCounter();
+  }
+
+  updatePageCounter() {
+    pageCounterSpan.innerText = this.currentPage;
   }
 
   getCurrentPage() {

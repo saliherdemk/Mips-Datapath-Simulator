@@ -17,14 +17,17 @@ function decrementPageNumber() {
 
 function showRow(address) {}
 
-function setTdValues(atd, valuetd, meantd, controlstd) {
+function setTdValues(pageIndex) {
   const trs = document.querySelectorAll("tr");
-  const els = addressOranizer.getElements();
+  const els = addressOranizer.getElementsByPage(pageIndex);
+
   for (let i = 0; i < els.length; i++) {
     const element = els[i];
 
     let tds = trs[i + 1].children;
     for (let j = 0; j < tds.length; j++) {
+      tds[j].innerHTML = "";
+
       if (j == tds.length - 1) {
         tds[j].append(element[j], element[j + 1]);
       } else {
@@ -35,7 +38,7 @@ function setTdValues(atd, valuetd, meantd, controlstd) {
 }
 
 function initAddresses() {
-  for (let i = 0; i < 400; i += 4) {
+  for (let i = 0; i < 100; i += 4) {
     let tr = document.createElement("tr");
     tr.classList.add("p-4");
     let addressTd = document.createElement("td");
