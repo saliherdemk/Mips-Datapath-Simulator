@@ -15,8 +15,6 @@ function decrementPageNumber() {
   addressOranizer.decrementCurrentPage();
 }
 
-function showRow(address) {}
-
 function setTdValues(pageIndex) {
   const trs = document.querySelectorAll("tr");
   const els = addressOranizer.getElementsByPage(pageIndex);
@@ -25,11 +23,15 @@ function setTdValues(pageIndex) {
     const element = els[i];
 
     let tds = trs[i + 1].children;
+    let selected = element[0] == addressOranizer.getSelectedAddress();
     for (let j = 0; j < tds.length; j++) {
       tds[j].innerHTML = "";
+      selected
+        ? tds[j].classList.add("bg-green-300")
+        : tds[j].classList.remove("bg-green-300");
 
       if (j == tds.length - 1) {
-        tds[j].append(element[j], element[j + 1]);
+        tds[j].appendChild(element[j]);
       } else {
         tds[j].innerText = element[j];
       }
@@ -53,6 +55,13 @@ function initAddresses() {
     controlsTd.classList.add("sticky", "right-0");
 
     tr.append(addressTd, valueTd, meanTd, controlsTd);
+    tr.onclick = () => {
+      addressOranizer.setSelectedAddress(tr.children[0].innerText);
+      tr.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    };
 
     addressTable.append(tr);
   }
