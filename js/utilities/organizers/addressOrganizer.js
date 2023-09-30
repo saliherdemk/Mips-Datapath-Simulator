@@ -2,7 +2,16 @@ class AddressOrganizer {
   constructor() {
     this.currentPage = 0; // this is an index for elements
     this.elements = {};
-    this.selectedAddress = "0x15C";
+    this.selectedAddress = "0x0";
+  }
+
+  updateToAddressBook(machineCode, meaning) {
+    this.elements[this.currentPage][this.selectedAddress] = [
+      machineCode,
+      meaning,
+    ];
+    console.log(this.elements);
+    setTdValues(this.currentPage);
   }
 
   getSelectedAddress() {
@@ -10,18 +19,27 @@ class AddressOrganizer {
   }
 
   setSelectedAddress(selectedAddress) {
+    getElementByAttribute("address", this.selectedAddress)?.children.forEach(
+      (el) => {
+        el.classList.remove("bg-green-200");
+      }
+    );
+
     this.selectedAddress = selectedAddress;
-    setTdValues(this.currentPage);
+    getElementByAttribute("address", this.selectedAddress)?.children.forEach(
+      (el) => {
+        el.classList.add("bg-green-200");
+      }
+    );
   }
 
   getElementsByPage(pageIndex) {
     return this.elements[pageIndex];
   }
 
-  createRow(i) {
+  createRow() {
     let el = [];
 
-    el.push(binToHex(dectoBin(i)));
     el.push("000000 00000 00000 00000 00000 000000");
     el.push("Nothing");
 
@@ -42,7 +60,7 @@ class AddressOrganizer {
       i < (this.currentPage + 1) * 100;
       i += 4
     ) {
-      els.push(this.createRow(i));
+      els[binToHex(dectoBin(i))] = this.createRow(i);
     }
     this.elements[this.currentPage] = els;
     setTdValues(this.currentPage);

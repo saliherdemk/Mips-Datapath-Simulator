@@ -1,8 +1,8 @@
 function startCycle(e) {
   e.preventDefault();
   setMachineCode();
-  organizer.updatePcValues();
-  goOneCycle();
+  // organizer.updatePcValues();
+  // goOneCycle();
 }
 
 function resetDataPath() {
@@ -78,7 +78,7 @@ function setMachineCode() {
   if (iData) {
     icArray.push(dectoBin(iData, 32 - codeLength));
   }
-  console.log(icArray.join(" "), inpValues);
+  addressOranizer.updateToAddressBook(icArray.join(" "), inpValues.join(" "));
   organizer.setICode(icArray.join(" "));
   instructionCodeContainer.innerText = organizer.getICode();
 }

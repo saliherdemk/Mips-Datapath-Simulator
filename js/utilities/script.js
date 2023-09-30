@@ -18,24 +18,25 @@ function decrementPageNumber() {
 function setTdValues(pageIndex) {
   const trs = document.querySelectorAll("tr");
   const els = addressOranizer.getElementsByPage(pageIndex);
+  i = 1;
+  for (const [key, value] of Object.entries(els)) {
+    let tds = trs[i].children;
+    [0, 1, 2, 3].forEach((index) => {
+      key == addressOranizer.getSelectedAddress()
+        ? tds[index].classList.add("bg-green-200")
+        : tds[index].classList.remove("bg-green-200");
 
-  for (let i = 0; i < els.length; i++) {
-    const element = els[i];
-
-    let tds = trs[i + 1].children;
-    let selected = element[0] == addressOranizer.getSelectedAddress();
-    for (let j = 0; j < tds.length; j++) {
-      tds[j].innerHTML = "";
-      selected
-        ? tds[j].classList.add("bg-green-300")
-        : tds[j].classList.remove("bg-green-300");
-
-      if (j == tds.length - 1) {
-        tds[j].appendChild(element[j]);
+      if (index == 0) tds[index].innerText = key;
+      else if (index == 3) {
+        tds[index].innerHTML = "";
+        tds[index].appendChild(value[index - 1]);
       } else {
-        tds[j].innerText = element[j];
+        tds[index].innerText = value[index - 1];
       }
-    }
+    });
+
+    trs[i].setAttribute("address", key);
+    i += 1;
   }
 }
 
@@ -235,6 +236,10 @@ function toggleLejant() {
 
 function toggleValuesContainer() {
   valuesContainer.classList.toggle("translate-x-0");
+}
+
+function getElementByAttribute(attr, value) {
+  return document.querySelector(`[${attr}="${value}"]`);
 }
 
 // p5.js functions can't access before the setup function. That's why this function must be called in setup.

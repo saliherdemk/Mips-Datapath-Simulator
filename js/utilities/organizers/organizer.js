@@ -50,10 +50,6 @@ class Organizer {
     return this.memValues;
   }
 
-  updateFromAddressBook(machineCode, meaning) {
-    this.pcValues[this.currAddress] = [machineCode, meaning];
-  }
-
   // getPcValue(key) {
   //   return this.pcValues[key];
   // }
