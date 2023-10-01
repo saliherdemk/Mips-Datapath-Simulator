@@ -2,42 +2,57 @@ class AddressOrganizer {
   constructor() {
     this.currentPage = 0; // this is an index for elements
     this.elements = {};
-    this.selectedAddress = "0x0";
+    this.selectedAddress = null;
   }
 
-  updateToAddressBook(machineCode, meaning) {
-    this.elements[this.currentPage][this.selectedAddress] = [
-      machineCode,
-      meaning,
-    ];
-    console.log(this.elements);
-    setTdValues(this.currentPage);
+  updateToAddressBook(machineCode, meaning, address = this.selectedAddress) {
+    if (!address) {
+      selectedAddressContainer.classList.add("jump-shaking");
+
+      return;
+    }
+    this.elements[this.currentPage][address][0] = machineCode;
+    this.elements[this.currentPage][address][1] = meaning;
+
+    let rows = getElementByAttribute("address", address).children;
+    rows[1].innerText = machineCode;
+    rows[2].innerText = meaning;
   }
 
   getSelectedAddress() {
     return this.selectedAddress;
   }
 
-  setSelectedAddress(selectedAddress) {
+  resetSelectedAddress() {
     getElementByAttribute("address", this.selectedAddress)?.children.forEach(
       (el) => {
         el.classList.remove("bg-green-200");
       }
     );
+    this.selectedAddress = null;
+    selectedAddressContainer.innerText = "None";
+  }
 
+  toggleSelectedAddress(selectedAddress) {
+    if (this.selectedAddress == selectedAddress) {
+      this.resetSelectedAddress();
+      return;
+    }
+    this.resetSelectedAddress();
     this.selectedAddress = selectedAddress;
     getElementByAttribute("address", this.selectedAddress)?.children.forEach(
       (el) => {
         el.classList.add("bg-green-200");
       }
     );
+    selectedAddressContainer.innerText = this.selectedAddress;
   }
 
   getElementsByPage(pageIndex) {
     return this.elements[pageIndex];
   }
 
-  createRow() {
+  createRow(address) {
     let el = [];
 
     el.push("000000 00000 00000 00000 00000 000000");
@@ -46,6 +61,14 @@ class AddressOrganizer {
     let b = document.createElement("button");
     b.classList.add("bg-rose-500", "p-2", "rounded", "text-white", "m-3");
     b.append(document.createTextNode("Clear"));
+    b.onclick = (e) => {
+      e.stopPropagation();
+      this.updateToAddressBook(
+        "000000 00000 00000 00000 00000 000000",
+        "Nothing",
+        address
+      );
+    };
 
     el.push(b);
 
@@ -60,7 +83,8 @@ class AddressOrganizer {
       i < (this.currentPage + 1) * 100;
       i += 4
     ) {
-      els[binToHex(dectoBin(i))] = this.createRow(i);
+      let address = binToHex(dectoBin(i));
+      els[address] = this.createRow(address);
     }
     this.elements[this.currentPage] = els;
     setTdValues(this.currentPage);

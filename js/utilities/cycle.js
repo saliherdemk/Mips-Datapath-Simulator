@@ -79,8 +79,6 @@ function setMachineCode() {
     icArray.push(dectoBin(iData, 32 - codeLength));
   }
   addressOranizer.updateToAddressBook(icArray.join(" "), inpValues.join(" "));
-  organizer.setICode(icArray.join(" "));
-  instructionCodeContainer.innerText = organizer.getICode();
 }
 
 function updateValuesContainer() {

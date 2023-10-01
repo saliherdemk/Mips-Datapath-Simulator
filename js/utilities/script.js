@@ -57,7 +57,7 @@ function initAddresses() {
 
     tr.append(addressTd, valueTd, meanTd, controlsTd);
     tr.onclick = () => {
-      addressOranizer.setSelectedAddress(tr.children[0].innerText);
+      addressOranizer.toggleSelectedAddress(tr.children[0].innerText);
       tr.scrollIntoView({
         behavior: "smooth",
         block: "center",
@@ -289,3 +289,11 @@ function drag(e) {
 window.addEventListener("mouseup", () => {
   window.removeEventListener("mousemove", drag);
 });
+
+// Empty Selected Address Events for animation
+
+function handleAnimationEnd() {
+  selectedAddressContainer.classList.remove("jump-shaking");
+}
+
+selectedAddressContainer.addEventListener("animationend", handleAnimationEnd);

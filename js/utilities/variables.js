@@ -8,7 +8,6 @@ const memContainer = document.getElementById("mem-container");
 const container = document.getElementById("container");
 const regForm = document.getElementById("reg-form");
 const instFormInputs = document.querySelectorAll(".inst-form-input");
-const instructionCodeContainer = document.getElementById("instruction-code");
 
 const lejant = document.getElementById("lejant");
 const valuesContainer = document.getElementById("valuesContainer");
@@ -17,6 +16,7 @@ const addressBookContainer = document.getElementById("address-book");
 const addressTable = document.getElementById("address-body");
 
 const pageCounterSpan = document.getElementById("page-counter");
+const selectedAddressContainer = document.getElementById("selected-address");
 
 const organizer = new Organizer();
 const pathOrganizer = new PathOrganizer();

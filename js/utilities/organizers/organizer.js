@@ -1,20 +1,10 @@
 class Organizer {
   constructor() {
-    this.instructionCode = "";
     this.instruction = "add"; // for setting input
     this.regValues = Array(31).fill("0");
     this.memValues = [];
-    this.pcValues = {};
     this.currAddress = "00000000000000000000000101011000";
     this.valueTable = {};
-  }
-
-  setICode(code) {
-    this.instructionCode = code;
-  }
-
-  getICode() {
-    return this.instructionCode;
   }
 
   setInstruction(i) {
@@ -49,14 +39,6 @@ class Organizer {
   getMemValues() {
     return this.memValues;
   }
-
-  // getPcValue(key) {
-  //   return this.pcValues[key];
-  // }
-
-  // updatePcValues() {
-  //   this.pcValues[this.currAddress] = this.instructionCode;
-  // }
 
   getCurrAddress() {
     return this.currAddress;
