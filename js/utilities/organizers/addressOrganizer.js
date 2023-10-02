@@ -9,12 +9,7 @@ class AddressOrganizer {
   // Current Address
 
   getAddressValue(address) {
-    if (binToDec(address) % 100 == 0 && binToDec(address) !== 0) {
-      this.incrementCurrentPage();
-      console.log(binToDec(address) % 100);
-    }
-    // this.incrementCurrentPage();
-    return this.book[~~(binToDec(address) / 97)][binToHex(address)][0];
+    return this.book[~~(binToDec(address) / 100)][binToHex(address)][0];
   }
 
   // Paint updated current address from book
@@ -22,7 +17,13 @@ class AddressOrganizer {
     let oldEl = getElementByAttribute("address", this.currentAddress);
     removeClassFromChildren(oldEl, "bg-blue-200");
 
-    this.currentAddress = address;
+    this.currentAddress = binToHex(address);
+
+    let decAddress = binToDec(address);
+    console.log(decAddress);
+    if (decAddress % 100 == 0 && decAddress !== 0) {
+      this.incrementCurrentPage();
+    }
 
     let newEl = getElementByAttribute("address", this.currentAddress);
     addClassToChildren(newEl, "bg-blue-200");

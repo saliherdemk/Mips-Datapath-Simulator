@@ -24,7 +24,7 @@ class Pc extends Component {
 
   update() {
     this.output.changeValue(this.input.value);
-    addressOrganizer.updateCurrentAddress(binToHex(this.output.value));
+    addressOrganizer.updateCurrentAddress(this.output.value);
   }
 
   show() {
