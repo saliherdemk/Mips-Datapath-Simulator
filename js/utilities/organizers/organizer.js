@@ -3,7 +3,6 @@ class Organizer {
     this.instruction = "add"; // for setting input
     this.regValues = Array(31).fill("0");
     this.memValues = [];
-    this.currAddress = "00000000000000000000000101011000";
     this.valueTable = {};
   }
 
@@ -38,15 +37,6 @@ class Organizer {
 
   getMemValues() {
     return this.memValues;
-  }
-
-  getCurrAddress() {
-    return this.currAddress;
-  }
-
-  setCurrAddress(values) {
-    this.currAddress = values;
-    return this.currAddress;
   }
 
   setValueTable(values) {

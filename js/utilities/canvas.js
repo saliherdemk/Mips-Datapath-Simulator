@@ -8,7 +8,7 @@ function setup() {
   setRegInputs();
   initColors();
   initDatapath();
-  addressOranizer.initElements();
+  addressOrganizer.initElements();
   // initNodesForLejant();
 }
 

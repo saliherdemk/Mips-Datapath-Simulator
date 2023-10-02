@@ -10,7 +10,7 @@ class Pc extends Component {
     this.input = new Node(
       this.x,
       this.y + this.height / 2,
-      "00000000000000000000000101011000",
+      "00000000000000000000000000000000",
       "top"
     );
     this.output = new Node(
@@ -23,7 +23,8 @@ class Pc extends Component {
   }
 
   update() {
-    this.output.changeValue(organizer.setCurrAddress(this.input.value));
+    this.output.changeValue(this.input.value);
+    addressOrganizer.updateCurrentAddress(binToHex(this.output.value));
   }
 
   show() {

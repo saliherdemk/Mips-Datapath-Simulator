@@ -20,7 +20,7 @@ const selectedAddressContainer = document.getElementById("selected-address");
 
 const organizer = new Organizer();
 const pathOrganizer = new PathOrganizer();
-const addressOranizer = new AddressOrganizer();
+const addressOrganizer = new AddressOrganizer();
 
 const hexDigits = {
   10: "A",

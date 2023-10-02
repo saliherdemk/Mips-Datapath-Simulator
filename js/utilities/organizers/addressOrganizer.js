@@ -1,35 +1,44 @@
 class AddressOrganizer {
   constructor() {
-    this.currentPage = 0; // this is an index for elements
-    this.elements = {};
+    this.currentPage = 0; // this is an index for book
+    this.book = {};
     this.selectedAddress = null;
+    this.currentAddress = "0x00000000";
   }
 
-  updateToAddressBook(machineCode, meaning, address = this.selectedAddress) {
-    if (!address) {
-      selectedAddressContainer.classList.add("jump-shaking");
+  // Current Address
 
-      return;
+  getAddressValue(address) {
+    if (binToDec(address) % 100 == 0 && binToDec(address) !== 0) {
+      this.incrementCurrentPage();
+      console.log(binToDec(address) % 100);
     }
-    this.elements[this.currentPage][address][0] = machineCode;
-    this.elements[this.currentPage][address][1] = meaning;
-
-    let rows = getElementByAttribute("address", address).children;
-    rows[1].innerText = machineCode;
-    rows[2].innerText = meaning;
+    // this.incrementCurrentPage();
+    return this.book[~~(binToDec(address) / 97)][binToHex(address)][0];
   }
 
+  // Paint updated current address from book
+  updateCurrentAddress(address) {
+    let oldEl = getElementByAttribute("address", this.currentAddress);
+    removeClassFromChildren(oldEl, "bg-blue-200");
+
+    this.currentAddress = address;
+
+    let newEl = getElementByAttribute("address", this.currentAddress);
+    addClassToChildren(newEl, "bg-blue-200");
+  }
+
+  // Selected Address
   getSelectedAddress() {
     return this.selectedAddress;
   }
 
   resetSelectedAddress() {
-    getElementByAttribute("address", this.selectedAddress)?.children.forEach(
-      (el) => {
-        el.classList.remove("bg-green-200");
-      }
-    );
+    let oldEl = getElementByAttribute("address", this.selectedAddress);
+    removeClassFromChildren(oldEl, "bg-green-200");
+
     this.selectedAddress = null;
+
     selectedAddressContainer.innerText = "None";
   }
 
@@ -40,18 +49,14 @@ class AddressOrganizer {
     }
     this.resetSelectedAddress();
     this.selectedAddress = selectedAddress;
-    getElementByAttribute("address", this.selectedAddress)?.children.forEach(
-      (el) => {
-        el.classList.add("bg-green-200");
-      }
-    );
+
+    let newEl = getElementByAttribute("address", this.selectedAddress);
+    addClassToChildren(newEl, "bg-green-200");
+
     selectedAddressContainer.innerText = this.selectedAddress;
   }
 
-  getElementsByPage(pageIndex) {
-    return this.elements[pageIndex];
-  }
-
+  // Creating records for that page if not exists
   createRow(address) {
     let el = [];
 
@@ -83,17 +88,18 @@ class AddressOrganizer {
       i < (this.currentPage + 1) * 100;
       i += 4
     ) {
-      let address = binToHex(dectoBin(i));
+      let address = binToHex(dectoBin(i, 32));
       els[address] = this.createRow(address);
     }
-    this.elements[this.currentPage] = els;
+    this.book[this.currentPage] = els;
     setTdValues(this.currentPage);
   }
 
+  // Page logic
   incrementCurrentPage() {
     this.currentPage += 1;
     this.updatePageCounter();
-    if (this.elements.hasOwnProperty(this.currentPage)) {
+    if (this.book.hasOwnProperty(this.currentPage)) {
       setTdValues(this.currentPage);
       return;
     }
@@ -112,5 +118,23 @@ class AddressOrganizer {
 
   getCurrentPage() {
     return this.currentPage;
+  }
+
+  getElementsByPage(pageIndex) {
+    return this.book[pageIndex];
+  }
+
+  // Adding & removing records to book
+  updateToAddressBook(machineCode, meaning, address = this.selectedAddress) {
+    if (!address) {
+      selectedAddressContainer.classList.add("jump-shaking");
+      return;
+    }
+    this.book[this.currentPage][address][0] = machineCode;
+    this.book[this.currentPage][address][1] = meaning;
+
+    let rows = getElementByAttribute("address", address).children;
+    rows[1].innerText = machineCode;
+    rows[2].innerText = meaning;
   }
 }

@@ -44,7 +44,7 @@
       <div
         class="w-full text-center p-5 h-25 flex justify-center items-center relative"
       >
-        <form action="" id="inst-form" onsubmit="startCycle(event)">
+        <form action="" id="inst-form" onsubmit="setMachineCode(event)">
           <div class="flex">
             <div class="px-4 block">
               <label
@@ -252,6 +252,8 @@
       >
         Close Popups
       </button>
+
+      <button onclick="goOneCycle()">Execute</button>
     </div>
     <!-- Popup Buttons End -->
 
@@ -310,6 +312,9 @@
         onmousedown="mouseDownDraggable(event)"
       >
         Address Book
+        <button class="absolute right-2 top-2.5" onclick="shrinkBook()">
+          <img src="/media/close.png" alt="" width="20" height="20" />
+        </button>
       </div>
 
       <!-- Addresses-->

@@ -8,21 +8,21 @@ function createImgLogo() {
 }
 
 function incrementPageNumber() {
-  addressOranizer.incrementCurrentPage();
+  addressOrganizer.incrementCurrentPage();
 }
 
 function decrementPageNumber() {
-  addressOranizer.decrementCurrentPage();
+  addressOrganizer.decrementCurrentPage();
 }
 
 function setTdValues(pageIndex) {
   const trs = document.querySelectorAll("tr");
-  const els = addressOranizer.getElementsByPage(pageIndex);
+  const els = addressOrganizer.getElementsByPage(pageIndex);
   i = 1;
   for (const [key, value] of Object.entries(els)) {
     let tds = trs[i].children;
     [0, 1, 2, 3].forEach((index) => {
-      key == addressOranizer.getSelectedAddress()
+      key == addressOrganizer.getSelectedAddress()
         ? tds[index].classList.add("bg-green-200")
         : tds[index].classList.remove("bg-green-200");
 
@@ -57,7 +57,7 @@ function initAddresses() {
 
     tr.append(addressTd, valueTd, meanTd, controlsTd);
     tr.onclick = () => {
-      addressOranizer.toggleSelectedAddress(tr.children[0].innerText);
+      addressOrganizer.toggleSelectedAddress(tr.children[0].innerText);
       tr.scrollIntoView({
         behavior: "smooth",
         block: "center",
@@ -242,6 +242,23 @@ function getElementByAttribute(attr, value) {
   return document.querySelector(`[${attr}="${value}"]`);
 }
 
+function removeClassFromChildren(element, className) {
+  element?.children.forEach((el) => {
+    el.classList.remove(className);
+  });
+}
+
+function addClassToChildren(element, className) {
+  element?.children.forEach((el) => {
+    el.classList.add(className);
+  });
+
+  element?.scrollIntoView({
+    behavior: "smooth",
+    block: "center",
+  });
+}
+
 // p5.js functions can't access before the setup function. That's why this function must be called in setup.
 function initColors() {
   colors.SKY = color(5, 176, 239);
@@ -270,6 +287,13 @@ function resize(e) {
 function stopResize() {
   window.removeEventListener("mousemove", resize, false);
   window.removeEventListener("mouseup", stopResize, false);
+}
+
+function shrinkBook() {
+  addressBookContainer.style.width = "330px";
+  addressBookContainer.style.height = "95px";
+  addressBookContainer.style.top = "0px";
+  addressBookContainer.style.left = "0px";
 }
 
 let offsetX, offsetY;

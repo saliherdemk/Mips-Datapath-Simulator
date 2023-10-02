@@ -1,10 +1,3 @@
-function startCycle(e) {
-  e.preventDefault();
-  setMachineCode();
-  // organizer.updatePcValues();
-  // goOneCycle();
-}
-
 function resetDataPath() {
   organizer.setValueTable({});
   pathOrganizer.resetDataPath();
@@ -27,10 +20,11 @@ function goOneCycle() {
     nodes[i].addNodeToValueTable();
   }
 
-  updateValuesContainer();
+  updateBinaryEquivalents();
 }
 
-function setMachineCode() {
+function setMachineCode(e) {
+  e.preventDefault();
   let inpValues = [];
   instFormInputs.forEach((inp) => {
     if (!inp.parentElement.classList.contains("hidden")) {
@@ -78,10 +72,10 @@ function setMachineCode() {
   if (iData) {
     icArray.push(dectoBin(iData, 32 - codeLength));
   }
-  addressOranizer.updateToAddressBook(icArray.join(" "), inpValues.join(" "));
+  addressOrganizer.updateToAddressBook(icArray.join(" "), inpValues.join(" "));
 }
 
-function updateValuesContainer() {
+function updateBinaryEquivalents() {
   const aside = valuesContainer.children[1]; // gets aside tag
   aside.innerHTML = "";
   let table = organizer.getValueTable();
