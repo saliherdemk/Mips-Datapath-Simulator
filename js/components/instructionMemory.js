@@ -22,7 +22,6 @@ class InstructionMemory extends Component {
     let code = addressOrganizer
       .getAddressValue(this.input.value)
       .replaceAll(" ", "");
-    console.log(code);
     this.output.changeValue(code);
     this.wires[0].endNode.changeValue(code.substring(6));
     this.wires[1].endNode.changeValue(code.substring(0, 6));

@@ -8,6 +8,9 @@ class AddressOrganizer {
 
   // Current Address
 
+  getCurrentAddress() {
+    return this.currentAddress;
+  }
   getAddressValue(address) {
     return this.book[~~(binToDec(address) / 100)][binToHex(address)][0];
   }
@@ -15,14 +18,15 @@ class AddressOrganizer {
   // Paint updated current address from book
   updateCurrentAddress(address) {
     let oldEl = getElementByAttribute("address", this.currentAddress);
+    console.log(oldEl);
     removeClassFromChildren(oldEl, "bg-blue-200");
 
     this.currentAddress = binToHex(address);
 
-    let decAddress = binToDec(address);
-    console.log(decAddress);
-    if (decAddress % 100 == 0 && decAddress !== 0) {
-      this.incrementCurrentPage();
+    let page = ~~(binToDec(address) / 100);
+    if (page > Object.values(this.book).length - 1) {
+      this.initElements(page);
+      this.jumpToPage(page);
     }
 
     let newEl = getElementByAttribute("address", this.currentAddress);
@@ -81,19 +85,15 @@ class AddressOrganizer {
     return el;
   }
 
-  initElements() {
+  initElements(page = this.currentPage) {
     let els = [];
 
-    for (
-      let i = this.currentPage * 100;
-      i < (this.currentPage + 1) * 100;
-      i += 4
-    ) {
+    for (let i = page * 100; i < (page + 1) * 100; i += 4) {
       let address = binToHex(dectoBin(i, 32));
       els[address] = this.createRow(address);
     }
-    this.book[this.currentPage] = els;
-    setTdValues(this.currentPage);
+    this.book[page] = els;
+    setTdValues(page);
   }
 
   // Page logic
@@ -109,7 +109,18 @@ class AddressOrganizer {
 
   decrementCurrentPage() {
     this.currentPage = Math.max(this.currentPage - 1, 0);
-    setTdValues(this.currentPage);
+    this.updatePageCounter();
+
+    if (this.book.hasOwnProperty(this.currentPage)) {
+      setTdValues(this.currentPage);
+      return;
+    }
+    this.initElements();
+  }
+
+  jumpToPage(pageNumber) {
+    this.currentPage = pageNumber;
+    setTdValues(pageNumber);
     this.updatePageCounter();
   }
 

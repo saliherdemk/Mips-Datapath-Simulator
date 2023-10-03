@@ -26,6 +26,10 @@ function setTdValues(pageIndex) {
         ? tds[index].classList.add("bg-green-200")
         : tds[index].classList.remove("bg-green-200");
 
+      key == addressOrganizer.getCurrentAddress()
+        ? tds[index].classList.add("bg-blue-200")
+        : tds[index].classList.remove("bg-blue-200");
+
       if (index == 0) tds[index].innerText = key;
       else if (index == 3) {
         tds[index].innerHTML = "";
