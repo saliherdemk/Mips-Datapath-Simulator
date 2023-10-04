@@ -18,6 +18,10 @@ const addressTable = document.getElementById("address-body");
 const pageCounterSpan = document.getElementById("page-counter");
 const selectedAddressContainer = document.getElementById("selected-address");
 
+const initilizer = new Initilizer();
+const instructionInputs = new InstructionInputs();
+const registerInputs = new RegisterInputs();
+
 const organizer = new Organizer();
 const pathOrganizer = new PathOrganizer();
 const addressOrganizer = new AddressOrganizer();

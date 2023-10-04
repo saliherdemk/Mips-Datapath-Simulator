@@ -61,7 +61,7 @@ class Registers extends Component {
         this.inputs[3].value
       ).toString();
 
-      updateRegisters(regValues);
+      registerInputs.updateRegisters(regValues);
     }
   }
 

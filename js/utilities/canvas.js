@@ -3,11 +3,7 @@ function setup() {
   cnv.parent(select("#canvas-container"));
   frameRate(30);
 
-  initAddresses();
-  setSelectOptions();
-  setRegInputs();
-  initColors();
-  initDatapath();
+  initilizer.init();
   addressOrganizer.initElements();
   // initNodesForLejant();
 }
@@ -26,9 +22,11 @@ function mousePressed() {
 
 function initNodesForLejant() {
   let nodes = [];
-  nodes.push(new Node(500, 100, false));
-  nodes.push(new Node(500, 130, true));
-  nodes.push(new Node(500, 160, "true"));
+  nodes.push(
+    new Node(500, 100, false),
+    new Node(500, 130, true),
+    new Node(500, 160, "true")
+  );
   let a = new Node(500, 250, true);
   a.setDontCare(true);
   let b = new Node(500, 220, false);

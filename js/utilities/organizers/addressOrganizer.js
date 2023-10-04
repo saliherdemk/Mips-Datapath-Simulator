@@ -6,6 +6,35 @@ class AddressOrganizer {
     this.currentAddress = "0x00000000";
   }
 
+  setTdValues(pageIndex) {
+    const trs = document.querySelectorAll("tr");
+    const els = addressOrganizer.getElementsByPage(pageIndex);
+    let i = 1;
+    for (const [key, value] of Object.entries(els)) {
+      let tds = trs[i].children;
+      [0, 1, 2, 3].forEach((index) => {
+        key == addressOrganizer.getSelectedAddress()
+          ? tds[index].classList.add("bg-green-200")
+          : tds[index].classList.remove("bg-green-200");
+
+        key == addressOrganizer.getCurrentAddress()
+          ? tds[index].classList.add("bg-blue-200")
+          : tds[index].classList.remove("bg-blue-200");
+
+        if (!index) tds[index].innerText = key;
+        else if (index == 3) {
+          tds[index].innerHTML = "";
+          tds[index].appendChild(value[index - 1]);
+        } else {
+          tds[index].innerText = value[index - 1];
+        }
+      });
+
+      trs[i].setAttribute("address", key);
+      i += 1;
+    }
+  }
+
   // Current Address
 
   getCurrentAddress() {
@@ -18,7 +47,6 @@ class AddressOrganizer {
   // Paint updated current address from book
   updateCurrentAddress(address) {
     let oldEl = getElementByAttribute("address", this.currentAddress);
-    console.log(oldEl);
     removeClassFromChildren(oldEl, "bg-blue-200");
 
     this.currentAddress = binToHex(address);
@@ -93,7 +121,7 @@ class AddressOrganizer {
       els[address] = this.createRow(address);
     }
     this.book[page] = els;
-    setTdValues(page);
+    this.setTdValues(page);
   }
 
   // Page logic
@@ -101,7 +129,7 @@ class AddressOrganizer {
     this.currentPage += 1;
     this.updatePageCounter();
     if (this.book.hasOwnProperty(this.currentPage)) {
-      setTdValues(this.currentPage);
+      this.setTdValues(this.currentPage);
       return;
     }
     this.initElements();
@@ -112,7 +140,7 @@ class AddressOrganizer {
     this.updatePageCounter();
 
     if (this.book.hasOwnProperty(this.currentPage)) {
-      setTdValues(this.currentPage);
+      this.setTdValues(this.currentPage);
       return;
     }
     this.initElements();
@@ -120,7 +148,7 @@ class AddressOrganizer {
 
   jumpToPage(pageNumber) {
     this.currentPage = pageNumber;
-    setTdValues(pageNumber);
+    this.setTdValues(pageNumber);
     this.updatePageCounter();
   }
 
