@@ -1,4 +1,4 @@
-class InstructionInputs {
+class InstructionManager {
   showInput(indexes) {
     indexes.map((index) => {
       regInput1[index].classList.remove("hidden");
@@ -16,13 +16,11 @@ class InstructionInputs {
   }
 
   changeInputs(instruction) {
-    organizer.setInstruction(e.target.value);
-
     this.resetInputs();
     if (instruction == "Jr") {
       this.showInput([0]);
     } else if (["J", "Jal"].includes(instruction)) {
-      showInput[0];
+      this.showInput[0];
       this.showSecondInput(0);
     } else if (instruction == "Addi") {
       this.showInput([0, 1, 2]);

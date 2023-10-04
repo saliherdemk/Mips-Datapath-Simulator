@@ -1,18 +1,8 @@
 class Organizer {
   constructor() {
-    this.instruction = "add"; // for setting input
     this.regValues = Array(31).fill("0");
     this.memValues = [];
     this.valueTable = {};
-  }
-
-  setInstruction(i) {
-    this.instruction = i;
-    return this.instruction;
-  }
-
-  getInstruction() {
-    return this.instruction;
   }
 
   getRegValues() {
@@ -26,7 +16,7 @@ class Organizer {
   getMemValue(address) {
     if (!this.memValues[address]) {
       this.updateMemValue(address, 0);
-      updateMemories();
+      memoryManager.updateMemories();
     }
     return this.memValues[address];
   }

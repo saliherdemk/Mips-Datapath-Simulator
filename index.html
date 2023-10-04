@@ -309,10 +309,10 @@
       <!-- Draggable -->
       <div
         class="w-full bg-gray-500 cursor-move text-center text-white py-2 rounded-t"
-        onmousedown="mouseDownDraggable(event)"
+        id="draggable-book"
       >
         Address Book
-        <button class="absolute right-2 top-2.5" onclick="shrinkBook()">
+        <button id="shrink-book" class="absolute right-2 top-2.5">
           <img src="/media/close.png" alt="" width="20" height="20" />
         </button>
       </div>
@@ -352,7 +352,7 @@
       <!-- Resizer -->
       <div
         class="absolute right-2 bottom-2 h-4 w-4 cursor-se-resize text-xs flex justify-center items-center"
-        onmousedown="initResize()"
+        id="resizer"
       >
         <i class="icon icon-link"></i>
       </div>
@@ -370,8 +370,10 @@
     ></script>
     <script src="js/data/data.js"></script>
 
-    <script src="js/utilities/InstructionInputs.js"></script>
-    <script src="js/utilities/RegisterInputs.js"></script>
+    <script src="js/utilities/managers/InstructionManager.js"></script>
+    <script src="js/utilities/managers/RegisterManager.js"></script>
+    <script src="js/utilities/managers/MemoryManager.js"></script>
+    <script src="js/utilities/managers/BookManager.js"></script>
 
     <script src="js/utilities/helpers.js"></script>
     <script src="js/utilities/initilizer.js"></script>

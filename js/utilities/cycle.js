@@ -31,7 +31,8 @@ function setMachineCode(e) {
       inpValues.push(inp.value);
     }
   });
-  let instruction = organizer.setInstruction(inpValues[0]).toLowerCase();
+
+  let instruction = inpValues[0].toLowerCase();
   let opCode = opCodes[instruction];
   let icArray = [opCode];
   let codeLength = 6;

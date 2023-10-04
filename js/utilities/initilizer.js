@@ -1,6 +1,4 @@
 class Initilizer {
-  constructor() {}
-
   initAddresses() {
     for (let i = 0; i < 100; i += 4) {
       let tr = document.createElement("tr");

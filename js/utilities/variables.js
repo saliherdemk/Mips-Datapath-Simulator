@@ -19,8 +19,11 @@ const pageCounterSpan = document.getElementById("page-counter");
 const selectedAddressContainer = document.getElementById("selected-address");
 
 const initilizer = new Initilizer();
-const instructionInputs = new InstructionInputs();
-const registerInputs = new RegisterInputs();
+
+const instructionManager = new InstructionManager();
+const registerManager = new RegisterManager();
+const memoryManager = new MemoryManager();
+const bookManager = new BookManager();
 
 const organizer = new Organizer();
 const pathOrganizer = new PathOrganizer();

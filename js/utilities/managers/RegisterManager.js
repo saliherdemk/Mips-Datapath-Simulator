@@ -1,4 +1,4 @@
-class RegisterInputs {
+class RegisterManager {
   toggleRegisters() {
     if (container.getAttribute("isExpanded") == "true") {
       container.style.maxHeight = "0px";

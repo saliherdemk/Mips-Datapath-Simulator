@@ -57,7 +57,7 @@ class DataMemory extends Component {
         binToHex(this.inputs[0].value),
         binToDec(this.inputs[1].value)
       );
-      updateMemories();
+      memoryManager.updateMemories();
     }
   }
 
