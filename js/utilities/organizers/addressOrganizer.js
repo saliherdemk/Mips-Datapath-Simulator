@@ -14,12 +14,12 @@ class AddressOrganizer {
       let tds = trs[i].children;
       [0, 1, 2, 3].forEach((index) => {
         key == addressOrganizer.getSelectedAddress()
-          ? tds[index].classList.add("bg-green-200")
-          : tds[index].classList.remove("bg-green-200");
+          ? tds[index].classList.add("bg-green-300")
+          : tds[index].classList.remove("bg-green-300");
 
         key == addressOrganizer.getCurrentAddress()
-          ? tds[index].classList.add("bg-blue-200")
-          : tds[index].classList.remove("bg-blue-200");
+          ? tds[index].classList.add("bg-blue-300")
+          : tds[index].classList.remove("bg-blue-300");
 
         if (!index) tds[index].innerText = key;
         else if (index == 3) {
@@ -40,6 +40,7 @@ class AddressOrganizer {
   getCurrentAddress() {
     return this.currentAddress;
   }
+
   getAddressValue(address) {
     return this.book[~~(binToDec(address) / 100)][binToHex(address)][0];
   }
@@ -47,18 +48,19 @@ class AddressOrganizer {
   // Paint updated current address from book
   updateCurrentAddress(address) {
     let oldEl = getElementByAttribute("address", this.currentAddress);
-    removeClassFromChildren(oldEl, "bg-blue-200");
+    removeClassFromChildren(oldEl, "bg-blue-300");
 
     this.currentAddress = binToHex(address);
 
     let page = ~~(binToDec(address) / 100);
-    if (page > Object.values(this.book).length - 1) {
+
+    if (!this.book.hasOwnProperty(page)) {
       this.initElements(page);
-      this.jumpToPage(page);
     }
+    this.jumpToPage(page);
 
     let newEl = getElementByAttribute("address", this.currentAddress);
-    addClassToChildren(newEl, "bg-blue-200");
+    addClassToChildren(newEl, "bg-blue-300");
   }
 
   // Selected Address
@@ -68,7 +70,7 @@ class AddressOrganizer {
 
   resetSelectedAddress() {
     let oldEl = getElementByAttribute("address", this.selectedAddress);
-    removeClassFromChildren(oldEl, "bg-green-200");
+    removeClassFromChildren(oldEl, "bg-green-300");
 
     this.selectedAddress = null;
 
@@ -84,7 +86,7 @@ class AddressOrganizer {
     this.selectedAddress = selectedAddress;
 
     let newEl = getElementByAttribute("address", this.selectedAddress);
-    addClassToChildren(newEl, "bg-green-200");
+    addClassToChildren(newEl, "bg-green-300");
 
     selectedAddressContainer.innerText = this.selectedAddress;
   }

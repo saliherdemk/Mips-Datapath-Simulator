@@ -20,6 +20,8 @@ function goOneCycle() {
     nodes[i].addNodeToValueTable();
   }
 
+  pathOrganizer.pc.setNextAddress();
+
   updateBinaryEquivalents();
 }
 

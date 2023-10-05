@@ -22,9 +22,12 @@ class Pc extends Component {
     pathOrganizer.addNodes([this.input, this.output]);
   }
 
+  setNextAddress() {
+    addressOrganizer.updateCurrentAddress(this.input.value);
+  }
+
   update() {
     this.output.changeValue(this.input.value);
-    addressOrganizer.updateCurrentAddress(this.output.value);
   }
 
   show() {
