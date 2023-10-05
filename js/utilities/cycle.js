@@ -75,7 +75,7 @@ function setMachineCode(e) {
   if (iData) {
     icArray.push(dectoBin(iData, 32 - codeLength));
   }
-  addressOrganizer.updateToAddressBook(icArray.join(" "), inpValues.join(" "));
+  addressOrganizer.updateAddressBook(icArray.join(" "), inpValues.join(" "));
 }
 
 function updateBinaryEquivalents() {

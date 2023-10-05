@@ -103,7 +103,7 @@ class AddressOrganizer {
     b.append(document.createTextNode("Clear"));
     b.onclick = (e) => {
       e.stopPropagation();
-      this.updateToAddressBook(
+      this.updateAddressBook(
         "000000 00000 00000 00000 00000 000000",
         "Nothing",
         address
@@ -167,7 +167,7 @@ class AddressOrganizer {
   }
 
   // Adding & removing records to book
-  updateToAddressBook(machineCode, meaning, address = this.selectedAddress) {
+  updateAddressBook(machineCode, meaning, address = this.selectedAddress) {
     if (!address) {
       selectedAddressContainer.classList.add("jump-shaking");
       return;
