@@ -239,22 +239,38 @@
     </div>
 
     <!-- Popup Buttons Start -->
-    <div class="text-right px-24 px-[15%]">
-      <button
-        onclick="openPopups()"
-        class="bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 my-2 rounded"
-      >
-        Open Popups
-      </button>
-      <button
-        onclick="closePopups()"
-        class="bg-rose-500 hover:bg-blue-700 text-white font-bold py-2 px-4 my-2 rounded"
-      >
-        Close Popups
-      </button>
-
-      <button onclick="goOneCycle()">Execute</button>
+    <div class="grid grid-cols-3 items-center mx-[15%]">
+      <span class="col-start-2 flex justify-center gap-2">
+        <button
+          onclick="goOneCycle()"
+          class="bg-gray-200 w-12 h-12 rounded-full flex justify-center items-center"
+        >
+          <img src="/media/repeat.png" width="36" alt="" />
+        </button>
+        <button
+          onclick="toggleAutomation()"
+          class="bg-gray-200 w-12 h-12 rounded-full flex justify-center items-center"
+        >
+          <i class="play"></i>
+          <i class="pause hidden"></i>
+        </button>
+      </span>
+      <div class="ml-auto">
+        <button
+          onclick="openPopups()"
+          class="bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 my-2 rounded"
+        >
+          Open Popups
+        </button>
+        <button
+          onclick="closePopups()"
+          class="bg-rose-500 hover:bg-blue-700 text-white font-bold py-2 px-4 my-2 rounded"
+        >
+          Close Popups
+        </button>
+      </div>
     </div>
+
     <!-- Popup Buttons End -->
 
     <!-- Binary Sidebar Start -->

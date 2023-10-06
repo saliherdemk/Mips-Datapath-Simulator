@@ -1,3 +1,15 @@
+let intervalId;
+function toggleAutomation() {
+  let isAutomated = organizer.toggleIsAutometed();
+  if (!isAutomated) {
+    showPauseIcon();
+    clearInterval(intervalId);
+    return;
+  }
+  showPlayIcon();
+  intervalId = setInterval(goOneCycle, 1000);
+}
+
 function resetDataPath() {
   organizer.setValueTable({});
   pathOrganizer.resetDataPath();

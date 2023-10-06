@@ -1,8 +1,26 @@
 class Organizer {
   constructor() {
+    this.isAutomatedState = false;
     this.regValues = Array(31).fill("0");
     this.memValues = [];
     this.valueTable = {};
+  }
+
+  isAutometed() {
+    return this.isAutomatedState;
+  }
+
+  toggleIsAutometed() {
+    this.isAutomatedState = !this.isAutomatedState;
+    return this.isAutomatedState;
+  }
+
+  enableAutomation() {
+    this.isAutomatedState = true;
+  }
+
+  disableAutomation() {
+    this.isAutomatedState = false;
   }
 
   getRegValues() {

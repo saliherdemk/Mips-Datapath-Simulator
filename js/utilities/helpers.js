@@ -50,3 +50,13 @@ function addClassToChildren(element, className) {
     block: "center",
   });
 }
+
+function showPlayIcon() {
+  pauseIcon.classList.remove("hidden");
+  playIcon.classList.add("hidden");
+}
+
+function showPauseIcon() {
+  pauseIcon.classList.add("hidden");
+  playIcon.classList.remove("hidden");
+}

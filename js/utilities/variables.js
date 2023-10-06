@@ -18,6 +18,9 @@ const addressTable = document.getElementById("address-body");
 const pageCounterSpan = document.getElementById("page-counter");
 const selectedAddressContainer = document.getElementById("selected-address");
 
+const playIcon = document.querySelector(".play");
+const pauseIcon = document.querySelector(".pause");
+
 const initilizer = new Initilizer();
 
 const instructionManager = new InstructionManager();
