@@ -91,7 +91,7 @@ td {
   width: 0px;
   background: none;
   border: none;
-  margin-left: 1px;
+  margin-left: 5px;
   border-top: 0.8rem solid transparent;
   border-bottom: 0.8rem solid transparent;
   border-left: calc(0.8rem * 2 * 0.86) solid rgb(88, 88, 88);
@@ -110,7 +110,7 @@ td {
     top: 0;
     height: 100%;
     width: 33%;
-    background: gray;
+    background: rgb(88, 88, 88);
   }
   &:before {
     left: 0;
