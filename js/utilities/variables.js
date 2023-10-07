@@ -21,6 +21,9 @@ const selectedAddressContainer = document.getElementById("selected-address");
 const playIcon = document.querySelector(".play");
 const pauseIcon = document.querySelector(".pause");
 
+const speedInput = document.getElementById("speed-input");
+const speedValueContainer = document.getElementById("speed-value-container");
+
 const initilizer = new Initilizer();
 
 const instructionManager = new InstructionManager();

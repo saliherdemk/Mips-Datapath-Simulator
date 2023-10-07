@@ -7,7 +7,7 @@ function toggleAutomation() {
     return;
   }
   showPlayIcon();
-  intervalId = setInterval(goOneCycle, 1000);
+  intervalId = setInterval(goOneCycle, organizer.getAutomationSpeed());
 }
 
 function resetDataPath() {

@@ -35,6 +35,11 @@ function toggleValuesContainer() {
   valuesContainer.classList.toggle("translate-x-0");
 }
 
+function changeSpeed(e) {
+  organizer.setAutomationSpeed(e.target.value);
+  speedValueContainer.innerText = e.target.value + "ms";
+}
+
 // Empty Selected Address Events for animation
 
 function handleAnimationEnd() {

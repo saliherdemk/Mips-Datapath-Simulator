@@ -240,6 +240,20 @@
 
     <!-- Popup Buttons Start -->
     <div class="grid grid-cols-3 items-center mx-[15%]">
+      <div class="flex justify-center items-center">
+        Speed:
+        <input
+          class="ml-2"
+          id="speed-input"
+          type="range"
+          min="100"
+          max="3000"
+          value="1000"
+          onchange="changeSpeed(event)"
+          oninput="changeSpeed(event)"
+        />
+        <span class="w-12 pl-2" id="speed-value-container">1000ms</span>
+      </div>
       <span class="col-start-2 flex justify-center gap-2">
         <button
           onclick="goOneCycle()"
@@ -276,7 +290,7 @@
     <!-- Binary Sidebar Start -->
     <div
       id="valuesContainer"
-      class="fixed h-full text-center w-[410px] top-[10%] left-0 z-40 transition-all -translate-x-[calc(100%_-_40px)]"
+      class="fixed h-full text-center w-[410px] top-[95px] left-0 z-40 transition-all -translate-x-[calc(100%_-_40px)]"
     >
       <div class="relative">
         <div

@@ -1,9 +1,18 @@
 class Organizer {
   constructor() {
     this.isAutomatedState = false;
+    this.automationSpeed = 1000;
     this.regValues = Array(31).fill("0");
     this.memValues = [];
     this.valueTable = {};
+  }
+
+  setAutomationSpeed(ms) {
+    this.automationSpeed = ms;
+  }
+
+  getAutomationSpeed() {
+    return this.automationSpeed;
   }
 
   isAutometed() {
@@ -12,15 +21,8 @@ class Organizer {
 
   toggleIsAutometed() {
     this.isAutomatedState = !this.isAutomatedState;
+    speedInput.disabled = this.isAutomatedState;
     return this.isAutomatedState;
-  }
-
-  enableAutomation() {
-    this.isAutomatedState = true;
-  }
-
-  disableAutomation() {
-    this.isAutomatedState = false;
   }
 
   getRegValues() {
