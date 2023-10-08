@@ -34,9 +34,6 @@ class Node {
           return;
         }
       });
-      let nodeWires = pathOrganizer.findWiresByEndNodeId(this.id);
-
-      nodeWires?.startNode.setDontCare(true);
     }
     this.changeValue(this.value);
   }

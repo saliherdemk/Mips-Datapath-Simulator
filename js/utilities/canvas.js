@@ -1,28 +1,19 @@
 function setup() {
   cnv = createCanvas(1300, 750);
   cnv.parent(select("#canvas-container"));
-  frameRate(30);
 
-  initilizer.init();
-  addressOrganizer.initElements();
-  // initNodesForLejant();
+  initColors();
+  initNodesForLejant();
 }
 
 function draw() {
   background(colors.WHITE);
-
-  // seeLejant();
-
-  pathOrganizer.draw();
-}
-
-function mousePressed() {
-  pathOrganizer.onPress();
+  drawNodes();
+  seeLejant();
 }
 
 function initNodesForLejant() {
-  let nodes = [];
-  nodes.push(
+  globalNodes.push(
     new Node(500, 100, false),
     new Node(500, 130, true),
     new Node(500, 160, "true")
@@ -33,8 +24,7 @@ function initNodesForLejant() {
   b.setDontCare(true);
   let c = new Node(500, 190, "true");
   c.setDontCare(true);
-  nodes.push(a, b, c);
-  pathOrganizer.addNodes(nodes);
+  globalNodes.push(a, b, c);
 }
 
 function seeLejant() {
@@ -64,5 +54,16 @@ function seeLejant() {
   textSize(17);
   text("True but Don't Care", 525, 255);
 
-  strokeWeight(2);
+  textSize(17);
+
+  text("Address Book", 490, 300);
+
+  fill(147, 197, 253);
+  rect(490, 330, 60, 20, 20);
+  fill(0);
+  text("Curent Address - Will Execute", 560, 345);
+  fill(134, 239, 172);
+  rect(490, 370, 60, 20, 20);
+  fill(0);
+  text("Selected Address - Put value", 560, 385);
 }
