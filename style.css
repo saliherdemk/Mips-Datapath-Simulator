@@ -18,7 +18,7 @@ body {
   -webkit-transform: rotate(45deg);
 }
 
-/* https://codepen.io/vitalhead/pen/qzpYxy */
+/* https://codepen.io/vitalhead/pen/qzpYxy Resizer*/
 .icon {
   box-sizing: border-box;
   display: inline-block;
@@ -82,4 +82,71 @@ td {
   border-bottom: 1px solid gray;
   padding: 5px;
   background-color: white;
+}
+
+/* Play - Pause*/
+/*https://codepen.io/jacobcs1996/pen/geQKLJ*/
+.play {
+  height: 0px;
+  width: 0px;
+  background: none;
+  border: none;
+  margin-left: 5px;
+  border-top: 0.8rem solid transparent;
+  border-bottom: 0.8rem solid transparent;
+  border-left: calc(0.8rem * 2 * 0.86) solid rgb(88, 88, 88);
+}
+
+.pause {
+  position: relative;
+  background: none;
+  border: none;
+  height: 1.5rem;
+  width: 1.2rem;
+  &:before,
+  &:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 33%;
+    background: rgb(88, 88, 88);
+  }
+  &:before {
+    left: 0;
+  }
+  &:after {
+    right: 0;
+  }
+}
+
+/* https://unused-css.com/blog/css-shake-animation/ */
+.jump-shaking {
+  animation: jump-shaking 0.83s;
+}
+
+@keyframes jump-shaking {
+  0% {
+    transform: translateX(0);
+    color: red;
+  }
+  25% {
+    transform: translateY(-9px);
+  }
+  35% {
+    transform: translateY(-9px) rotate(17deg);
+  }
+  55% {
+    transform: translateY(-9px) rotate(-17deg);
+  }
+  65% {
+    transform: translateY(-9px) rotate(17deg);
+  }
+  75% {
+    transform: translateY(-9px) rotate(-17deg);
+  }
+  100% {
+    transform: translateY(0) rotate(0);
+    color: black;
+  }
 }

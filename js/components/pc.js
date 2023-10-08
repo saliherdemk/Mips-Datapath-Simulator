@@ -10,7 +10,7 @@ class Pc extends Component {
     this.input = new Node(
       this.x,
       this.y + this.height / 2,
-      "00000000000000000000000101011000",
+      "00000000000000000000000000000000",
       "top"
     );
     this.output = new Node(
@@ -22,8 +22,12 @@ class Pc extends Component {
     pathOrganizer.addNodes([this.input, this.output]);
   }
 
+  setNextAddress() {
+    addressOrganizer.updateCurrentAddress(this.input.value);
+  }
+
   update() {
-    this.output.changeValue(organizer.setCurrAddress(this.input.value));
+    this.output.changeValue(this.input.value);
   }
 
   show() {

@@ -44,7 +44,7 @@
       <div
         class="w-full text-center p-5 h-25 flex justify-center items-center relative"
       >
-        <form action="" id="inst-form" onsubmit="startCycle(event)">
+        <form action="" id="inst-form" onsubmit="setMachineCode(event)">
           <div class="flex">
             <div class="px-4 block">
               <label
@@ -172,17 +172,19 @@
               class="h-10 w-2/3 w-full bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded place-self-end"
               type="submit"
             >
-              Execute
+              Add
             </button>
           </div>
+          <div class="flex justify-center items-center pt-3 gap-2">
+            Selected Address:
+            <div id="selected-address">None</div>
+          </div>
         </form>
-        <button class="right-0 absolute" onclick="toggleForm()">
+        <button class="right-0 absolute" onclick="toggleRegisters()">
           <i class="arrow down"></i>
         </button>
       </div>
       <!-- Instruction Inputs End -->
-
-      <p id="instruction-code" class="text-center"></p>
 
       <div
         class="w-full max-h-[500px] relative overflow-hidden transition-all"
@@ -237,26 +239,59 @@
     </div>
 
     <!-- Popup Buttons Start -->
-    <div class="text-right px-24 px-[15%]">
-      <button
-        onclick="openPopups()"
-        class="bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 my-2 rounded"
-      >
-        Open Popups
-      </button>
-      <button
-        onclick="closePopups()"
-        class="bg-rose-500 hover:bg-blue-700 text-white font-bold py-2 px-4 my-2 rounded"
-      >
-        Close Popups
-      </button>
+    <div class="grid grid-cols-3 items-center mx-[15%]">
+      <div class="flex justify-center items-center">
+        Speed:
+        <input
+          class="ml-2"
+          id="speed-input"
+          type="range"
+          step="50"
+          min="100"
+          max="3000"
+          value="1000"
+          onchange="changeSpeed(event)"
+          oninput="changeSpeed(event)"
+        />
+        <span class="w-12 pl-2" id="speed-value-container">1000ms</span>
+      </div>
+      <span class="col-start-2 flex justify-center gap-2">
+        <button
+          onclick="goOneCycle()"
+          class="bg-gray-200 w-12 h-12 rounded-full flex justify-center items-center"
+        >
+          <img src="/media/goOnce.png" width="36" alt="" />
+        </button>
+        <button
+          onclick="toggleAutomation()"
+          class="bg-gray-200 w-12 h-12 rounded-full flex justify-center items-center"
+        >
+          <i class="play"></i>
+          <i class="pause hidden"></i>
+        </button>
+      </span>
+      <div class="ml-auto">
+        <button
+          onclick="openPopups()"
+          class="bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 my-2 rounded"
+        >
+          Open Popups
+        </button>
+        <button
+          onclick="closePopups()"
+          class="bg-rose-500 hover:bg-blue-700 text-white font-bold py-2 px-4 my-2 rounded"
+        >
+          Close Popups
+        </button>
+      </div>
     </div>
+
     <!-- Popup Buttons End -->
 
     <!-- Binary Sidebar Start -->
     <div
       id="valuesContainer"
-      class="fixed h-full text-center w-[410px] top-[10%] left-0 z-40 transition-all -translate-x-[calc(100%_-_40px)]"
+      class="fixed h-full text-center w-[410px] top-[95px] left-0 z-40 transition-all -translate-x-[calc(100%_-_40px)]"
     >
       <div class="relative">
         <div
@@ -300,14 +335,17 @@
     <!-- Address Book Start -->
     <div
       id="address-book"
-      class="fixed w-56 h-96 top-28 left-24 rounded shadow bg-white z-40"
+      class="fixed w-[330px] h-96 top-28 left-24 rounded shadow bg-white z-40"
     >
       <!-- Draggable -->
       <div
         class="w-full bg-gray-500 cursor-move text-center text-white py-2 rounded-t"
-        onmousedown="mouseDownDraggable(event)"
+        id="draggable-book"
       >
         Address Book
+        <button id="shrink-book" class="absolute right-2 top-2.5">
+          <img src="/media/close.png" alt="" width="20" height="20" />
+        </button>
       </div>
 
       <!-- Addresses-->
@@ -316,19 +354,36 @@
           <thead>
             <tr>
               <th class="sticky left-0 p-3 bg-white min-w-[60px]">Address</th>
-              <th class="min-w-[388px]">Value</th>
+              <th class="min-w-[388px]">Machine Code</th>
               <th class="min-w-[160px]">Meaning</th>
               <th class="sticky right-0 bg-white min-w-[128px]">Controls</th>
             </tr>
           </thead>
           <tbody id="address-body"></tbody>
         </table>
+        <div class="sticky bottom-0 left-0 flex justify-center items-center">
+          <button
+            class="bg-[#dee0ee] px-3 h-9 hover:bg-[#575b71] rounded-t"
+            onclick="decrementPageNumber()"
+          >
+            <img src="/media/minus.png" alt="" width="12" height="12" />
+          </button>
+          <span class="bg-white px-3 h-9 flex items-center" id="page-counter"
+            >0</span
+          >
+          <button
+            class="bg-[#dee0ee] px-3 h-9 hover:bg-[#575b71] rounded-t"
+            onclick="incrementPageNumber()"
+          >
+            <img src="/media/plus.png" alt="" width="12" height="12" />
+          </button>
+        </div>
       </div>
 
       <!-- Resizer -->
       <div
         class="absolute right-2 bottom-2 h-4 w-4 cursor-se-resize text-xs flex justify-center items-center"
-        onmousedown="initResize()"
+        id="resizer"
       >
         <i class="icon icon-link"></i>
       </div>
@@ -346,8 +401,17 @@
     ></script>
     <script src="js/data/data.js"></script>
 
-    <script src="js/utilities/organizer.js"></script>
-    <script src="js/utilities/pathOrganizer.js"></script>
+    <script src="js/utilities/managers/InstructionManager.js"></script>
+    <script src="js/utilities/managers/RegisterManager.js"></script>
+    <script src="js/utilities/managers/MemoryManager.js"></script>
+    <script src="js/utilities/managers/BookManager.js"></script>
+
+    <script src="js/utilities/helpers.js"></script>
+    <script src="js/utilities/initilizer.js"></script>
+
+    <script src="js/utilities/organizers/organizer.js"></script>
+    <script src="js/utilities/organizers/pathOrganizer.js"></script>
+    <script src="js/utilities/organizers/addressOrganizer.js"></script>
 
     <script src="js/utilities/variables.js"></script>
     <script src="js/utilities/script.js"></script>

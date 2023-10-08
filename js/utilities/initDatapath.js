@@ -20,8 +20,8 @@ function initDatapath() {
   let mux2 = new Mux(originX + 580, originY + 400, false);
   let mux3 = new Mux(originX + 985, originY + 300, true);
   let mux4 = new Mux(originX + 1000, originY + 6.5, true);
-  let mux5 = new Mux(originX + 855, originY + 50);
-  let muxJR = new Mux(originX + 1080, originY + 95, false, true);
+  let mux5 = new Mux(originX + 855, originY + 50, false);
+  let muxJR = new Mux(originX + 1080, originY + 95, false);
 
   let signExtend = new Ellipse(
     originX + 450,

@@ -1,8 +1,13 @@
-function startCycle(e) {
-  e.preventDefault();
-  setMachineCode();
-  organizer.updatePcValues();
-  goOneCycle();
+let intervalId;
+function toggleAutomation() {
+  let isAutomated = organizer.toggleIsAutometed();
+  if (!isAutomated) {
+    showPauseIcon();
+    clearInterval(intervalId);
+    return;
+  }
+  showPlayIcon();
+  intervalId = setInterval(goOneCycle, organizer.getAutomationSpeed());
 }
 
 function resetDataPath() {
@@ -27,18 +32,21 @@ function goOneCycle() {
     nodes[i].addNodeToValueTable();
   }
 
-  updateValuesContainer();
+  pathOrganizer.pc.setNextAddress();
+
+  updateBinaryEquivalents();
 }
 
-function setMachineCode() {
+function setMachineCode(e) {
+  e.preventDefault();
   let inpValues = [];
   instFormInputs.forEach((inp) => {
     if (!inp.parentElement.classList.contains("hidden")) {
       inpValues.push(inp.value);
     }
   });
-  inpValues = ["Add", "$0", "$0", "$0"];
-  let instruction = organizer.setInstruction(inpValues[0]).toLowerCase();
+
+  let instruction = inpValues[0].toLowerCase();
   let opCode = opCodes[instruction];
   let icArray = [opCode];
   let codeLength = 6;
@@ -79,12 +87,10 @@ function setMachineCode() {
   if (iData) {
     icArray.push(dectoBin(iData, 32 - codeLength));
   }
-
-  organizer.setICode(icArray.join(" "));
-  instructionCodeContainer.innerText = organizer.getICode();
+  addressOrganizer.updateAddressBook(icArray.join(" "), inpValues.join(" "));
 }
 
-function updateValuesContainer() {
+function updateBinaryEquivalents() {
   const aside = valuesContainer.children[1]; // gets aside tag
   aside.innerHTML = "";
   let table = organizer.getValueTable();

@@ -1,29 +1,28 @@
 class Organizer {
   constructor() {
-    this.instructionCode = "";
-    this.instruction = "add";
+    this.isAutomatedState = false;
+    this.automationSpeed = 1000;
     this.regValues = Array(31).fill("0");
     this.memValues = [];
-    this.pcValues = {};
-    this.currAddress = "00000000000000000000000101011000";
     this.valueTable = {};
   }
 
-  setICode(code) {
-    this.instructionCode = code;
+  setAutomationSpeed(ms) {
+    this.automationSpeed = ms;
   }
 
-  getICode() {
-    return this.instructionCode;
+  getAutomationSpeed() {
+    return this.automationSpeed;
   }
 
-  setInstruction(i) {
-    this.instruction = i;
-    return this.instruction;
+  isAutometed() {
+    return this.isAutomatedState;
   }
 
-  getInstruction() {
-    return this.instruction;
+  toggleIsAutometed() {
+    this.isAutomatedState = !this.isAutomatedState;
+    speedInput.disabled = this.isAutomatedState;
+    return this.isAutomatedState;
   }
 
   getRegValues() {
@@ -37,7 +36,7 @@ class Organizer {
   getMemValue(address) {
     if (!this.memValues[address]) {
       this.updateMemValue(address, 0);
-      updateMemories();
+      memoryManager.updateMemories();
     }
     return this.memValues[address];
   }
@@ -48,23 +47,6 @@ class Organizer {
 
   getMemValues() {
     return this.memValues;
-  }
-
-  getPcValue(key) {
-    return this.pcValues[key];
-  }
-
-  updatePcValues() {
-    this.pcValues[this.currAddress] = this.instructionCode;
-  }
-
-  getCurrAddress() {
-    return this.currAddress;
-  }
-
-  setCurrAddress(values) {
-    this.currAddress = values;
-    return this.currAddress;
   }
 
   setValueTable(values) {

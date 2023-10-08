@@ -1,12 +1,11 @@
 class Mux extends Component {
-  constructor(x, y, toTop = false, updateAddress = false) {
+  constructor(x, y, toTop = false) {
     super(x, y, 35, 80, "M\nU\nX", 3, 3);
     this.inputs = [];
     this.output;
     this.additionalInput;
     this.toTop = toTop;
     this.generateIO();
-    this.updateAddress = updateAddress;
   }
 
   generateIO() {
@@ -57,8 +56,6 @@ class Mux extends Component {
     this.output.changeValue(this.inputs[inputIndex].value);
     this.inputs[+!inputIndex].setDontCare(true);
     this.inputs[+inputIndex].setDontCare(false);
-
-    this.updateAddress && organizer.setCurrAddress(this.output.value);
   }
 
   show() {
