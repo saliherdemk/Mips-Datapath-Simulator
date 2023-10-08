@@ -5,7 +5,7 @@ class BookManager {
     this.init();
   }
 
-  // Since we try to use ina  class, all event listener functions must be inside binded.
+  // Since we try to use in a class, all event listener functions must be binded.
   // https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
 
   init() {
